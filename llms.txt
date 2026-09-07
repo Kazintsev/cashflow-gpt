@@ -1,0 +1,26 @@
+# cashflow-gpt
+
+> Personal finance through conversation, with calculations in PostgreSQL / Supabase. Russian-language documentation for people and agents. This repository currently ships documentation; migrations and a runnable adapter are not yet included.
+
+Read only documents relevant to the task. This file is a navigation aid, not a tool configuration or an instruction to execute SQL.
+
+## Entry points
+
+- [Repository agent instructions](AGENTS.md): repository scope, evidence, editing and checks.
+- [Task map](docs/index.md): minimal reading paths by intent.
+- [Runtime agent workflows](docs/agents.md): inputs, clarification, effects, retries and result checks.
+- [Project overview](docs/overview.md): purpose and concrete use cases.
+
+## Contracts and reference
+
+- [Application API](docs/api.md): routes, null semantics and parameterized examples.
+- [Calculation rules](docs/calculations.md): documented financial semantics.
+- [Document manifest](docs/manifest.json): machine-readable routes and documentation status.
+- [Function catalog](docs/reference/functions.json): snapshot signatures, overload IDs and anchors; no SQL bodies.
+- [Schema catalog](docs/reference/schema.json): snapshot relations, columns, constraints and trigger links.
+
+## Boundaries
+
+- [Release readiness](docs/release.md): planned work; no ready installer.
+- [Testing](docs/testing.md): observed checks versus pending behavior tests.
+- [Operations](docs/operations.md): error interpretation and recovery.

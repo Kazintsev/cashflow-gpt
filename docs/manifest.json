@@ -1,0 +1,353 @@
+{
+  "schema_version": 1,
+  "project": "cashflow-gpt",
+  "language": "ru",
+  "reference_base": "repository_root",
+  "snapshot_date": "2026-09-07",
+  "observed_status_version": "cashflow_until_next_income_v3",
+  "repository_delivery": "documentation_only",
+  "runtime_source_in_repo": false,
+  "ready_for_clean_install": false,
+  "navigation_is_execution_authorization": false,
+  "documents": [
+    {
+      "id": "readme",
+      "path": "README.md",
+      "audience": [
+        "user",
+        "developer",
+        "agent"
+      ],
+      "evidence_status": "mixed",
+      "purpose": "Назначение, сценарии и состояние репозитория"
+    },
+    {
+      "id": "repository_agent_instructions",
+      "path": "AGENTS.md",
+      "audience": [
+        "repository_agent"
+      ],
+      "evidence_status": "proposed_workflow",
+      "purpose": "Правила работы с репозиторием"
+    },
+    {
+      "id": "model_entrypoint",
+      "path": "llms.txt",
+      "audience": [
+        "agent"
+      ],
+      "evidence_status": "navigation",
+      "purpose": "Короткий индекс"
+    },
+    {
+      "id": "project_overview",
+      "path": "docs/overview.md",
+      "audience": [
+        "user",
+        "agent"
+      ],
+      "evidence_status": "proposed_workflow",
+      "purpose": "Назначение проекта и семь сценариев применения"
+    },
+    {
+      "id": "task_index",
+      "path": "docs/index.md",
+      "audience": [
+        "user",
+        "developer",
+        "agent"
+      ],
+      "evidence_status": "navigation",
+      "purpose": "Минимальный набор чтения по задаче"
+    },
+    {
+      "id": "agent_workflows",
+      "path": "docs/agents.md",
+      "audience": [
+        "runtime_agent",
+        "integrator"
+      ],
+      "evidence_status": "proposed_workflow",
+      "purpose": "Предусловия, эффекты, повторы и проверка результата"
+    },
+    {
+      "id": "documentation_maintenance",
+      "path": "docs/maintenance.md",
+      "audience": [
+        "developer",
+        "repository_agent"
+      ],
+      "evidence_status": "proposed_workflow",
+      "purpose": "Как обновлять связанные Markdown и JSON"
+    },
+    {
+      "id": "setup",
+      "path": "docs/start.md",
+      "audience": [
+        "user",
+        "integrator"
+      ],
+      "evidence_status": "mixed",
+      "purpose": "Подготовка собственной копии; установка пока не проверена"
+    },
+    {
+      "id": "user_guide",
+      "path": "docs/user-guide.md",
+      "audience": [
+        "user",
+        "runtime_agent"
+      ],
+      "evidence_status": "mixed",
+      "purpose": "Диалог, бюджет, платежи и исправления"
+    },
+    {
+      "id": "calculation_rules",
+      "path": "docs/calculations.md",
+      "audience": [
+        "user",
+        "developer",
+        "agent"
+      ],
+      "evidence_status": "observed_snapshot",
+      "purpose": "Денежные формулы и временные границы"
+    },
+    {
+      "id": "architecture",
+      "path": "docs/architecture.md",
+      "audience": [
+        "developer",
+        "agent"
+      ],
+      "evidence_status": "observed_snapshot",
+      "purpose": "Компоненты, модели долга и границы доступа"
+    },
+    {
+      "id": "application_api",
+      "path": "docs/api.md",
+      "audience": [
+        "developer",
+        "runtime_agent"
+      ],
+      "evidence_status": "observed_snapshot",
+      "purpose": "Прикладные маршруты и SQL-примеры"
+    },
+    {
+      "id": "chat_instructions",
+      "path": "docs/chat-instructions.md",
+      "audience": [
+        "runtime_agent",
+        "integrator"
+      ],
+      "evidence_status": "proposed_workflow",
+      "purpose": "Переносимые инструкции финансового ассистента"
+    },
+    {
+      "id": "function_reference",
+      "path": "docs/functions.md",
+      "audience": [
+        "developer",
+        "agent"
+      ],
+      "evidence_status": "observed_snapshot",
+      "purpose": "Точные сигнатуры и отдельные якоря перегрузок"
+    },
+    {
+      "id": "schema_reference",
+      "path": "docs/schema.md",
+      "audience": [
+        "developer",
+        "agent"
+      ],
+      "evidence_status": "observed_snapshot",
+      "purpose": "Поля, типы, связи и ограничения"
+    },
+    {
+      "id": "operations",
+      "path": "docs/operations.md",
+      "audience": [
+        "operator",
+        "agent"
+      ],
+      "evidence_status": "mixed",
+      "purpose": "Диагностика, повторы и обслуживание"
+    },
+    {
+      "id": "testing",
+      "path": "docs/testing.md",
+      "audience": [
+        "developer",
+        "repository_agent"
+      ],
+      "evidence_status": "mixed",
+      "purpose": "Выполненные проверки и будущие сценарии"
+    },
+    {
+      "id": "release_readiness",
+      "path": "docs/release.md",
+      "audience": [
+        "developer",
+        "agent"
+      ],
+      "evidence_status": "planned",
+      "purpose": "Работы до воспроизводимого открытого выпуска"
+    },
+    {
+      "id": "manifest",
+      "path": "docs/manifest.json",
+      "audience": [
+        "agent",
+        "integrator"
+      ],
+      "evidence_status": "navigation",
+      "purpose": "Документы и маршруты задач"
+    },
+    {
+      "id": "functions_json",
+      "path": "docs/reference/functions.json",
+      "audience": [
+        "agent",
+        "integrator"
+      ],
+      "evidence_status": "observed_snapshot",
+      "purpose": "Сигнатуры и ссылки для программной обработки"
+    },
+    {
+      "id": "schema_json",
+      "path": "docs/reference/schema.json",
+      "audience": [
+        "agent",
+        "integrator"
+      ],
+      "evidence_status": "observed_snapshot",
+      "purpose": "Поля и связи для программной обработки"
+    }
+  ],
+  "tasks": [
+    {
+      "intent": "project_overview",
+      "effect": "none",
+      "read": [
+        "docs/overview.md",
+        "README.md"
+      ]
+    },
+    {
+      "intent": "setup",
+      "effect": "planning_only",
+      "read": [
+        "docs/start.md",
+        "docs/release.md"
+      ],
+      "ready_to_run": false
+    },
+    {
+      "intent": "status",
+      "effect": "read",
+      "read": [
+        "docs/agents.md#status",
+        "docs/api.md#status-read"
+      ],
+      "function_id": "fn-get-status-until-next-income-8d89e6dc13"
+    },
+    {
+      "intent": "record_transaction",
+      "effect": "write",
+      "read": [
+        "docs/agents.md#record",
+        "docs/api.md#transaction-write"
+      ],
+      "function_id": "fn-finance-command-4c19d2b97f",
+      "command": "record_transaction"
+    },
+    {
+      "intent": "fund_event",
+      "effect": "write",
+      "read": [
+        "docs/agents.md#payment",
+        "docs/api.md#event-write"
+      ],
+      "function_id": "fn-finance-command-4c19d2b97f",
+      "command": "fund_event"
+    },
+    {
+      "intent": "execute_event",
+      "effect": "write",
+      "read": [
+        "docs/agents.md#payment",
+        "docs/api.md#event-write"
+      ],
+      "function_id": "fn-finance-command-4c19d2b97f",
+      "command": "execute_event"
+    },
+    {
+      "intent": "correct_transaction",
+      "effect": "write",
+      "read": [
+        "docs/agents.md#correct",
+        "docs/api.md#transaction-correct"
+      ],
+      "function_id": "fn-correct-finance-transaction-9009324eb2"
+    },
+    {
+      "intent": "payments",
+      "effect": "read",
+      "read": [
+        "docs/agents.md#payments",
+        "docs/api.md#payments-read"
+      ],
+      "function_id": "fn-get-cash-flow-event-state-as-of-e6aad22f44",
+      "query_composition_required": true
+    },
+    {
+      "intent": "budget_categories",
+      "effect": "read",
+      "read": [
+        "docs/agents.md#budget",
+        "docs/api.md#categories-read"
+      ],
+      "function_id": "fn-get-expense-category-lines-25428b0831",
+      "query_composition_required": true
+    },
+    {
+      "intent": "forecast",
+      "effect": "read",
+      "read": [
+        "docs/agents.md#forecast",
+        "docs/api.md#forecast-read"
+      ],
+      "function_id": "fn-get-financial-position-at-9f14d7d31e"
+    },
+    {
+      "intent": "integrity",
+      "effect": "read",
+      "read": [
+        "docs/agents.md#integrity",
+        "docs/api.md#integrity-read",
+        "docs/operations.md"
+      ],
+      "function_id": "fn-finance-integrity-check-b9b78cef5e"
+    },
+    {
+      "intent": "repository_edit",
+      "effect": "repository_files",
+      "read": [
+        "AGENTS.md",
+        "docs/maintenance.md"
+      ]
+    },
+    {
+      "intent": "integration",
+      "effect": "planning_only",
+      "read": [
+        "docs/architecture.md",
+        "docs/api.md",
+        "docs/testing.md"
+      ]
+    }
+  ],
+  "catalogs": {
+    "functions": "docs/reference/functions.json",
+    "schema": "docs/reference/schema.json"
+  },
+  "validation_command": "python3 scripts/check_docs.py"
+}

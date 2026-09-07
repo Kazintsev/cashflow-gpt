@@ -1,0 +1,1649 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-09-07",
+  "evidence_status": "observed_snapshot",
+  "runtime_source_in_repo": false,
+  "reference_base": "repository_root",
+  "execution_authorization": false,
+  "defaults_policy": "Only has_default is provided; exact DEFAULT values and function bodies are not included.",
+  "functions": [
+    {
+      "signature_id": "fn-apply-event-payment-budget-semantics-12658278ea",
+      "name": "apply_event_payment_budget_semantics",
+      "qualified_name": "public.apply_event_payment_budget_semantics",
+      "identity_arguments": "",
+      "signature": "public.apply_event_payment_budget_semantics()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-apply-event-payment-budget-semantics-12658278ea"
+    },
+    {
+      "signature_id": "fn-assert-free-cash-invariant-a2c2858b89",
+      "name": "assert_free_cash_invariant",
+      "qualified_name": "public.assert_free_cash_invariant",
+      "identity_arguments": "p_before numeric, p_after numeric, p_context text, p_tolerance numeric",
+      "signature": "public.assert_free_cash_invariant(p_before numeric, p_after numeric, p_context text, p_tolerance numeric)",
+      "parameters": [
+        {
+          "name": "p_before",
+          "sql_type": "numeric",
+          "has_default": false
+        },
+        {
+          "name": "p_after",
+          "sql_type": "numeric",
+          "has_default": false
+        },
+        {
+          "name": "p_context",
+          "sql_type": "text",
+          "has_default": false
+        },
+        {
+          "name": "p_tolerance",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "void",
+      "declared_volatility": "IMMUTABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-assert-free-cash-invariant-a2c2858b89"
+    },
+    {
+      "signature_id": "fn-business-day-on-or-before-cebbf35516",
+      "name": "business_day_on_or_before",
+      "qualified_name": "public.business_day_on_or_before",
+      "identity_arguments": "d date",
+      "signature": "public.business_day_on_or_before(d date)",
+      "parameters": [
+        {
+          "name": "d",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "date",
+      "declared_volatility": "IMMUTABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-business-day-on-or-before-cebbf35516"
+    },
+    {
+      "signature_id": "fn-clear-credit-card-minimum-allocations-a521adf21e",
+      "name": "clear_credit_card_minimum_allocations",
+      "qualified_name": "public.clear_credit_card_minimum_allocations",
+      "identity_arguments": "",
+      "signature": "public.clear_credit_card_minimum_allocations()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-clear-credit-card-minimum-allocations-a521adf21e"
+    },
+    {
+      "signature_id": "fn-clear-payment-buffer-funding-allocations-765bde8b76",
+      "name": "clear_payment_buffer_funding_allocations",
+      "qualified_name": "public.clear_payment_buffer_funding_allocations",
+      "identity_arguments": "",
+      "signature": "public.clear_payment_buffer_funding_allocations()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-clear-payment-buffer-funding-allocations-765bde8b76"
+    },
+    {
+      "signature_id": "fn-complete-income-event-935dedcc55",
+      "name": "complete_income_event",
+      "qualified_name": "public.complete_income_event",
+      "identity_arguments": "p_event_id bigint, p_completed_at timestamp with time zone",
+      "signature": "public.complete_income_event(p_event_id bigint, p_completed_at timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_event_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_completed_at",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "void",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-complete-income-event-935dedcc55"
+    },
+    {
+      "signature_id": "fn-correct-finance-transaction-9009324eb2",
+      "name": "correct_finance_transaction",
+      "qualified_name": "public.correct_finance_transaction",
+      "identity_arguments": "p_transaction_id bigint, p_patch jsonb, p_category_allocations jsonb, p_debt_details jsonb, p_event_allocations jsonb, p_receipt_patch jsonb",
+      "signature": "public.correct_finance_transaction(p_transaction_id bigint, p_patch jsonb, p_category_allocations jsonb, p_debt_details jsonb, p_event_allocations jsonb, p_receipt_patch jsonb)",
+      "parameters": [
+        {
+          "name": "p_transaction_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_patch",
+          "sql_type": "jsonb",
+          "has_default": false
+        },
+        {
+          "name": "p_category_allocations",
+          "sql_type": "jsonb",
+          "has_default": true
+        },
+        {
+          "name": "p_debt_details",
+          "sql_type": "jsonb",
+          "has_default": true
+        },
+        {
+          "name": "p_event_allocations",
+          "sql_type": "jsonb",
+          "has_default": true
+        },
+        {
+          "name": "p_receipt_patch",
+          "sql_type": "jsonb",
+          "has_default": true
+        }
+      ],
+      "return_type": "transactions",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "application_entrypoint",
+      "documented_effect": "write",
+      "doc_ref": "docs/functions.md#fn-correct-finance-transaction-9009324eb2"
+    },
+    {
+      "signature_id": "fn-execute-event-5dc04a140f",
+      "name": "execute_event",
+      "qualified_name": "public.execute_event",
+      "identity_arguments": "p_event_id bigint, p_from_account_id bigint, p_occurred_at timestamp with time zone, p_actual_amount numeric, p_principal_amount numeric, p_interest_amount numeric, p_fee_amount numeric",
+      "signature": "public.execute_event(p_event_id bigint, p_from_account_id bigint, p_occurred_at timestamp with time zone, p_actual_amount numeric, p_principal_amount numeric, p_interest_amount numeric, p_fee_amount numeric)",
+      "parameters": [
+        {
+          "name": "p_event_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_from_account_id",
+          "sql_type": "bigint",
+          "has_default": true
+        },
+        {
+          "name": "p_occurred_at",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        },
+        {
+          "name": "p_actual_amount",
+          "sql_type": "numeric",
+          "has_default": true
+        },
+        {
+          "name": "p_principal_amount",
+          "sql_type": "numeric",
+          "has_default": true
+        },
+        {
+          "name": "p_interest_amount",
+          "sql_type": "numeric",
+          "has_default": true
+        },
+        {
+          "name": "p_fee_amount",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "bigint",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-execute-event-5dc04a140f"
+    },
+    {
+      "signature_id": "fn-execute-installment-payment-84817fc831",
+      "name": "execute_installment_payment",
+      "qualified_name": "public.execute_installment_payment",
+      "identity_arguments": "p_event_id bigint, p_occurred_at timestamp with time zone, p_actual_amount numeric, p_principal_amount numeric, p_interest_amount numeric, p_fee_amount numeric",
+      "signature": "public.execute_installment_payment(p_event_id bigint, p_occurred_at timestamp with time zone, p_actual_amount numeric, p_principal_amount numeric, p_interest_amount numeric, p_fee_amount numeric)",
+      "parameters": [
+        {
+          "name": "p_event_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_occurred_at",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        },
+        {
+          "name": "p_actual_amount",
+          "sql_type": "numeric",
+          "has_default": true
+        },
+        {
+          "name": "p_principal_amount",
+          "sql_type": "numeric",
+          "has_default": true
+        },
+        {
+          "name": "p_interest_amount",
+          "sql_type": "numeric",
+          "has_default": true
+        },
+        {
+          "name": "p_fee_amount",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "bigint",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-execute-installment-payment-84817fc831"
+    },
+    {
+      "signature_id": "fn-finance-business-date-425398addf",
+      "name": "finance_business_date",
+      "qualified_name": "public.finance_business_date",
+      "identity_arguments": "p_ts timestamp with time zone",
+      "signature": "public.finance_business_date(p_ts timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_ts",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "date",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-finance-business-date-425398addf"
+    },
+    {
+      "signature_id": "fn-finance-command-4c19d2b97f",
+      "name": "finance_command",
+      "qualified_name": "public.finance_command",
+      "identity_arguments": "p_request_key text, p_command text, p_args jsonb",
+      "signature": "public.finance_command(p_request_key text, p_command text, p_args jsonb)",
+      "parameters": [
+        {
+          "name": "p_request_key",
+          "sql_type": "text",
+          "has_default": false
+        },
+        {
+          "name": "p_command",
+          "sql_type": "text",
+          "has_default": false
+        },
+        {
+          "name": "p_args",
+          "sql_type": "jsonb",
+          "has_default": false
+        }
+      ],
+      "return_type": "bigint",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "application_entrypoint",
+      "documented_effect": "write",
+      "doc_ref": "docs/functions.md#fn-finance-command-4c19d2b97f",
+      "commands": [
+        "record_transaction",
+        "fund_event",
+        "execute_event"
+      ]
+    },
+    {
+      "signature_id": "fn-finance-data-issues-5926da9222",
+      "name": "finance_data_issues",
+      "qualified_name": "public.finance_data_issues",
+      "identity_arguments": "",
+      "signature": "public.finance_data_issues()",
+      "parameters": [],
+      "return_type": "TABLE(code text, entity_id bigint, details jsonb)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "application_entrypoint",
+      "documented_effect": "read",
+      "doc_ref": "docs/functions.md#fn-finance-data-issues-5926da9222"
+    },
+    {
+      "signature_id": "fn-finance-day-end-c0ec7af4f3",
+      "name": "finance_day_end",
+      "qualified_name": "public.finance_day_end",
+      "identity_arguments": "p_date date",
+      "signature": "public.finance_day_end(p_date date)",
+      "parameters": [
+        {
+          "name": "p_date",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "timestamp with time zone",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-finance-day-end-c0ec7af4f3"
+    },
+    {
+      "signature_id": "fn-finance-day-start-04625df52f",
+      "name": "finance_day_start",
+      "qualified_name": "public.finance_day_start",
+      "identity_arguments": "p_date date",
+      "signature": "public.finance_day_start(p_date date)",
+      "parameters": [
+        {
+          "name": "p_date",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "timestamp with time zone",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-finance-day-start-04625df52f"
+    },
+    {
+      "signature_id": "fn-finance-integrity-check-b9b78cef5e",
+      "name": "finance_integrity_check",
+      "qualified_name": "public.finance_integrity_check",
+      "identity_arguments": "p_as_of timestamp with time zone",
+      "signature": "public.finance_integrity_check(p_as_of timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(severity text, code text, entity_type text, entity_id bigint, message text, details jsonb)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "application_entrypoint",
+      "documented_effect": "read",
+      "doc_ref": "docs/functions.md#fn-finance-integrity-check-b9b78cef5e"
+    },
+    {
+      "signature_id": "fn-finance-setting-numeric-7c24e5a300",
+      "name": "finance_setting_numeric",
+      "qualified_name": "public.finance_setting_numeric",
+      "identity_arguments": "p_key text, p_default numeric",
+      "signature": "public.finance_setting_numeric(p_key text, p_default numeric)",
+      "parameters": [
+        {
+          "name": "p_key",
+          "sql_type": "text",
+          "has_default": false
+        },
+        {
+          "name": "p_default",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "numeric",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-finance-setting-numeric-7c24e5a300"
+    },
+    {
+      "signature_id": "fn-finance-setting-text-5e1df66f14",
+      "name": "finance_setting_text",
+      "qualified_name": "public.finance_setting_text",
+      "identity_arguments": "p_key text, p_default text",
+      "signature": "public.finance_setting_text(p_key text, p_default text)",
+      "parameters": [
+        {
+          "name": "p_key",
+          "sql_type": "text",
+          "has_default": false
+        },
+        {
+          "name": "p_default",
+          "sql_type": "text",
+          "has_default": true
+        }
+      ],
+      "return_type": "text",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-finance-setting-text-5e1df66f14"
+    },
+    {
+      "signature_id": "fn-finance-validate-data-deferred-9903e2cc8c",
+      "name": "finance_validate_data_deferred",
+      "qualified_name": "public.finance_validate_data_deferred",
+      "identity_arguments": "",
+      "signature": "public.finance_validate_data_deferred()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-finance-validate-data-deferred-9903e2cc8c"
+    },
+    {
+      "signature_id": "fn-finance-write-lock-493e7475cb",
+      "name": "finance_write_lock",
+      "qualified_name": "public.finance_write_lock",
+      "identity_arguments": "",
+      "signature": "public.finance_write_lock()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-finance-write-lock-493e7475cb"
+    },
+    {
+      "signature_id": "fn-forecast-free-cash-888649f7ff",
+      "name": "forecast_free_cash",
+      "qualified_name": "public.forecast_free_cash",
+      "identity_arguments": "p_target_date date, p_weekly_living numeric, p_reserve numeric",
+      "signature": "public.forecast_free_cash(p_target_date date, p_weekly_living numeric, p_reserve numeric)",
+      "parameters": [
+        {
+          "name": "p_target_date",
+          "sql_type": "date",
+          "has_default": false
+        },
+        {
+          "name": "p_weekly_living",
+          "sql_type": "numeric",
+          "has_default": true
+        },
+        {
+          "name": "p_reserve",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(current_free_cash numeric, planned_income numeric, secured_outflows numeric, unsecure_outflows numeric, remaining_living_budget numeric, living_budget_overrun numeric, future_living_budget numeric, projected_free_cash numeric, safe_extra_payment numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-forecast-free-cash-888649f7ff"
+    },
+    {
+      "signature_id": "fn-fund-event-e24cde05db",
+      "name": "fund_event",
+      "qualified_name": "public.fund_event",
+      "identity_arguments": "p_event_id bigint, p_from_account_id bigint, p_amount numeric, p_occurred_at timestamp with time zone, p_description text",
+      "signature": "public.fund_event(p_event_id bigint, p_from_account_id bigint, p_amount numeric, p_occurred_at timestamp with time zone, p_description text)",
+      "parameters": [
+        {
+          "name": "p_event_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_from_account_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_amount",
+          "sql_type": "numeric",
+          "has_default": true
+        },
+        {
+          "name": "p_occurred_at",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        },
+        {
+          "name": "p_description",
+          "sql_type": "text",
+          "has_default": true
+        }
+      ],
+      "return_type": "bigint",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-fund-event-e24cde05db"
+    },
+    {
+      "signature_id": "fn-generate-cash-flow-events-5188dc9aeb",
+      "name": "generate_cash_flow_events",
+      "qualified_name": "public.generate_cash_flow_events",
+      "identity_arguments": "from_date date, to_date date",
+      "signature": "public.generate_cash_flow_events(from_date date, to_date date)",
+      "parameters": [
+        {
+          "name": "from_date",
+          "sql_type": "date",
+          "has_default": false
+        },
+        {
+          "name": "to_date",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "void",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-generate-cash-flow-events-5188dc9aeb"
+    },
+    {
+      "signature_id": "fn-get-account-balance-329abeba8c",
+      "name": "get_account_balance",
+      "qualified_name": "public.get_account_balance",
+      "identity_arguments": "p_account_id bigint, p_as_of date",
+      "signature": "public.get_account_balance(p_account_id bigint, p_as_of date)",
+      "parameters": [
+        {
+          "name": "p_account_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_as_of",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "numeric",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-account-balance-329abeba8c"
+    },
+    {
+      "signature_id": "fn-get-account-balance-654dfdbb2e",
+      "name": "get_account_balance",
+      "qualified_name": "public.get_account_balance",
+      "identity_arguments": "p_account_id bigint, p_as_of timestamp with time zone",
+      "signature": "public.get_account_balance(p_account_id bigint, p_as_of timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_account_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "numeric",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-account-balance-654dfdbb2e"
+    },
+    {
+      "signature_id": "fn-get-actual-cash-4d54a90000",
+      "name": "get_actual_cash",
+      "qualified_name": "public.get_actual_cash",
+      "identity_arguments": "p_as_of date",
+      "signature": "public.get_actual_cash(p_as_of date)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "numeric",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-actual-cash-4d54a90000"
+    },
+    {
+      "signature_id": "fn-get-actual-cash-f161cecaef",
+      "name": "get_actual_cash",
+      "qualified_name": "public.get_actual_cash",
+      "identity_arguments": "p_as_of timestamp with time zone",
+      "signature": "public.get_actual_cash(p_as_of timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "numeric",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-actual-cash-f161cecaef"
+    },
+    {
+      "signature_id": "fn-get-cash-flow-event-coverage-af94ef53c9",
+      "name": "get_cash_flow_event_coverage",
+      "qualified_name": "public.get_cash_flow_event_coverage",
+      "identity_arguments": "p_event_id bigint",
+      "signature": "public.get_cash_flow_event_coverage(p_event_id bigint)",
+      "parameters": [
+        {
+          "name": "p_event_id",
+          "sql_type": "bigint",
+          "has_default": false
+        }
+      ],
+      "return_type": "TABLE(planned_amount numeric, paid_amount numeric, funded_amount numeric, remaining_payment_amount numeric, remaining_funding_amount numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-cash-flow-event-coverage-af94ef53c9"
+    },
+    {
+      "signature_id": "fn-get-cash-flow-event-state-as-of-e6aad22f44",
+      "name": "get_cash_flow_event_state_as_of",
+      "qualified_name": "public.get_cash_flow_event_state_as_of",
+      "identity_arguments": "p_as_of timestamp with time zone",
+      "signature": "public.get_cash_flow_event_state_as_of(p_as_of timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(event_id bigint, event_date date, event_type text, amount numeric, description text, account_id bigint, liability_id bigint, status text, paid_amount numeric, funded_amount numeric, cash_committed_amount numeric, remaining_payment_amount numeric, cash_still_required numeric, derived_status text)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "application_entrypoint",
+      "documented_effect": "read",
+      "doc_ref": "docs/functions.md#fn-get-cash-flow-event-state-as-of-e6aad22f44"
+    },
+    {
+      "signature_id": "fn-get-credit-budget-position-a68ed80ef8",
+      "name": "get_credit_budget_position",
+      "qualified_name": "public.get_credit_budget_position",
+      "identity_arguments": "p_as_of timestamp with time zone",
+      "signature": "public.get_credit_budget_position(p_as_of timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(account_id bigint, account_name text, life_spend_total numeric, cash_repayments_total numeric, unsettled_budget_spend numeric, this_week_life_spend numeric, this_week_cash_repayments numeric, this_week_unsettled numeric, carryover_unsettled numeric, strategic_repayments numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-credit-budget-position-a68ed80ef8"
+    },
+    {
+      "signature_id": "fn-get-credit-cash-reserves-48133ca082",
+      "name": "get_credit_cash_reserves",
+      "qualified_name": "public.get_credit_cash_reserves",
+      "identity_arguments": "p_as_of timestamp with time zone, p_horizon_end date",
+      "signature": "public.get_credit_cash_reserves(p_as_of timestamp with time zone, p_horizon_end date)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": false
+        },
+        {
+          "name": "p_horizon_end",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "TABLE(account_id bigint, unpaid_life numeric, grace_outstanding numeric, scheduled_repayments numeric, additional_reserve numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-credit-cash-reserves-48133ca082"
+    },
+    {
+      "signature_id": "fn-get-expense-category-lines-25428b0831",
+      "name": "get_expense_category_lines",
+      "qualified_name": "public.get_expense_category_lines",
+      "identity_arguments": "p_start date, p_end date",
+      "signature": "public.get_expense_category_lines(p_start date, p_end date)",
+      "parameters": [
+        {
+          "name": "p_start",
+          "sql_type": "date",
+          "has_default": false
+        },
+        {
+          "name": "p_end",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "TABLE(transaction_id bigint, transaction_date date, description text, category_id bigint, category_name text, amount numeric, allocation_source text)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "application_entrypoint",
+      "documented_effect": "read",
+      "doc_ref": "docs/functions.md#fn-get-expense-category-lines-25428b0831"
+    },
+    {
+      "signature_id": "fn-get-financial-position-d043b30aa9",
+      "name": "get_financial_position",
+      "qualified_name": "public.get_financial_position",
+      "identity_arguments": "p_as_of date, p_default_weekly_budget numeric",
+      "signature": "public.get_financial_position(p_as_of date, p_default_weekly_budget numeric)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "date",
+          "has_default": false
+        },
+        {
+          "name": "p_default_weekly_budget",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(as_of timestamp with time zone, actual_cash numeric, projected_cash numeric, current_week_budget numeric, remaining_living_budget numeric, living_budget_overrun numeric, active_purchase_reserve numeric, unsecured_obligations numeric, secured_obligations numeric, credit_expenses_over_budget numeric, free_cash numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-financial-position-d043b30aa9"
+    },
+    {
+      "signature_id": "fn-get-financial-position-6ee5ec6561",
+      "name": "get_financial_position",
+      "qualified_name": "public.get_financial_position",
+      "identity_arguments": "p_as_of timestamp with time zone, p_default_weekly_budget numeric",
+      "signature": "public.get_financial_position(p_as_of timestamp with time zone, p_default_weekly_budget numeric)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": false
+        },
+        {
+          "name": "p_default_weekly_budget",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(as_of timestamp with time zone, actual_cash numeric, projected_cash numeric, current_week_budget numeric, remaining_living_budget numeric, living_budget_overrun numeric, active_purchase_reserve numeric, unsecured_obligations numeric, secured_obligations numeric, credit_expenses_over_budget numeric, free_cash numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-financial-position-6ee5ec6561"
+    },
+    {
+      "signature_id": "fn-get-financial-position-at-9f14d7d31e",
+      "name": "get_financial_position_at",
+      "qualified_name": "public.get_financial_position_at",
+      "identity_arguments": "p_as_of date, p_cutoff timestamp with time zone, p_default_weekly_budget numeric",
+      "signature": "public.get_financial_position_at(p_as_of date, p_cutoff timestamp with time zone, p_default_weekly_budget numeric)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "date",
+          "has_default": false
+        },
+        {
+          "name": "p_cutoff",
+          "sql_type": "timestamp with time zone",
+          "has_default": false
+        },
+        {
+          "name": "p_default_weekly_budget",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(as_of date, actual_cash numeric, expected_income numeric, required_cash_flow_outflows numeric, secured_future_outflows numeric, projected_cash numeric, current_week_budget numeric, current_week_spend numeric, remaining_living_budget numeric, future_living_budget numeric, credit_budget_reserve numeric, credit_budget_additional_reserve numeric, planned_purchase_reserve numeric, free_cash numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "application_entrypoint",
+      "documented_effect": "read",
+      "doc_ref": "docs/functions.md#fn-get-financial-position-at-9f14d7d31e"
+    },
+    {
+      "signature_id": "fn-get-financial-position-v2-588bed1dca",
+      "name": "get_financial_position_v2",
+      "qualified_name": "public.get_financial_position_v2",
+      "identity_arguments": "p_as_of date, p_default_weekly_budget numeric",
+      "signature": "public.get_financial_position_v2(p_as_of date, p_default_weekly_budget numeric)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "date",
+          "has_default": false
+        },
+        {
+          "name": "p_default_weekly_budget",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(as_of date, actual_cash numeric, expected_income numeric, required_cash_flow_outflows numeric, secured_future_outflows numeric, projected_cash numeric, current_week_budget numeric, current_week_spend numeric, remaining_living_budget numeric, future_living_budget numeric, credit_budget_reserve numeric, credit_budget_additional_reserve numeric, planned_purchase_reserve numeric, free_cash numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-financial-position-v2-588bed1dca"
+    },
+    {
+      "signature_id": "fn-get-free-cash-5de924fe5e",
+      "name": "get_free_cash",
+      "qualified_name": "public.get_free_cash",
+      "identity_arguments": "p_as_of date",
+      "signature": "public.get_free_cash(p_as_of date)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "numeric",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-free-cash-5de924fe5e"
+    },
+    {
+      "signature_id": "fn-get-free-cash-5ed941717d",
+      "name": "get_free_cash",
+      "qualified_name": "public.get_free_cash",
+      "identity_arguments": "p_as_of timestamp with time zone",
+      "signature": "public.get_free_cash(p_as_of timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "numeric",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-free-cash-5ed941717d"
+    },
+    {
+      "signature_id": "fn-get-income-event-state-as-of-e07cdd98ff",
+      "name": "get_income_event_state_as_of",
+      "qualified_name": "public.get_income_event_state_as_of",
+      "identity_arguments": "p_as_of timestamp with time zone",
+      "signature": "public.get_income_event_state_as_of(p_as_of timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(event_id bigint, received_amount numeric, remaining_amount numeric, derived_status text, last_received_at timestamp with time zone)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-income-event-state-as-of-e07cdd98ff"
+    },
+    {
+      "signature_id": "fn-get-liability-balance-4540d0944f",
+      "name": "get_liability_balance",
+      "qualified_name": "public.get_liability_balance",
+      "identity_arguments": "p_liability_id bigint, p_as_of date",
+      "signature": "public.get_liability_balance(p_liability_id bigint, p_as_of date)",
+      "parameters": [
+        {
+          "name": "p_liability_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_as_of",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "TABLE(principal_balance numeric, accrued_interest numeric, fees_due numeric, total_debt numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-liability-balance-4540d0944f"
+    },
+    {
+      "signature_id": "fn-get-liability-balance-8d1c73d395",
+      "name": "get_liability_balance",
+      "qualified_name": "public.get_liability_balance",
+      "identity_arguments": "p_liability_id bigint, p_as_of timestamp with time zone",
+      "signature": "public.get_liability_balance(p_liability_id bigint, p_as_of timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_liability_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(principal_balance numeric, accrued_interest numeric, fees_due numeric, total_debt numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-liability-balance-8d1c73d395"
+    },
+    {
+      "signature_id": "fn-get-liability-balance-details-0017571ee7",
+      "name": "get_liability_balance_details",
+      "qualified_name": "public.get_liability_balance_details",
+      "identity_arguments": "p_liability_id bigint, p_as_of timestamp with time zone",
+      "signature": "public.get_liability_balance_details(p_liability_id bigint, p_as_of timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_liability_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(total_debt numeric, principal_balance numeric, accrued_interest numeric, fees_due numeric, components_known boolean, components_as_of timestamp with time zone)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-liability-balance-details-0017571ee7"
+    },
+    {
+      "signature_id": "fn-get-liquidity-until-next-income-5a43c09635",
+      "name": "get_liquidity_until_next_income",
+      "qualified_name": "public.get_liquidity_until_next_income",
+      "identity_arguments": "p_as_of timestamp with time zone, p_default_weekly_budget numeric",
+      "signature": "public.get_liquidity_until_next_income(p_as_of timestamp with time zone, p_default_weekly_budget numeric)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        },
+        {
+          "name": "p_default_weekly_budget",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(as_of timestamp with time zone, business_date date, next_income_date date, next_income_description text, next_income_amount numeric, actual_cash numeric, required_outflows_before_income numeric, remaining_living_budget numeric, future_living_budget numeric, planned_purchase_reserve numeric, free_cash_until_next_income numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-liquidity-until-next-income-5a43c09635"
+    },
+    {
+      "signature_id": "fn-get-living-budget-reserve-e27d063804",
+      "name": "get_living_budget_reserve",
+      "qualified_name": "public.get_living_budget_reserve",
+      "identity_arguments": "p_week_start date, p_as_of timestamp with time zone, p_default_budget numeric",
+      "signature": "public.get_living_budget_reserve(p_week_start date, p_as_of timestamp with time zone, p_default_budget numeric)",
+      "parameters": [
+        {
+          "name": "p_week_start",
+          "sql_type": "date",
+          "has_default": false
+        },
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": false
+        },
+        {
+          "name": "p_default_budget",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(budget_amount numeric, spent_amount numeric, earmarked_amount numeric, remaining_reserve numeric, overrun numeric)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-living-budget-reserve-e27d063804"
+    },
+    {
+      "signature_id": "fn-get-obligations-until-next-income-67aba6d215",
+      "name": "get_obligations_until_next_income",
+      "qualified_name": "public.get_obligations_until_next_income",
+      "identity_arguments": "p_as_of timestamp with time zone",
+      "signature": "public.get_obligations_until_next_income(p_as_of timestamp with time zone)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(next_income_date date, event_id bigint, event_date date, description text, amount numeric, remaining_payment_amount numeric, cash_still_required numeric, derived_status text)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-obligations-until-next-income-67aba6d215"
+    },
+    {
+      "signature_id": "fn-get-settlement-attention-8b310d39ab",
+      "name": "get_settlement_attention",
+      "qualified_name": "public.get_settlement_attention",
+      "identity_arguments": "p_as_of date",
+      "signature": "public.get_settlement_attention(p_as_of date)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "date",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(event_id bigint, event_date date, description text, amount numeric, paid_amount numeric, funded_amount numeric, cash_still_required numeric, remaining_payment_amount numeric, derived_status text, timing_status text, attention_status text)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-get-settlement-attention-8b310d39ab"
+    },
+    {
+      "signature_id": "fn-get-status-until-next-income-8d89e6dc13",
+      "name": "get_status_until_next_income",
+      "qualified_name": "public.get_status_until_next_income",
+      "identity_arguments": "p_as_of timestamp with time zone, p_default_weekly_budget numeric",
+      "signature": "public.get_status_until_next_income(p_as_of timestamp with time zone, p_default_weekly_budget numeric)",
+      "parameters": [
+        {
+          "name": "p_as_of",
+          "sql_type": "timestamp with time zone",
+          "has_default": true
+        },
+        {
+          "name": "p_default_weekly_budget",
+          "sql_type": "numeric",
+          "has_default": true
+        }
+      ],
+      "return_type": "jsonb",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "application_entrypoint",
+      "documented_effect": "read",
+      "doc_ref": "docs/functions.md#fn-get-status-until-next-income-8d89e6dc13"
+    },
+    {
+      "signature_id": "fn-get-upcoming-payments-cf8a6c80ca",
+      "name": "get_upcoming_payments",
+      "qualified_name": "public.get_upcoming_payments",
+      "identity_arguments": "p_days integer",
+      "signature": "public.get_upcoming_payments(p_days integer)",
+      "parameters": [
+        {
+          "name": "p_days",
+          "sql_type": "integer",
+          "has_default": true
+        }
+      ],
+      "return_type": "TABLE(event_id bigint, event_date date, description text, amount numeric, secured boolean, security_transaction_id bigint, security_note text)",
+      "declared_volatility": "STABLE",
+      "security": "INVOKER",
+      "usage_class": "application_entrypoint",
+      "documented_effect": "read",
+      "doc_ref": "docs/functions.md#fn-get-upcoming-payments-cf8a6c80ca"
+    },
+    {
+      "signature_id": "fn-link-funding-183bf77d8a",
+      "name": "link_funding",
+      "qualified_name": "public.link_funding",
+      "identity_arguments": "p_event_id bigint, p_transaction_id bigint, p_amount numeric",
+      "signature": "public.link_funding(p_event_id bigint, p_transaction_id bigint, p_amount numeric)",
+      "parameters": [
+        {
+          "name": "p_event_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_transaction_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_amount",
+          "sql_type": "numeric",
+          "has_default": false
+        }
+      ],
+      "return_type": "void",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-link-funding-183bf77d8a"
+    },
+    {
+      "signature_id": "fn-link-funding-baaab7d6e0",
+      "name": "link_funding",
+      "qualified_name": "public.link_funding",
+      "identity_arguments": "p_event_id bigint, p_transaction_id bigint, p_amount numeric, p_relation_type text",
+      "signature": "public.link_funding(p_event_id bigint, p_transaction_id bigint, p_amount numeric, p_relation_type text)",
+      "parameters": [
+        {
+          "name": "p_event_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_transaction_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_amount",
+          "sql_type": "numeric",
+          "has_default": false
+        },
+        {
+          "name": "p_relation_type",
+          "sql_type": "text",
+          "has_default": false
+        }
+      ],
+      "return_type": "void",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-link-funding-baaab7d6e0"
+    },
+    {
+      "signature_id": "fn-normalize-credit-card-payment-semantics-4d193efffb",
+      "name": "normalize_credit_card_payment_semantics",
+      "qualified_name": "public.normalize_credit_card_payment_semantics",
+      "identity_arguments": "",
+      "signature": "public.normalize_credit_card_payment_semantics()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-normalize-credit-card-payment-semantics-4d193efffb"
+    },
+    {
+      "signature_id": "fn-normalize-payment-buffer-funding-semantics-16ab0a0576",
+      "name": "normalize_payment_buffer_funding_semantics",
+      "qualified_name": "public.normalize_payment_buffer_funding_semantics",
+      "identity_arguments": "",
+      "signature": "public.normalize_payment_buffer_funding_semantics()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-normalize-payment-buffer-funding-semantics-16ab0a0576"
+    },
+    {
+      "signature_id": "fn-normalize-transaction-budget-effect-9e6add9034",
+      "name": "normalize_transaction_budget_effect",
+      "qualified_name": "public.normalize_transaction_budget_effect",
+      "identity_arguments": "",
+      "signature": "public.normalize_transaction_budget_effect()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-normalize-transaction-budget-effect-9e6add9034"
+    },
+    {
+      "signature_id": "fn-rebuild-debt-payment-movements-cadf8bb48d",
+      "name": "rebuild_debt_payment_movements",
+      "qualified_name": "public.rebuild_debt_payment_movements",
+      "identity_arguments": "p_liability_id bigint",
+      "signature": "public.rebuild_debt_payment_movements(p_liability_id bigint)",
+      "parameters": [
+        {
+          "name": "p_liability_id",
+          "sql_type": "bigint",
+          "has_default": false
+        }
+      ],
+      "return_type": "void",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-rebuild-debt-payment-movements-cadf8bb48d"
+    },
+    {
+      "signature_id": "fn-reconcile-credit-card-minimum-ea61b8cf4b",
+      "name": "reconcile_credit_card_minimum",
+      "qualified_name": "public.reconcile_credit_card_minimum",
+      "identity_arguments": "p_event_id bigint",
+      "signature": "public.reconcile_credit_card_minimum(p_event_id bigint)",
+      "parameters": [
+        {
+          "name": "p_event_id",
+          "sql_type": "bigint",
+          "has_default": false
+        }
+      ],
+      "return_type": "void",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-reconcile-credit-card-minimum-ea61b8cf4b"
+    },
+    {
+      "signature_id": "fn-reconcile-credit-card-minimum-from-old-transaction-4945a36f7d",
+      "name": "reconcile_credit_card_minimum_from_old_transaction",
+      "qualified_name": "public.reconcile_credit_card_minimum_from_old_transaction",
+      "identity_arguments": "",
+      "signature": "public.reconcile_credit_card_minimum_from_old_transaction()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-reconcile-credit-card-minimum-from-old-transaction-4945a36f7d"
+    },
+    {
+      "signature_id": "fn-reconcile-credit-card-minimum-from-transaction-189bfba7de",
+      "name": "reconcile_credit_card_minimum_from_transaction",
+      "qualified_name": "public.reconcile_credit_card_minimum_from_transaction",
+      "identity_arguments": "",
+      "signature": "public.reconcile_credit_card_minimum_from_transaction()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-reconcile-credit-card-minimum-from-transaction-189bfba7de"
+    },
+    {
+      "signature_id": "fn-reconcile-payment-buffer-funding-from-transaction-2d2145772a",
+      "name": "reconcile_payment_buffer_funding_from_transaction",
+      "qualified_name": "public.reconcile_payment_buffer_funding_from_transaction",
+      "identity_arguments": "",
+      "signature": "public.reconcile_payment_buffer_funding_from_transaction()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-reconcile-payment-buffer-funding-from-transaction-2d2145772a"
+    },
+    {
+      "signature_id": "fn-refresh-cash-flow-24981a6d0a",
+      "name": "refresh_cash_flow",
+      "qualified_name": "public.refresh_cash_flow",
+      "identity_arguments": "",
+      "signature": "public.refresh_cash_flow()",
+      "parameters": [],
+      "return_type": "void",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-24981a6d0a"
+    },
+    {
+      "signature_id": "fn-refresh-cash-flow-event-from-allocation-176c3ff941",
+      "name": "refresh_cash_flow_event_from_allocation",
+      "qualified_name": "public.refresh_cash_flow_event_from_allocation",
+      "identity_arguments": "",
+      "signature": "public.refresh_cash_flow_event_from_allocation()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-event-from-allocation-176c3ff941"
+    },
+    {
+      "signature_id": "fn-refresh-cash-flow-event-status-7a84b59058",
+      "name": "refresh_cash_flow_event_status",
+      "qualified_name": "public.refresh_cash_flow_event_status",
+      "identity_arguments": "p_event_id bigint",
+      "signature": "public.refresh_cash_flow_event_status(p_event_id bigint)",
+      "parameters": [
+        {
+          "name": "p_event_id",
+          "sql_type": "bigint",
+          "has_default": false
+        }
+      ],
+      "return_type": "cash_flow_events",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-event-status-7a84b59058"
+    },
+    {
+      "signature_id": "fn-refresh-cash-flow-security-bef82af046",
+      "name": "refresh_cash_flow_security",
+      "qualified_name": "public.refresh_cash_flow_security",
+      "identity_arguments": "p_start date, p_end date",
+      "signature": "public.refresh_cash_flow_security(p_start date, p_end date)",
+      "parameters": [
+        {
+          "name": "p_start",
+          "sql_type": "date",
+          "has_default": false
+        },
+        {
+          "name": "p_end",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "integer",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-security-bef82af046"
+    },
+    {
+      "signature_id": "fn-refresh-event-security-cb28073649",
+      "name": "refresh_event_security",
+      "qualified_name": "public.refresh_event_security",
+      "identity_arguments": "",
+      "signature": "public.refresh_event_security()",
+      "parameters": [],
+      "return_type": "void",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-refresh-event-security-cb28073649"
+    },
+    {
+      "signature_id": "fn-refresh-snapshot-dependents-e774891266",
+      "name": "refresh_snapshot_dependents",
+      "qualified_name": "public.refresh_snapshot_dependents",
+      "identity_arguments": "",
+      "signature": "public.refresh_snapshot_dependents()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-refresh-snapshot-dependents-e774891266"
+    },
+    {
+      "signature_id": "fn-refresh-transaction-dependents-3513c6b0a2",
+      "name": "refresh_transaction_dependents",
+      "qualified_name": "public.refresh_transaction_dependents",
+      "identity_arguments": "",
+      "signature": "public.refresh_transaction_dependents()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-refresh-transaction-dependents-3513c6b0a2"
+    },
+    {
+      "signature_id": "fn-set-credit-card-minimum-613f21d5d7",
+      "name": "set_credit_card_minimum",
+      "qualified_name": "public.set_credit_card_minimum",
+      "identity_arguments": "p_liability_id bigint, p_amount numeric, p_due_date date",
+      "signature": "public.set_credit_card_minimum(p_liability_id bigint, p_amount numeric, p_due_date date)",
+      "parameters": [
+        {
+          "name": "p_liability_id",
+          "sql_type": "bigint",
+          "has_default": false
+        },
+        {
+          "name": "p_amount",
+          "sql_type": "numeric",
+          "has_default": false
+        },
+        {
+          "name": "p_due_date",
+          "sql_type": "date",
+          "has_default": false
+        }
+      ],
+      "return_type": "bigint",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-set-credit-card-minimum-613f21d5d7"
+    },
+    {
+      "signature_id": "fn-sync-cash-flow-sources-2ed9ef51b8",
+      "name": "sync_cash_flow_sources",
+      "qualified_name": "public.sync_cash_flow_sources",
+      "identity_arguments": "",
+      "signature": "public.sync_cash_flow_sources()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-sync-cash-flow-sources-2ed9ef51b8"
+    },
+    {
+      "signature_id": "fn-sync-debt-payment-movements-e4b6004cb5",
+      "name": "sync_debt_payment_movements",
+      "qualified_name": "public.sync_debt_payment_movements",
+      "identity_arguments": "",
+      "signature": "public.sync_debt_payment_movements()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-sync-debt-payment-movements-e4b6004cb5"
+    },
+    {
+      "signature_id": "fn-sync-liability-principal-cache-493f3f0c4a",
+      "name": "sync_liability_principal_cache",
+      "qualified_name": "public.sync_liability_principal_cache",
+      "identity_arguments": "p_liability_id bigint",
+      "signature": "public.sync_liability_principal_cache(p_liability_id bigint)",
+      "parameters": [
+        {
+          "name": "p_liability_id",
+          "sql_type": "bigint",
+          "has_default": false
+        }
+      ],
+      "return_type": "void",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "internal_review_required",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-sync-liability-principal-cache-493f3f0c4a"
+    },
+    {
+      "signature_id": "fn-sync-salary-transaction-to-event-845fb072a1",
+      "name": "sync_salary_transaction_to_event",
+      "qualified_name": "public.sync_salary_transaction_to_event",
+      "identity_arguments": "",
+      "signature": "public.sync_salary_transaction_to_event()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-sync-salary-transaction-to-event-845fb072a1"
+    },
+    {
+      "signature_id": "fn-trg-sync-liability-cache-from-movements-68942a8473",
+      "name": "trg_sync_liability_cache_from_movements",
+      "qualified_name": "public.trg_sync_liability_cache_from_movements",
+      "identity_arguments": "",
+      "signature": "public.trg_sync_liability_cache_from_movements()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-trg-sync-liability-cache-from-movements-68942a8473"
+    },
+    {
+      "signature_id": "fn-trg-sync-revolving-liability-cache-da3ad9487b",
+      "name": "trg_sync_revolving_liability_cache",
+      "qualified_name": "public.trg_sync_revolving_liability_cache",
+      "identity_arguments": "",
+      "signature": "public.trg_sync_revolving_liability_cache()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-trg-sync-revolving-liability-cache-da3ad9487b"
+    },
+    {
+      "signature_id": "fn-validate-cash-flow-allocation-7bc13b6030",
+      "name": "validate_cash_flow_allocation",
+      "qualified_name": "public.validate_cash_flow_allocation",
+      "identity_arguments": "",
+      "signature": "public.validate_cash_flow_allocation()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-validate-cash-flow-allocation-7bc13b6030"
+    },
+    {
+      "signature_id": "fn-validate-debt-payment-details-fc68f8438d",
+      "name": "validate_debt_payment_details",
+      "qualified_name": "public.validate_debt_payment_details",
+      "identity_arguments": "",
+      "signature": "public.validate_debt_payment_details()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-validate-debt-payment-details-fc68f8438d"
+    },
+    {
+      "signature_id": "fn-validate-grace-reserve-d63891a4f9",
+      "name": "validate_grace_reserve",
+      "qualified_name": "public.validate_grace_reserve",
+      "identity_arguments": "",
+      "signature": "public.validate_grace_reserve()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-validate-grace-reserve-d63891a4f9"
+    },
+    {
+      "signature_id": "fn-validate-grace-reserve-deferred-303d13b645",
+      "name": "validate_grace_reserve_deferred",
+      "qualified_name": "public.validate_grace_reserve_deferred",
+      "identity_arguments": "",
+      "signature": "public.validate_grace_reserve_deferred()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-validate-grace-reserve-deferred-303d13b645"
+    },
+    {
+      "signature_id": "fn-validate-transaction-category-allocations-deferred-2a4024676f",
+      "name": "validate_transaction_category_allocations_deferred",
+      "qualified_name": "public.validate_transaction_category_allocations_deferred",
+      "identity_arguments": "",
+      "signature": "public.validate_transaction_category_allocations_deferred()",
+      "parameters": [],
+      "return_type": "trigger",
+      "declared_volatility": "VOLATILE",
+      "security": "INVOKER",
+      "usage_class": "trigger_only",
+      "documented_effect": "unspecified",
+      "doc_ref": "docs/functions.md#fn-validate-transaction-category-allocations-deferred-2a4024676f"
+    }
+  ]
+}

@@ -1,5 +1,9 @@
 # Справочник базы данных
 
+> ID: schema_reference · Для: developer, agent · Тип: observed_snapshot
+>
+> Поля, типы, связи и ограничения. [Карта документации](index.md) · [Манифест](manifest.json)
+
 Сформирован из каталога PostgreSQL 7 сентября 2026 года. Описывает только схему `public`. Не содержит строк прикладных данных. Типы, NULL, identity и ограничения взяты из каталога. Индексы, не представленные ограничениями, последовательности и серверные настройки не включены: этот справочник не является полным DDL-экспортом.
 
 ## Таблицы
@@ -26,6 +30,8 @@
 | `transaction_category_allocations` | Разбиение одного расхода по категориям. |
 | `transactions` | Фактические перемещения денег с временной, бюджетной и зарплатной разметкой. |
 
+<a id="table-account-balance-snapshots"></a>
+
 ## account_balance_snapshots
 
 Контрольные остатки счетов на точный момент времени.
@@ -47,6 +53,8 @@
 | `account_balance_snapshots_account_time_key` | UNIQUE | `UNIQUE (account_id, balance_as_of)` |
 | `balance_snapshots_account_id_fkey` | FOREIGN KEY | `FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE` |
 | `balance_snapshots_pkey` | PRIMARY KEY | `PRIMARY KEY (id)` |
+
+<a id="table-accounts"></a>
 
 ## accounts
 
@@ -75,6 +83,8 @@
 | `accounts_rub` | CHECK | `CHECK ((currency = 'RUB'::text))` |
 | `finance_validate_data` | t | `TRIGGER DEFERRABLE INITIALLY DEFERRED` |
 
+<a id="view-balance-snapshots"></a>
+
 ## balance_snapshots
 
 Представление совместимости для снимков остатков счетов.
@@ -90,6 +100,8 @@
 | `notes` | `text` |
 | `created_at` | `timestamp with time zone` |
 | `balance_as_of` | `timestamp with time zone` |
+
+<a id="table-cash-flow-event-funding"></a>
 
 ## cash_flow_event_funding
 
@@ -118,6 +130,8 @@
 | `cash_flow_event_funding_transaction_id_fkey` | FOREIGN KEY | `FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE` |
 | `finance_validate_data` | t | `TRIGGER DEFERRABLE INITIALLY DEFERRED` |
 
+<a id="view-cash-flow-event-settlement-summary"></a>
+
 ## cash_flow_event_settlement_summary
 
 Представление расчётных сумм исполнения и обеспечения события.
@@ -132,6 +146,8 @@
 | `funded_amount` | `numeric` |
 | `remaining_payment_amount` | `numeric` |
 | `remaining_funding_amount` | `numeric` |
+
+<a id="view-cash-flow-event-state"></a>
 
 ## cash_flow_event_state
 
@@ -155,6 +171,8 @@
 | `remaining_payment_amount` | `numeric` |
 | `cash_still_required` | `numeric` |
 | `derived_status` | `text` |
+
+<a id="table-cash-flow-events"></a>
 
 ## cash_flow_events
 
@@ -206,6 +224,8 @@
 | `cash_flow_events_valid_type` | CHECK | `CHECK ((event_type = ANY (ARRAY['income'::text, 'expense'::text, 'debt_payment'::text, 'planned_expense'::text])))` |
 | `finance_validate_data` | t | `TRIGGER DEFERRABLE INITIALLY DEFERRED` |
 
+<a id="table-cash-flow-rules"></a>
+
 ## cash_flow_rules
 
 Источники повторяющихся событий: фиксированные платежи и зарплатные правила.
@@ -245,6 +265,8 @@
 | `cash_flow_rules_rule_type_check` | CHECK | `CHECK ((rule_type = ANY (ARRAY['fixed'::text, 'salary_advance'::text, 'salary_balance'::text, 'recurring_obligation'::text, 'salary'::text, 'living_budget'::text])))` |
 | `cash_flow_rules_schedule_type_check` | CHECK | `CHECK ((schedule_type = ANY (ARRAY['monthly'::text, 'weekly'::text])))` |
 
+<a id="table-categories"></a>
+
 ## categories
 
 Категории операций с возможной иерархией через parent_id.
@@ -265,6 +287,8 @@
 | `categories_name_category_type_key` | UNIQUE | `UNIQUE (name, category_type)` |
 | `categories_parent_id_fkey` | FOREIGN KEY | `FOREIGN KEY (parent_id) REFERENCES categories(id)` |
 | `categories_pkey` | PRIMARY KEY | `PRIMARY KEY (id)` |
+
+<a id="table-debt-goals"></a>
 
 ## debt_goals
 
@@ -289,6 +313,8 @@
 | `debt_goals_liability_id_fkey` | FOREIGN KEY | `FOREIGN KEY (liability_id) REFERENCES liabilities(id) ON DELETE CASCADE` |
 | `debt_goals_liability_id_key` | UNIQUE | `UNIQUE (liability_id)` |
 | `debt_goals_pkey` | PRIMARY KEY | `PRIMARY KEY (id)` |
+
+<a id="table-debt-payment-details"></a>
 
 ## debt_payment_details
 
@@ -319,6 +345,8 @@
 | `debt_payment_details_transaction_id_key` | UNIQUE | `UNIQUE (transaction_id)` |
 | `finance_validate_data` | t | `TRIGGER DEFERRABLE INITIALLY DEFERRED` |
 
+<a id="table-finance-settings"></a>
+
 ## finance_settings
 
 Ключи конфигурации со значениями JSONB.
@@ -335,6 +363,8 @@
 | Имя | Вид | Определение |
 |---|---|---|
 | `finance_settings_pkey` | PRIMARY KEY | `PRIMARY KEY (key)` |
+
+<a id="table-liabilities"></a>
 
 ## liabilities
 
@@ -380,6 +410,8 @@
 | `liabilities_pkey` | PRIMARY KEY | `PRIMARY KEY (id)` |
 | `liabilities_status_check` | CHECK | `CHECK ((status = ANY (ARRAY['active'::text, 'closed'::text, 'paused'::text])))` |
 
+<a id="table-liability-balance-snapshots"></a>
+
 ## liability_balance_snapshots
 
 Исходные/контрольные суммы тела долга, процентов и комиссий на момент времени.
@@ -407,6 +439,8 @@
 | `liability_balance_snapshots_pkey` | PRIMARY KEY | `PRIMARY KEY (id)` |
 | `liability_balance_snapshots_principal_balance_check` | CHECK | `CHECK ((principal_balance >= (0)::numeric))` |
 
+<a id="view-liability-current-balances"></a>
+
 ## liability_current_balances
 
 Представление текущих расчётных остатков долгов.
@@ -425,6 +459,8 @@
 | `total_debt` | `numeric` |
 | `payment_account_id` | `bigint` |
 | `linked_account_id` | `bigint` |
+
+<a id="table-liability-movements"></a>
 
 ## liability_movements
 
@@ -457,6 +493,8 @@
 | `liability_movements_movement_type_check` | CHECK | `CHECK ((movement_type = ANY (ARRAY['principal_increase'::text, 'principal_payment'::text, 'interest_accrual'::text, 'interest_payment'::text, 'fee_accrual'::text, 'fee_payment'::text, 'principal_adjustment'::text, 'interest_adjustment'::text, 'fee_adjustment'::text])))` |
 | `liability_movements_pkey` | PRIMARY KEY | `PRIMARY KEY (id)` |
 | `liability_movements_transaction_id_fkey` | FOREIGN KEY | `FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE` |
+
+<a id="table-liability-payment-schedule"></a>
 
 ## liability_payment_schedule
 
@@ -493,6 +531,8 @@
 | `liability_payment_schedule_principal_before_check` | CHECK | `CHECK ((principal_before >= (0)::numeric))` |
 | `liability_payment_schedule_total_amount_check` | CHECK | `CHECK ((total_amount >= (0)::numeric))` |
 
+<a id="table-living-budgets"></a>
+
 ## living_budgets
 
 Индивидуальный лимит конкретной недели.
@@ -513,6 +553,8 @@
 | `living_budgets_monday` | CHECK | `CHECK ((EXTRACT(isodow FROM week_start) = (1)::numeric))` |
 | `living_budgets_pkey` | PRIMARY KEY | `PRIMARY KEY (id)` |
 | `living_budgets_week_start_key` | UNIQUE | `UNIQUE (week_start)` |
+
+<a id="table-planned-purchases"></a>
 
 ## planned_purchases
 
@@ -542,6 +584,8 @@
 | `planned_purchases_pkey` | PRIMARY KEY | `PRIMARY KEY (id)` |
 | `planned_purchases_planned_amount_check` | CHECK | `CHECK ((planned_amount > (0)::numeric))` |
 | `planned_purchases_status_check` | CHECK | `CHECK ((status = ANY (ARRAY['active'::text, 'completed'::text, 'cancelled'::text, 'converted_to_split'::text, 'converted_to_credit'::text])))` |
+
+<a id="table-receipt-items"></a>
 
 ## receipt_items
 
@@ -576,6 +620,8 @@
 | `receipt_items_receipt_id_fkey` | FOREIGN KEY | `FOREIGN KEY (receipt_id) REFERENCES receipts(id) ON DELETE CASCADE` |
 | `receipt_items_receipt_id_line_number_key` | UNIQUE | `UNIQUE (receipt_id, line_number)` |
 
+<a id="table-receipts"></a>
+
 ## receipts
 
 Чек, связанный с расходной операцией.
@@ -608,6 +654,8 @@
 | `receipts_transaction_id_fkey` | FOREIGN KEY | `FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE` |
 | `receipts_transaction_id_key` | UNIQUE | `UNIQUE (transaction_id)` |
 
+<a id="table-transaction-category-allocations"></a>
+
 ## transaction_category_allocations
 
 Разбиение одного расхода по категориям.
@@ -634,6 +682,8 @@
 | `transaction_category_allocations_transaction_id_category_id_key` | UNIQUE | `UNIQUE (transaction_id, category_id)` |
 | `transaction_category_allocations_transaction_id_fkey` | FOREIGN KEY | `FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE` |
 | `trg_validate_transaction_category_allocations` | t | `TRIGGER DEFERRABLE INITIALLY DEFERRED` |
+
+<a id="table-transactions"></a>
 
 ## transactions
 

@@ -1,5 +1,9 @@
 # Каталог функций
 
+> ID: function_reference · Для: developer, agent · Тип: observed_snapshot
+>
+> Точные сигнатуры и отдельные якоря перегрузок. [Карта документации](index.md) · [Манифест](manifest.json)
+
 В каталоге 76 сигнатур схемы `public`, включая перегрузки и триггерные функции. Сигнатуры и возвращаемые типы получены из PostgreSQL 7 сентября 2026 года. Это инвентаризация, а не обещание стабильности всех внутренних вызовов. Для интеграции начинайте с [прикладного API](api.md).
 
 В сигнатурах ниже значения DEFAULT намеренно опущены; параметры с defaults перечислены отдельно. Для фактического вызова используйте именованные аргументы и явные типы. Полные тела функций и миграции в этот пакет не включены.
@@ -10,82 +14,84 @@
 
 | Функция | Возвращает | Volatility |
 |---|---|---|
-| `apply_event_payment_budget_semantics()` | `trigger` | VOLATILE |
-| `assert_free_cash_invariant(p_before numeric, p_after numeric, p_context text, p_tolerance numeric)` | `void` | IMMUTABLE |
-| `business_day_on_or_before(d date)` | `date` | IMMUTABLE |
-| `clear_credit_card_minimum_allocations()` | `trigger` | VOLATILE |
-| `clear_payment_buffer_funding_allocations()` | `trigger` | VOLATILE |
-| `complete_income_event(p_event_id bigint, p_completed_at timestamp with time zone)` | `void` | VOLATILE |
-| `correct_finance_transaction(p_transaction_id bigint, p_patch jsonb, p_category_allocations jsonb, p_debt_details jsonb, p_event_allocations jsonb, p_receipt_patch jsonb)` | `transactions` | VOLATILE |
-| `execute_event(p_event_id bigint, p_from_account_id bigint, p_occurred_at timestamp with time zone, p_actual_amount numeric, p_principal_amount numeric, p_interest_amount numeric, p_fee_amount numeric)` | `bigint` | VOLATILE |
-| `execute_installment_payment(p_event_id bigint, p_occurred_at timestamp with time zone, p_actual_amount numeric, p_principal_amount numeric, p_interest_amount numeric, p_fee_amount numeric)` | `bigint` | VOLATILE |
-| `finance_business_date(p_ts timestamp with time zone)` | `date` | STABLE |
-| `finance_command(p_request_key text, p_command text, p_args jsonb)` | `bigint` | VOLATILE |
-| `finance_data_issues()` | `TABLE(code text, entity_id bigint, details jsonb)` | STABLE |
-| `finance_day_end(p_date date)` | `timestamp with time zone` | STABLE |
-| `finance_day_start(p_date date)` | `timestamp with time zone` | STABLE |
-| `finance_integrity_check(p_as_of timestamp with time zone)` | `TABLE(severity text, code text, entity_type text, entity_id bigint, message text, details jsonb)` | STABLE |
-| `finance_setting_numeric(p_key text, p_default numeric)` | `numeric` | STABLE |
-| `finance_setting_text(p_key text, p_default text)` | `text` | STABLE |
-| `finance_validate_data_deferred()` | `trigger` | VOLATILE |
-| `finance_write_lock()` | `trigger` | VOLATILE |
-| `forecast_free_cash(p_target_date date, p_weekly_living numeric, p_reserve numeric)` | `TABLE(current_free_cash numeric, planned_income numeric, secured_outflows numeric, unsecure_outflows numeric, remaining_living_budget numeric, living_budget_overrun numeric, future_living_budget numeric, projected_free_cash numeric, safe_extra_payment numeric)` | STABLE |
-| `fund_event(p_event_id bigint, p_from_account_id bigint, p_amount numeric, p_occurred_at timestamp with time zone, p_description text)` | `bigint` | VOLATILE |
-| `generate_cash_flow_events(from_date date, to_date date)` | `void` | VOLATILE |
-| `get_account_balance(p_account_id bigint, p_as_of date)` | `numeric` | STABLE |
-| `get_account_balance(p_account_id bigint, p_as_of timestamp with time zone)` | `numeric` | STABLE |
-| `get_actual_cash(p_as_of date)` | `numeric` | STABLE |
-| `get_actual_cash(p_as_of timestamp with time zone)` | `numeric` | STABLE |
-| `get_cash_flow_event_coverage(p_event_id bigint)` | `TABLE(planned_amount numeric, paid_amount numeric, funded_amount numeric, remaining_payment_amount numeric, remaining_funding_amount numeric)` | STABLE |
-| `get_cash_flow_event_state_as_of(p_as_of timestamp with time zone)` | `TABLE(event_id bigint, event_date date, event_type text, amount numeric, description text, account_id bigint, liability_id bigint, status text, paid_amount numeric, funded_amount numeric, cash_committed_amount numeric, remaining_payment_amount numeric, cash_still_required numeric, derived_status text)` | STABLE |
-| `get_credit_budget_position(p_as_of timestamp with time zone)` | `TABLE(account_id bigint, account_name text, life_spend_total numeric, cash_repayments_total numeric, unsettled_budget_spend numeric, this_week_life_spend numeric, this_week_cash_repayments numeric, this_week_unsettled numeric, carryover_unsettled numeric, strategic_repayments numeric)` | STABLE |
-| `get_credit_cash_reserves(p_as_of timestamp with time zone, p_horizon_end date)` | `TABLE(account_id bigint, unpaid_life numeric, grace_outstanding numeric, scheduled_repayments numeric, additional_reserve numeric)` | STABLE |
-| `get_expense_category_lines(p_start date, p_end date)` | `TABLE(transaction_id bigint, transaction_date date, description text, category_id bigint, category_name text, amount numeric, allocation_source text)` | STABLE |
-| `get_financial_position(p_as_of date, p_default_weekly_budget numeric)` | `TABLE(as_of timestamp with time zone, actual_cash numeric, projected_cash numeric, current_week_budget numeric, remaining_living_budget numeric, living_budget_overrun numeric, active_purchase_reserve numeric, unsecured_obligations numeric, secured_obligations numeric, credit_expenses_over_budget numeric, free_cash numeric)` | STABLE |
-| `get_financial_position(p_as_of timestamp with time zone, p_default_weekly_budget numeric)` | `TABLE(as_of timestamp with time zone, actual_cash numeric, projected_cash numeric, current_week_budget numeric, remaining_living_budget numeric, living_budget_overrun numeric, active_purchase_reserve numeric, unsecured_obligations numeric, secured_obligations numeric, credit_expenses_over_budget numeric, free_cash numeric)` | STABLE |
-| `get_financial_position_at(p_as_of date, p_cutoff timestamp with time zone, p_default_weekly_budget numeric)` | `TABLE(as_of date, actual_cash numeric, expected_income numeric, required_cash_flow_outflows numeric, secured_future_outflows numeric, projected_cash numeric, current_week_budget numeric, current_week_spend numeric, remaining_living_budget numeric, future_living_budget numeric, credit_budget_reserve numeric, credit_budget_additional_reserve numeric, planned_purchase_reserve numeric, free_cash numeric)` | STABLE |
-| `get_financial_position_v2(p_as_of date, p_default_weekly_budget numeric)` | `TABLE(as_of date, actual_cash numeric, expected_income numeric, required_cash_flow_outflows numeric, secured_future_outflows numeric, projected_cash numeric, current_week_budget numeric, current_week_spend numeric, remaining_living_budget numeric, future_living_budget numeric, credit_budget_reserve numeric, credit_budget_additional_reserve numeric, planned_purchase_reserve numeric, free_cash numeric)` | STABLE |
-| `get_free_cash(p_as_of date)` | `numeric` | STABLE |
-| `get_free_cash(p_as_of timestamp with time zone)` | `numeric` | STABLE |
-| `get_income_event_state_as_of(p_as_of timestamp with time zone)` | `TABLE(event_id bigint, received_amount numeric, remaining_amount numeric, derived_status text, last_received_at timestamp with time zone)` | STABLE |
-| `get_liability_balance(p_liability_id bigint, p_as_of date)` | `TABLE(principal_balance numeric, accrued_interest numeric, fees_due numeric, total_debt numeric)` | STABLE |
-| `get_liability_balance(p_liability_id bigint, p_as_of timestamp with time zone)` | `TABLE(principal_balance numeric, accrued_interest numeric, fees_due numeric, total_debt numeric)` | STABLE |
-| `get_liability_balance_details(p_liability_id bigint, p_as_of timestamp with time zone)` | `TABLE(total_debt numeric, principal_balance numeric, accrued_interest numeric, fees_due numeric, components_known boolean, components_as_of timestamp with time zone)` | STABLE |
-| `get_liquidity_until_next_income(p_as_of timestamp with time zone, p_default_weekly_budget numeric)` | `TABLE(as_of timestamp with time zone, business_date date, next_income_date date, next_income_description text, next_income_amount numeric, actual_cash numeric, required_outflows_before_income numeric, remaining_living_budget numeric, future_living_budget numeric, planned_purchase_reserve numeric, free_cash_until_next_income numeric)` | STABLE |
-| `get_living_budget_reserve(p_week_start date, p_as_of timestamp with time zone, p_default_budget numeric)` | `TABLE(budget_amount numeric, spent_amount numeric, earmarked_amount numeric, remaining_reserve numeric, overrun numeric)` | STABLE |
-| `get_obligations_until_next_income(p_as_of timestamp with time zone)` | `TABLE(next_income_date date, event_id bigint, event_date date, description text, amount numeric, remaining_payment_amount numeric, cash_still_required numeric, derived_status text)` | STABLE |
-| `get_settlement_attention(p_as_of date)` | `TABLE(event_id bigint, event_date date, description text, amount numeric, paid_amount numeric, funded_amount numeric, cash_still_required numeric, remaining_payment_amount numeric, derived_status text, timing_status text, attention_status text)` | STABLE |
-| `get_status_until_next_income(p_as_of timestamp with time zone, p_default_weekly_budget numeric)` | `jsonb` | STABLE |
-| `get_upcoming_payments(p_days integer)` | `TABLE(event_id bigint, event_date date, description text, amount numeric, secured boolean, security_transaction_id bigint, security_note text)` | STABLE |
-| `link_funding(p_event_id bigint, p_transaction_id bigint, p_amount numeric)` | `void` | VOLATILE |
-| `link_funding(p_event_id bigint, p_transaction_id bigint, p_amount numeric, p_relation_type text)` | `void` | VOLATILE |
-| `normalize_credit_card_payment_semantics()` | `trigger` | VOLATILE |
-| `normalize_payment_buffer_funding_semantics()` | `trigger` | VOLATILE |
-| `normalize_transaction_budget_effect()` | `trigger` | VOLATILE |
-| `rebuild_debt_payment_movements(p_liability_id bigint)` | `void` | VOLATILE |
-| `reconcile_credit_card_minimum(p_event_id bigint)` | `void` | VOLATILE |
-| `reconcile_credit_card_minimum_from_old_transaction()` | `trigger` | VOLATILE |
-| `reconcile_credit_card_minimum_from_transaction()` | `trigger` | VOLATILE |
-| `reconcile_payment_buffer_funding_from_transaction()` | `trigger` | VOLATILE |
-| `refresh_cash_flow()` | `void` | VOLATILE |
-| `refresh_cash_flow_event_from_allocation()` | `trigger` | VOLATILE |
-| `refresh_cash_flow_event_status(p_event_id bigint)` | `cash_flow_events` | VOLATILE |
-| `refresh_cash_flow_security(p_start date, p_end date)` | `integer` | VOLATILE |
-| `refresh_event_security()` | `void` | VOLATILE |
-| `refresh_snapshot_dependents()` | `trigger` | VOLATILE |
-| `refresh_transaction_dependents()` | `trigger` | VOLATILE |
-| `set_credit_card_minimum(p_liability_id bigint, p_amount numeric, p_due_date date)` | `bigint` | VOLATILE |
-| `sync_cash_flow_sources()` | `trigger` | VOLATILE |
-| `sync_debt_payment_movements()` | `trigger` | VOLATILE |
-| `sync_liability_principal_cache(p_liability_id bigint)` | `void` | VOLATILE |
-| `sync_salary_transaction_to_event()` | `trigger` | VOLATILE |
-| `trg_sync_liability_cache_from_movements()` | `trigger` | VOLATILE |
-| `trg_sync_revolving_liability_cache()` | `trigger` | VOLATILE |
-| `validate_cash_flow_allocation()` | `trigger` | VOLATILE |
-| `validate_debt_payment_details()` | `trigger` | VOLATILE |
-| `validate_grace_reserve()` | `trigger` | VOLATILE |
-| `validate_grace_reserve_deferred()` | `trigger` | VOLATILE |
-| `validate_transaction_category_allocations_deferred()` | `trigger` | VOLATILE |
+| [`apply_event_payment_budget_semantics()`](#fn-apply-event-payment-budget-semantics-12658278ea) | `trigger` | VOLATILE |
+| [`assert_free_cash_invariant(p_before numeric, p_after numeric, p_context text, p_tolerance numeric)`](#fn-assert-free-cash-invariant-a2c2858b89) | `void` | IMMUTABLE |
+| [`business_day_on_or_before(d date)`](#fn-business-day-on-or-before-cebbf35516) | `date` | IMMUTABLE |
+| [`clear_credit_card_minimum_allocations()`](#fn-clear-credit-card-minimum-allocations-a521adf21e) | `trigger` | VOLATILE |
+| [`clear_payment_buffer_funding_allocations()`](#fn-clear-payment-buffer-funding-allocations-765bde8b76) | `trigger` | VOLATILE |
+| [`complete_income_event(p_event_id bigint, p_completed_at timestamp with time zone)`](#fn-complete-income-event-935dedcc55) | `void` | VOLATILE |
+| [`correct_finance_transaction(p_transaction_id bigint, p_patch jsonb, p_category_allocations jsonb, p_debt_details jsonb, p_event_allocations jsonb, p_receipt_patch jsonb)`](#fn-correct-finance-transaction-9009324eb2) | `transactions` | VOLATILE |
+| [`execute_event(p_event_id bigint, p_from_account_id bigint, p_occurred_at timestamp with time zone, p_actual_amount numeric, p_principal_amount numeric, p_interest_amount numeric, p_fee_amount numeric)`](#fn-execute-event-5dc04a140f) | `bigint` | VOLATILE |
+| [`execute_installment_payment(p_event_id bigint, p_occurred_at timestamp with time zone, p_actual_amount numeric, p_principal_amount numeric, p_interest_amount numeric, p_fee_amount numeric)`](#fn-execute-installment-payment-84817fc831) | `bigint` | VOLATILE |
+| [`finance_business_date(p_ts timestamp with time zone)`](#fn-finance-business-date-425398addf) | `date` | STABLE |
+| [`finance_command(p_request_key text, p_command text, p_args jsonb)`](#fn-finance-command-4c19d2b97f) | `bigint` | VOLATILE |
+| [`finance_data_issues()`](#fn-finance-data-issues-5926da9222) | `TABLE(code text, entity_id bigint, details jsonb)` | STABLE |
+| [`finance_day_end(p_date date)`](#fn-finance-day-end-c0ec7af4f3) | `timestamp with time zone` | STABLE |
+| [`finance_day_start(p_date date)`](#fn-finance-day-start-04625df52f) | `timestamp with time zone` | STABLE |
+| [`finance_integrity_check(p_as_of timestamp with time zone)`](#fn-finance-integrity-check-b9b78cef5e) | `TABLE(severity text, code text, entity_type text, entity_id bigint, message text, details jsonb)` | STABLE |
+| [`finance_setting_numeric(p_key text, p_default numeric)`](#fn-finance-setting-numeric-7c24e5a300) | `numeric` | STABLE |
+| [`finance_setting_text(p_key text, p_default text)`](#fn-finance-setting-text-5e1df66f14) | `text` | STABLE |
+| [`finance_validate_data_deferred()`](#fn-finance-validate-data-deferred-9903e2cc8c) | `trigger` | VOLATILE |
+| [`finance_write_lock()`](#fn-finance-write-lock-493e7475cb) | `trigger` | VOLATILE |
+| [`forecast_free_cash(p_target_date date, p_weekly_living numeric, p_reserve numeric)`](#fn-forecast-free-cash-888649f7ff) | `TABLE(current_free_cash numeric, planned_income numeric, secured_outflows numeric, unsecure_outflows numeric, remaining_living_budget numeric, living_budget_overrun numeric, future_living_budget numeric, projected_free_cash numeric, safe_extra_payment numeric)` | STABLE |
+| [`fund_event(p_event_id bigint, p_from_account_id bigint, p_amount numeric, p_occurred_at timestamp with time zone, p_description text)`](#fn-fund-event-e24cde05db) | `bigint` | VOLATILE |
+| [`generate_cash_flow_events(from_date date, to_date date)`](#fn-generate-cash-flow-events-5188dc9aeb) | `void` | VOLATILE |
+| [`get_account_balance(p_account_id bigint, p_as_of date)`](#fn-get-account-balance-329abeba8c) | `numeric` | STABLE |
+| [`get_account_balance(p_account_id bigint, p_as_of timestamp with time zone)`](#fn-get-account-balance-654dfdbb2e) | `numeric` | STABLE |
+| [`get_actual_cash(p_as_of date)`](#fn-get-actual-cash-4d54a90000) | `numeric` | STABLE |
+| [`get_actual_cash(p_as_of timestamp with time zone)`](#fn-get-actual-cash-f161cecaef) | `numeric` | STABLE |
+| [`get_cash_flow_event_coverage(p_event_id bigint)`](#fn-get-cash-flow-event-coverage-af94ef53c9) | `TABLE(planned_amount numeric, paid_amount numeric, funded_amount numeric, remaining_payment_amount numeric, remaining_funding_amount numeric)` | STABLE |
+| [`get_cash_flow_event_state_as_of(p_as_of timestamp with time zone)`](#fn-get-cash-flow-event-state-as-of-e6aad22f44) | `TABLE(event_id bigint, event_date date, event_type text, amount numeric, description text, account_id bigint, liability_id bigint, status text, paid_amount numeric, funded_amount numeric, cash_committed_amount numeric, remaining_payment_amount numeric, cash_still_required numeric, derived_status text)` | STABLE |
+| [`get_credit_budget_position(p_as_of timestamp with time zone)`](#fn-get-credit-budget-position-a68ed80ef8) | `TABLE(account_id bigint, account_name text, life_spend_total numeric, cash_repayments_total numeric, unsettled_budget_spend numeric, this_week_life_spend numeric, this_week_cash_repayments numeric, this_week_unsettled numeric, carryover_unsettled numeric, strategic_repayments numeric)` | STABLE |
+| [`get_credit_cash_reserves(p_as_of timestamp with time zone, p_horizon_end date)`](#fn-get-credit-cash-reserves-48133ca082) | `TABLE(account_id bigint, unpaid_life numeric, grace_outstanding numeric, scheduled_repayments numeric, additional_reserve numeric)` | STABLE |
+| [`get_expense_category_lines(p_start date, p_end date)`](#fn-get-expense-category-lines-25428b0831) | `TABLE(transaction_id bigint, transaction_date date, description text, category_id bigint, category_name text, amount numeric, allocation_source text)` | STABLE |
+| [`get_financial_position(p_as_of date, p_default_weekly_budget numeric)`](#fn-get-financial-position-d043b30aa9) | `TABLE(as_of timestamp with time zone, actual_cash numeric, projected_cash numeric, current_week_budget numeric, remaining_living_budget numeric, living_budget_overrun numeric, active_purchase_reserve numeric, unsecured_obligations numeric, secured_obligations numeric, credit_expenses_over_budget numeric, free_cash numeric)` | STABLE |
+| [`get_financial_position(p_as_of timestamp with time zone, p_default_weekly_budget numeric)`](#fn-get-financial-position-6ee5ec6561) | `TABLE(as_of timestamp with time zone, actual_cash numeric, projected_cash numeric, current_week_budget numeric, remaining_living_budget numeric, living_budget_overrun numeric, active_purchase_reserve numeric, unsecured_obligations numeric, secured_obligations numeric, credit_expenses_over_budget numeric, free_cash numeric)` | STABLE |
+| [`get_financial_position_at(p_as_of date, p_cutoff timestamp with time zone, p_default_weekly_budget numeric)`](#fn-get-financial-position-at-9f14d7d31e) | `TABLE(as_of date, actual_cash numeric, expected_income numeric, required_cash_flow_outflows numeric, secured_future_outflows numeric, projected_cash numeric, current_week_budget numeric, current_week_spend numeric, remaining_living_budget numeric, future_living_budget numeric, credit_budget_reserve numeric, credit_budget_additional_reserve numeric, planned_purchase_reserve numeric, free_cash numeric)` | STABLE |
+| [`get_financial_position_v2(p_as_of date, p_default_weekly_budget numeric)`](#fn-get-financial-position-v2-588bed1dca) | `TABLE(as_of date, actual_cash numeric, expected_income numeric, required_cash_flow_outflows numeric, secured_future_outflows numeric, projected_cash numeric, current_week_budget numeric, current_week_spend numeric, remaining_living_budget numeric, future_living_budget numeric, credit_budget_reserve numeric, credit_budget_additional_reserve numeric, planned_purchase_reserve numeric, free_cash numeric)` | STABLE |
+| [`get_free_cash(p_as_of date)`](#fn-get-free-cash-5de924fe5e) | `numeric` | STABLE |
+| [`get_free_cash(p_as_of timestamp with time zone)`](#fn-get-free-cash-5ed941717d) | `numeric` | STABLE |
+| [`get_income_event_state_as_of(p_as_of timestamp with time zone)`](#fn-get-income-event-state-as-of-e07cdd98ff) | `TABLE(event_id bigint, received_amount numeric, remaining_amount numeric, derived_status text, last_received_at timestamp with time zone)` | STABLE |
+| [`get_liability_balance(p_liability_id bigint, p_as_of date)`](#fn-get-liability-balance-4540d0944f) | `TABLE(principal_balance numeric, accrued_interest numeric, fees_due numeric, total_debt numeric)` | STABLE |
+| [`get_liability_balance(p_liability_id bigint, p_as_of timestamp with time zone)`](#fn-get-liability-balance-8d1c73d395) | `TABLE(principal_balance numeric, accrued_interest numeric, fees_due numeric, total_debt numeric)` | STABLE |
+| [`get_liability_balance_details(p_liability_id bigint, p_as_of timestamp with time zone)`](#fn-get-liability-balance-details-0017571ee7) | `TABLE(total_debt numeric, principal_balance numeric, accrued_interest numeric, fees_due numeric, components_known boolean, components_as_of timestamp with time zone)` | STABLE |
+| [`get_liquidity_until_next_income(p_as_of timestamp with time zone, p_default_weekly_budget numeric)`](#fn-get-liquidity-until-next-income-5a43c09635) | `TABLE(as_of timestamp with time zone, business_date date, next_income_date date, next_income_description text, next_income_amount numeric, actual_cash numeric, required_outflows_before_income numeric, remaining_living_budget numeric, future_living_budget numeric, planned_purchase_reserve numeric, free_cash_until_next_income numeric)` | STABLE |
+| [`get_living_budget_reserve(p_week_start date, p_as_of timestamp with time zone, p_default_budget numeric)`](#fn-get-living-budget-reserve-e27d063804) | `TABLE(budget_amount numeric, spent_amount numeric, earmarked_amount numeric, remaining_reserve numeric, overrun numeric)` | STABLE |
+| [`get_obligations_until_next_income(p_as_of timestamp with time zone)`](#fn-get-obligations-until-next-income-67aba6d215) | `TABLE(next_income_date date, event_id bigint, event_date date, description text, amount numeric, remaining_payment_amount numeric, cash_still_required numeric, derived_status text)` | STABLE |
+| [`get_settlement_attention(p_as_of date)`](#fn-get-settlement-attention-8b310d39ab) | `TABLE(event_id bigint, event_date date, description text, amount numeric, paid_amount numeric, funded_amount numeric, cash_still_required numeric, remaining_payment_amount numeric, derived_status text, timing_status text, attention_status text)` | STABLE |
+| [`get_status_until_next_income(p_as_of timestamp with time zone, p_default_weekly_budget numeric)`](#fn-get-status-until-next-income-8d89e6dc13) | `jsonb` | STABLE |
+| [`get_upcoming_payments(p_days integer)`](#fn-get-upcoming-payments-cf8a6c80ca) | `TABLE(event_id bigint, event_date date, description text, amount numeric, secured boolean, security_transaction_id bigint, security_note text)` | STABLE |
+| [`link_funding(p_event_id bigint, p_transaction_id bigint, p_amount numeric)`](#fn-link-funding-183bf77d8a) | `void` | VOLATILE |
+| [`link_funding(p_event_id bigint, p_transaction_id bigint, p_amount numeric, p_relation_type text)`](#fn-link-funding-baaab7d6e0) | `void` | VOLATILE |
+| [`normalize_credit_card_payment_semantics()`](#fn-normalize-credit-card-payment-semantics-4d193efffb) | `trigger` | VOLATILE |
+| [`normalize_payment_buffer_funding_semantics()`](#fn-normalize-payment-buffer-funding-semantics-16ab0a0576) | `trigger` | VOLATILE |
+| [`normalize_transaction_budget_effect()`](#fn-normalize-transaction-budget-effect-9e6add9034) | `trigger` | VOLATILE |
+| [`rebuild_debt_payment_movements(p_liability_id bigint)`](#fn-rebuild-debt-payment-movements-cadf8bb48d) | `void` | VOLATILE |
+| [`reconcile_credit_card_minimum(p_event_id bigint)`](#fn-reconcile-credit-card-minimum-ea61b8cf4b) | `void` | VOLATILE |
+| [`reconcile_credit_card_minimum_from_old_transaction()`](#fn-reconcile-credit-card-minimum-from-old-transaction-4945a36f7d) | `trigger` | VOLATILE |
+| [`reconcile_credit_card_minimum_from_transaction()`](#fn-reconcile-credit-card-minimum-from-transaction-189bfba7de) | `trigger` | VOLATILE |
+| [`reconcile_payment_buffer_funding_from_transaction()`](#fn-reconcile-payment-buffer-funding-from-transaction-2d2145772a) | `trigger` | VOLATILE |
+| [`refresh_cash_flow()`](#fn-refresh-cash-flow-24981a6d0a) | `void` | VOLATILE |
+| [`refresh_cash_flow_event_from_allocation()`](#fn-refresh-cash-flow-event-from-allocation-176c3ff941) | `trigger` | VOLATILE |
+| [`refresh_cash_flow_event_status(p_event_id bigint)`](#fn-refresh-cash-flow-event-status-7a84b59058) | `cash_flow_events` | VOLATILE |
+| [`refresh_cash_flow_security(p_start date, p_end date)`](#fn-refresh-cash-flow-security-bef82af046) | `integer` | VOLATILE |
+| [`refresh_event_security()`](#fn-refresh-event-security-cb28073649) | `void` | VOLATILE |
+| [`refresh_snapshot_dependents()`](#fn-refresh-snapshot-dependents-e774891266) | `trigger` | VOLATILE |
+| [`refresh_transaction_dependents()`](#fn-refresh-transaction-dependents-3513c6b0a2) | `trigger` | VOLATILE |
+| [`set_credit_card_minimum(p_liability_id bigint, p_amount numeric, p_due_date date)`](#fn-set-credit-card-minimum-613f21d5d7) | `bigint` | VOLATILE |
+| [`sync_cash_flow_sources()`](#fn-sync-cash-flow-sources-2ed9ef51b8) | `trigger` | VOLATILE |
+| [`sync_debt_payment_movements()`](#fn-sync-debt-payment-movements-e4b6004cb5) | `trigger` | VOLATILE |
+| [`sync_liability_principal_cache(p_liability_id bigint)`](#fn-sync-liability-principal-cache-493f3f0c4a) | `void` | VOLATILE |
+| [`sync_salary_transaction_to_event()`](#fn-sync-salary-transaction-to-event-845fb072a1) | `trigger` | VOLATILE |
+| [`trg_sync_liability_cache_from_movements()`](#fn-trg-sync-liability-cache-from-movements-68942a8473) | `trigger` | VOLATILE |
+| [`trg_sync_revolving_liability_cache()`](#fn-trg-sync-revolving-liability-cache-da3ad9487b) | `trigger` | VOLATILE |
+| [`validate_cash_flow_allocation()`](#fn-validate-cash-flow-allocation-7bc13b6030) | `trigger` | VOLATILE |
+| [`validate_debt_payment_details()`](#fn-validate-debt-payment-details-fc68f8438d) | `trigger` | VOLATILE |
+| [`validate_grace_reserve()`](#fn-validate-grace-reserve-d63891a4f9) | `trigger` | VOLATILE |
+| [`validate_grace_reserve_deferred()`](#fn-validate-grace-reserve-deferred-303d13b645) | `trigger` | VOLATILE |
+| [`validate_transaction_category_allocations_deferred()`](#fn-validate-transaction-category-allocations-deferred-2a4024676f) | `trigger` | VOLATILE |
+
+<a id="fn-apply-event-payment-budget-semantics-12658278ea"></a>
 
 ## apply_event_payment_budget_semantics
 
@@ -99,6 +105,8 @@ RETURNS trigger
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
 
+<a id="fn-assert-free-cash-invariant-a2c2858b89"></a>
+
 ## assert_free_cash_invariant
 
 ```sql
@@ -110,6 +118,8 @@ RETURNS void
 
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
+
+<a id="fn-business-day-on-or-before-cebbf35516"></a>
 
 ## business_day_on_or_before
 
@@ -123,6 +133,8 @@ RETURNS date
 Перенос только субботы/воскресенья на пятницу; без праздничного календаря.
 
 
+<a id="fn-clear-credit-card-minimum-allocations-a521adf21e"></a>
+
 ## clear_credit_card_minimum_allocations
 
 ```sql
@@ -134,6 +146,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-clear-payment-buffer-funding-allocations-765bde8b76"></a>
 
 ## clear_payment_buffer_funding_allocations
 
@@ -147,6 +161,8 @@ RETURNS trigger
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
 
+<a id="fn-complete-income-event-935dedcc55"></a>
+
 ## complete_income_event
 
 ```sql
@@ -158,6 +174,8 @@ RETURNS void
 
 Подтверждение завершения дохода после хотя бы одного зачисления.
 
+
+<a id="fn-correct-finance-transaction-9009324eb2"></a>
 
 ## correct_finance_transaction
 
@@ -173,6 +191,8 @@ RETURNS transactions
 Комментарий в БД: Atomic correction. Supply replacement breakdowns when changing amounts; deferred constraints reject incomplete corrections.
 
 
+<a id="fn-execute-event-5dc04a140f"></a>
+
 ## execute_event
 
 ```sql
@@ -187,6 +207,8 @@ RETURNS bigint
 Комментарий в БД: Canonical command to confirm actual event execution/payment.
 
 
+<a id="fn-execute-installment-payment-84817fc831"></a>
+
 ## execute_installment_payment
 
 ```sql
@@ -199,6 +221,8 @@ RETURNS bigint
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
+<a id="fn-finance-business-date-425398addf"></a>
+
 ## finance_business_date
 
 ```sql
@@ -210,6 +234,8 @@ RETURNS date
 
 Бизнес-дата момента времени.
 
+
+<a id="fn-finance-command-4c19d2b97f"></a>
 
 ## finance_command
 
@@ -225,6 +251,8 @@ RETURNS bigint
 Комментарий в БД: Idempotent entry point for record_transaction, fund_event and execute_event. Reuse request key on retry; different payload with same key is rejected.
 
 
+<a id="fn-finance-data-issues-5926da9222"></a>
+
 ## finance_data_issues
 
 ```sql
@@ -236,6 +264,8 @@ RETURNS TABLE(code text, entity_id bigint, details jsonb)
 
 Структурные/семантические проблемы текущих данных.
 
+
+<a id="fn-finance-day-end-c0ec7af4f3"></a>
 
 ## finance_day_end
 
@@ -249,6 +279,8 @@ RETURNS timestamp with time zone
 Конец дня в business_timezone с точностью до микросекунды.
 
 
+<a id="fn-finance-day-start-04625df52f"></a>
+
 ## finance_day_start
 
 ```sql
@@ -260,6 +292,8 @@ RETURNS timestamp with time zone
 
 Начало дня в business_timezone.
 
+
+<a id="fn-finance-integrity-check-b9b78cef5e"></a>
 
 ## finance_integrity_check
 
@@ -273,6 +307,8 @@ RETURNS TABLE(severity text, code text, entity_type text, entity_id bigint, mess
 Диагностика согласованности с severity, code и details.
 
 
+<a id="fn-finance-setting-numeric-7c24e5a300"></a>
+
 ## finance_setting_numeric
 
 ```sql
@@ -284,6 +320,8 @@ RETURNS numeric
 
 Числовая настройка JSONB с fallback.
 
+
+<a id="fn-finance-setting-text-5e1df66f14"></a>
 
 ## finance_setting_text
 
@@ -297,6 +335,8 @@ RETURNS text
 Текстовая настройка JSONB с fallback.
 
 
+<a id="fn-finance-validate-data-deferred-9903e2cc8c"></a>
+
 ## finance_validate_data_deferred
 
 ```sql
@@ -308,6 +348,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-finance-write-lock-493e7475cb"></a>
 
 ## finance_write_lock
 
@@ -321,6 +363,8 @@ RETURNS trigger
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
 
+<a id="fn-forecast-free-cash-888649f7ff"></a>
+
 ## forecast_free_cash
 
 ```sql
@@ -332,6 +376,8 @@ RETURNS TABLE(current_free_cash numeric, planned_income numeric, secured_outflow
 
 Прогнозная обёртка; не замена оперативному статусу.
 
+
+<a id="fn-fund-event-e24cde05db"></a>
 
 ## fund_event
 
@@ -347,6 +393,8 @@ RETURNS bigint
 Комментарий в БД: Canonical command to secure an event. Creates funding only; never marks the event paid.
 
 
+<a id="fn-generate-cash-flow-events-5188dc9aeb"></a>
+
 ## generate_cash_flow_events
 
 ```sql
@@ -358,6 +406,8 @@ RETURNS void
 
 Создание/синхронизация событий по правилам и банковским графикам; изменяет данные.
 
+
+<a id="fn-get-account-balance-329abeba8c"></a>
 
 ## get_account_balance
 
@@ -371,6 +421,8 @@ RETURNS numeric
 Баланс счёта на момент или конец бизнес-дня.
 
 
+<a id="fn-get-account-balance-654dfdbb2e"></a>
+
 ## get_account_balance
 
 ```sql
@@ -382,6 +434,8 @@ RETURNS numeric
 
 Баланс счёта на момент или конец бизнес-дня.
 
+
+<a id="fn-get-actual-cash-4d54a90000"></a>
 
 ## get_actual_cash
 
@@ -395,6 +449,8 @@ RETURNS numeric
 Фактические деньги активных bank/cash счетов.
 
 
+<a id="fn-get-actual-cash-f161cecaef"></a>
+
 ## get_actual_cash
 
 ```sql
@@ -406,6 +462,8 @@ RETURNS numeric
 
 Фактические деньги активных bank/cash счетов.
 
+
+<a id="fn-get-cash-flow-event-coverage-af94ef53c9"></a>
 
 ## get_cash_flow_event_coverage
 
@@ -419,6 +477,8 @@ RETURNS TABLE(planned_amount numeric, paid_amount numeric, funded_amount numeric
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
+<a id="fn-get-cash-flow-event-state-as-of-e6aad22f44"></a>
+
 ## get_cash_flow_event_state_as_of
 
 ```sql
@@ -431,6 +491,8 @@ RETURNS TABLE(event_id bigint, event_date date, event_type text, amount numeric,
 Суммы и вычисляемое состояние событий на момент времени.
 
 
+<a id="fn-get-credit-budget-position-a68ed80ef8"></a>
+
 ## get_credit_budget_position
 
 ```sql
@@ -442,6 +504,8 @@ RETURNS TABLE(account_id bigint, account_name text, life_spend_total numeric, ca
 
 Отслеживаемые повседневные расходы кредитных карт и их погашения.
 
+
+<a id="fn-get-credit-cash-reserves-48133ca082"></a>
 
 ## get_credit_cash_reserves
 
@@ -457,6 +521,8 @@ RETURNS TABLE(account_id bigint, unpaid_life numeric, grace_outstanding numeric,
 Комментарий в БД: Reserve actual unrepaid daily card spending and explicitly tagged grace draws, net of scheduled repayments already reserved in the horizon.
 
 
+<a id="fn-get-expense-category-lines-25428b0831"></a>
+
 ## get_expense_category_lines
 
 ```sql
@@ -468,6 +534,8 @@ RETURNS TABLE(transaction_id bigint, transaction_date date, description text, ca
 
 Строки категорий расходов, заменяющие полную сумму при наличии разбиения.
 
+
+<a id="fn-get-financial-position-d043b30aa9"></a>
 
 ## get_financial_position
 
@@ -481,6 +549,8 @@ RETURNS TABLE(as_of timestamp with time zone, actual_cash numeric, projected_cas
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
+<a id="fn-get-financial-position-6ee5ec6561"></a>
+
 ## get_financial_position
 
 ```sql
@@ -492,6 +562,8 @@ RETURNS TABLE(as_of timestamp with time zone, actual_cash numeric, projected_cas
 
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
+
+<a id="fn-get-financial-position-at-9f14d7d31e"></a>
 
 ## get_financial_position_at
 
@@ -507,6 +579,8 @@ RETURNS TABLE(as_of date, actual_cash numeric, expected_income numeric, required
 Комментарий в БД: Fact at exact cutoff and forecast to target date. Canonical daily status is get_status_until_next_income.
 
 
+<a id="fn-get-financial-position-v2-588bed1dca"></a>
+
 ## get_financial_position_v2
 
 ```sql
@@ -519,6 +593,8 @@ RETURNS TABLE(as_of date, actual_cash numeric, expected_income numeric, required
 Обёртка выбора cutoff для отчёта на дату.
 
 
+<a id="fn-get-free-cash-5de924fe5e"></a>
+
 ## get_free_cash
 
 ```sql
@@ -530,6 +606,8 @@ RETURNS numeric
 
 Свободные деньги до дохода; не сумма физических остатков.
 
+
+<a id="fn-get-free-cash-5ed941717d"></a>
 
 ## get_free_cash
 
@@ -545,6 +623,8 @@ RETURNS numeric
 Комментарий в БД: Canonical free cash until next planned income; actual physical cash is get_actual_cash.
 
 
+<a id="fn-get-income-event-state-as-of-e07cdd98ff"></a>
+
 ## get_income_event_state_as_of
 
 ```sql
@@ -557,6 +637,8 @@ RETURNS TABLE(event_id bigint, received_amount numeric, remaining_amount numeric
 Полученная и оставшаяся сумма ожидаемых доходов.
 
 
+<a id="fn-get-liability-balance-4540d0944f"></a>
+
 ## get_liability_balance
 
 ```sql
@@ -568,6 +650,8 @@ RETURNS TABLE(principal_balance numeric, accrued_interest numeric, fees_due nume
 
 Существующий контракт расчёта долга; для детализации и признака доступности компонентов см. get_liability_balance_details.
 
+
+<a id="fn-get-liability-balance-8d1c73d395"></a>
 
 ## get_liability_balance
 
@@ -583,6 +667,8 @@ RETURNS TABLE(principal_balance numeric, accrued_interest numeric, fees_due nume
 Комментарий в БД: Legacy card model: principal_balance equals total card debt. For accurate components and availability flag use get_liability_balance_details.
 
 
+<a id="fn-get-liability-balance-details-0017571ee7"></a>
+
 ## get_liability_balance_details
 
 ```sql
@@ -594,6 +680,8 @@ RETURNS TABLE(total_debt numeric, principal_balance numeric, accrued_interest nu
 
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
+
+<a id="fn-get-liquidity-until-next-income-5a43c09635"></a>
 
 ## get_liquidity_until_next_income
 
@@ -607,6 +695,8 @@ RETURNS TABLE(as_of timestamp with time zone, business_date date, next_income_da
 Составляющие свободных денег до ближайшего незавершённого дохода.
 
 
+<a id="fn-get-living-budget-reserve-e27d063804"></a>
+
 ## get_living_budget_reserve
 
 ```sql
@@ -618,6 +708,8 @@ RETURNS TABLE(budget_amount numeric, spent_amount numeric, earmarked_amount nume
 
 Лимит, траты, обеспеченные бюджетные суммы и остаток резерва недели.
 
+
+<a id="fn-get-obligations-until-next-income-67aba6d215"></a>
 
 ## get_obligations_until_next_income
 
@@ -631,6 +723,8 @@ RETURNS TABLE(next_income_date date, event_id bigint, event_date date, descripti
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
+<a id="fn-get-settlement-attention-8b310d39ab"></a>
+
 ## get_settlement_attention
 
 ```sql
@@ -642,6 +736,8 @@ RETURNS TABLE(event_id bigint, event_date date, description text, amount numeric
 
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
+
+<a id="fn-get-status-until-next-income-8d89e6dc13"></a>
 
 ## get_status_until_next_income
 
@@ -657,6 +753,8 @@ RETURNS jsonb
 Комментарий в БД: Canonical operational finance status. Use this instead of get_financial_position/free_cash for user-facing status.
 
 
+<a id="fn-get-upcoming-payments-cf8a6c80ca"></a>
+
 ## get_upcoming_payments
 
 ```sql
@@ -668,6 +766,8 @@ RETURNS TABLE(event_id bigint, event_date date, description text, amount numeric
 
 Неисполненные платежи: сегодня…сегодня+p_days включительно.
 
+
+<a id="fn-link-funding-183bf77d8a"></a>
 
 ## link_funding
 
@@ -681,6 +781,8 @@ RETURNS void
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
+<a id="fn-link-funding-baaab7d6e0"></a>
+
 ## link_funding
 
 ```sql
@@ -692,6 +794,8 @@ RETURNS void
 
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
+
+<a id="fn-normalize-credit-card-payment-semantics-4d193efffb"></a>
 
 ## normalize_credit_card_payment_semantics
 
@@ -705,6 +809,8 @@ RETURNS trigger
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
 
+<a id="fn-normalize-payment-buffer-funding-semantics-16ab0a0576"></a>
+
 ## normalize_payment_buffer_funding_semantics
 
 ```sql
@@ -716,6 +822,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-normalize-transaction-budget-effect-9e6add9034"></a>
 
 ## normalize_transaction_budget_effect
 
@@ -729,6 +837,8 @@ RETURNS trigger
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
 
+<a id="fn-rebuild-debt-payment-movements-cadf8bb48d"></a>
+
 ## rebuild_debt_payment_movements
 
 ```sql
@@ -740,6 +850,8 @@ RETURNS void
 
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
+
+<a id="fn-reconcile-credit-card-minimum-ea61b8cf4b"></a>
 
 ## reconcile_credit_card_minimum
 
@@ -753,6 +865,8 @@ RETURNS void
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
+<a id="fn-reconcile-credit-card-minimum-from-old-transaction-4945a36f7d"></a>
+
 ## reconcile_credit_card_minimum_from_old_transaction
 
 ```sql
@@ -764,6 +878,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-reconcile-credit-card-minimum-from-transaction-189bfba7de"></a>
 
 ## reconcile_credit_card_minimum_from_transaction
 
@@ -777,6 +893,8 @@ RETURNS trigger
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
 
+<a id="fn-reconcile-payment-buffer-funding-from-transaction-2d2145772a"></a>
+
 ## reconcile_payment_buffer_funding_from_transaction
 
 ```sql
@@ -788,6 +906,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-refresh-cash-flow-24981a6d0a"></a>
 
 ## refresh_cash_flow
 
@@ -801,6 +921,8 @@ RETURNS void
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
+<a id="fn-refresh-cash-flow-event-from-allocation-176c3ff941"></a>
+
 ## refresh_cash_flow_event_from_allocation
 
 ```sql
@@ -812,6 +934,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-refresh-cash-flow-event-status-7a84b59058"></a>
 
 ## refresh_cash_flow_event_status
 
@@ -825,6 +949,8 @@ RETURNS cash_flow_events
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
+<a id="fn-refresh-cash-flow-security-bef82af046"></a>
+
 ## refresh_cash_flow_security
 
 ```sql
@@ -836,6 +962,8 @@ RETURNS integer
 
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
+
+<a id="fn-refresh-event-security-cb28073649"></a>
 
 ## refresh_event_security
 
@@ -849,6 +977,8 @@ RETURNS void
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
+<a id="fn-refresh-snapshot-dependents-e774891266"></a>
+
 ## refresh_snapshot_dependents
 
 ```sql
@@ -860,6 +990,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-refresh-transaction-dependents-3513c6b0a2"></a>
 
 ## refresh_transaction_dependents
 
@@ -873,6 +1005,8 @@ RETURNS trigger
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
 
+<a id="fn-set-credit-card-minimum-613f21d5d7"></a>
+
 ## set_credit_card_minimum
 
 ```sql
@@ -884,6 +1018,8 @@ RETURNS bigint
 
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
+
+<a id="fn-sync-cash-flow-sources-2ed9ef51b8"></a>
 
 ## sync_cash_flow_sources
 
@@ -897,6 +1033,8 @@ RETURNS trigger
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
 
+<a id="fn-sync-debt-payment-movements-e4b6004cb5"></a>
+
 ## sync_debt_payment_movements
 
 ```sql
@@ -908,6 +1046,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-sync-liability-principal-cache-493f3f0c4a"></a>
 
 ## sync_liability_principal_cache
 
@@ -921,6 +1061,8 @@ RETURNS void
 Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
+<a id="fn-sync-salary-transaction-to-event-845fb072a1"></a>
+
 ## sync_salary_transaction_to_event
 
 ```sql
@@ -932,6 +1074,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-trg-sync-liability-cache-from-movements-68942a8473"></a>
 
 ## trg_sync_liability_cache_from_movements
 
@@ -945,6 +1089,8 @@ RETURNS trigger
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
 
+<a id="fn-trg-sync-revolving-liability-cache-da3ad9487b"></a>
+
 ## trg_sync_revolving_liability_cache
 
 ```sql
@@ -956,6 +1102,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-validate-cash-flow-allocation-7bc13b6030"></a>
 
 ## validate_cash_flow_allocation
 
@@ -969,6 +1117,8 @@ RETURNS trigger
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
 
+<a id="fn-validate-debt-payment-details-fc68f8438d"></a>
+
 ## validate_debt_payment_details
 
 ```sql
@@ -980,6 +1130,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-validate-grace-reserve-d63891a4f9"></a>
 
 ## validate_grace_reserve
 
@@ -993,6 +1145,8 @@ RETURNS trigger
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
 
+<a id="fn-validate-grace-reserve-deferred-303d13b645"></a>
+
 ## validate_grace_reserve_deferred
 
 ```sql
@@ -1004,6 +1158,8 @@ RETURNS trigger
 
 Триггерная функция. Вызывается механизмом триггеров; не использовать как пользовательскую команду. Привязки приведены в справочнике базы.
 
+
+<a id="fn-validate-transaction-category-allocations-deferred-2a4024676f"></a>
 
 ## validate_transaction_category_allocations_deferred
 

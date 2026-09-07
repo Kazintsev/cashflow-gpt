@@ -1,0 +1,3034 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-09-07",
+  "evidence_status": "observed_snapshot",
+  "runtime_source_in_repo": false,
+  "reference_base": "repository_root",
+  "execution_authorization": false,
+  "scope": "public",
+  "ddl_complete": false,
+  "constraint_type_codes": {
+    "p": "primary_key",
+    "f": "foreign_key",
+    "u": "unique",
+    "c": "check",
+    "x": "exclude"
+  },
+  "relations": [
+    {
+      "name": "account_balance_snapshots",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-account-balance-snapshots",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": "nextval('balance_snapshots_id_seq'::regclass)",
+          "identity": "none"
+        },
+        {
+          "name": "account_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "balance_date",
+          "sql_type": "date",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "balance",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        },
+        {
+          "name": "balance_as_of",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "account_balance_snapshots_account_time_key",
+          "type": "u",
+          "definition": "UNIQUE (account_id, balance_as_of)"
+        },
+        {
+          "name": "balance_snapshots_account_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "balance_snapshots_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ]
+    },
+    {
+      "name": "accounts",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-accounts",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "by_default"
+        },
+        {
+          "name": "name",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "account_type",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "currency",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'RUB'::text",
+          "identity": "none"
+        },
+        {
+          "name": "institution",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "credit_limit",
+          "sql_type": "numeric(14,2)",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "opening_balance",
+          "sql_type": "numeric(14,2)",
+          "nullable": false,
+          "default_expression": "0",
+          "identity": "none"
+        },
+        {
+          "name": "opening_balance_date",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "is_active",
+          "sql_type": "boolean",
+          "nullable": false,
+          "default_expression": "true",
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "accounts_account_type_check",
+          "type": "c",
+          "definition": "CHECK ((account_type = ANY (ARRAY['cash'::text, 'bank'::text, 'credit_card'::text, 'loan'::text, 'mortgage'::text, 'savings'::text, 'investment'::text, 'other_asset'::text, 'other_liability'::text, 'payment_buffer'::text])))"
+        },
+        {
+          "name": "accounts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "accounts_rub",
+          "type": "c",
+          "definition": "CHECK ((currency = 'RUB'::text))"
+        },
+        {
+          "name": "finance_validate_data",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        }
+      ]
+    },
+    {
+      "name": "balance_snapshots",
+      "kind": "view",
+      "doc_ref": "docs/schema.md#view-balance-snapshots",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "account_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "balance_date",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "balance",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "balance_as_of",
+          "sql_type": "timestamp with time zone",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        }
+      ],
+      "constraints": []
+    },
+    {
+      "name": "cash_flow_event_funding",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-cash-flow-event-funding",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": "nextval('cash_flow_event_funding_id_seq'::regclass)",
+          "identity": "none"
+        },
+        {
+          "name": "cash_flow_event_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "transaction_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        },
+        {
+          "name": "relation_type",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'funding'::text",
+          "identity": "none"
+        },
+        {
+          "name": "allocation_source",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'manual'::text",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "cash_flow_event_funding_allocation_source_check",
+          "type": "c",
+          "definition": "CHECK ((allocation_source = ANY (ARRAY['manual'::text, 'auto_card_minimum'::text, 'auto_installment'::text, 'auto_payment_buffer'::text])))"
+        },
+        {
+          "name": "cash_flow_event_funding_amount_check",
+          "type": "c",
+          "definition": "CHECK ((amount > (0)::numeric))"
+        },
+        {
+          "name": "cash_flow_event_funding_cash_flow_event_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (cash_flow_event_id) REFERENCES cash_flow_events(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "cash_flow_event_funding_cash_flow_event_id_transaction_id_key",
+          "type": "u",
+          "definition": "UNIQUE (cash_flow_event_id, transaction_id)"
+        },
+        {
+          "name": "cash_flow_event_funding_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "cash_flow_event_funding_relation_type_check",
+          "type": "c",
+          "definition": "CHECK ((relation_type = ANY (ARRAY['funding'::text, 'payment'::text])))"
+        },
+        {
+          "name": "cash_flow_event_funding_transaction_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "finance_validate_data",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        }
+      ]
+    },
+    {
+      "name": "cash_flow_event_settlement_summary",
+      "kind": "view",
+      "doc_ref": "docs/schema.md#view-cash-flow-event-settlement-summary",
+      "columns": [
+        {
+          "name": "cash_flow_event_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "planned_amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "paid_amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "funded_amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "remaining_payment_amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "remaining_funding_amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        }
+      ],
+      "constraints": []
+    },
+    {
+      "name": "cash_flow_event_state",
+      "kind": "view",
+      "doc_ref": "docs/schema.md#view-cash-flow-event-state",
+      "columns": [
+        {
+          "name": "event_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "event_date",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "event_type",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "description",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "account_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "liability_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "status",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "paid_amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "funded_amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "cash_committed_amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "remaining_payment_amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "cash_still_required",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "derived_status",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        }
+      ],
+      "constraints": []
+    },
+    {
+      "name": "cash_flow_events",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-cash-flow-events",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": "nextval('cash_flow_events_id_seq'::regclass)",
+          "identity": "none"
+        },
+        {
+          "name": "event_date",
+          "sql_type": "date",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "event_type",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "description",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "account_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "liability_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "is_planned",
+          "sql_type": "boolean",
+          "nullable": false,
+          "default_expression": "true",
+          "identity": "none"
+        },
+        {
+          "name": "is_secured",
+          "sql_type": "boolean",
+          "nullable": false,
+          "default_expression": "false",
+          "identity": "none"
+        },
+        {
+          "name": "source_transaction_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        },
+        {
+          "name": "rule_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "period_start",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "period_end",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "calculation_method",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "living_budget_exempt",
+          "sql_type": "boolean",
+          "nullable": false,
+          "default_expression": "false",
+          "identity": "none"
+        },
+        {
+          "name": "security_amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "status",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'planned'::text",
+          "identity": "none"
+        },
+        {
+          "name": "actual_amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "actual_date",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "source_type",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'manual'::text",
+          "identity": "none"
+        },
+        {
+          "name": "source_key",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "fulfillment_mode",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'dated_payment'::text",
+          "identity": "none"
+        },
+        {
+          "name": "liability_payment_schedule_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "income_completed_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "cash_flow_events_account_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (account_id) REFERENCES accounts(id)"
+        },
+        {
+          "name": "cash_flow_events_fulfillment_mode_check",
+          "type": "c",
+          "definition": "CHECK ((fulfillment_mode = ANY (ARRAY['dated_payment'::text, 'cumulative_contributions'::text])))"
+        },
+        {
+          "name": "cash_flow_events_liability_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (liability_id) REFERENCES liabilities(id)"
+        },
+        {
+          "name": "cash_flow_events_liability_payment_schedule_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (liability_payment_schedule_id) REFERENCES liability_payment_schedule(id) ON DELETE SET NULL"
+        },
+        {
+          "name": "cash_flow_events_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "cash_flow_events_rule_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (rule_id) REFERENCES cash_flow_rules(id)"
+        },
+        {
+          "name": "cash_flow_events_source_transaction_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (source_transaction_id) REFERENCES transactions(id) ON DELETE SET NULL"
+        },
+        {
+          "name": "cash_flow_events_source_type_check",
+          "type": "c",
+          "definition": "CHECK ((source_type = ANY (ARRAY['manual'::text, 'rule'::text, 'split_schedule'::text, 'legacy'::text, 'bank_schedule'::text, 'card_minimum'::text])))"
+        },
+        {
+          "name": "cash_flow_events_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['planned'::text, 'partially_secured'::text, 'secured'::text, 'partially_executed'::text, 'executed'::text, 'cancelled'::text])))"
+        },
+        {
+          "name": "cash_flow_events_valid_amount",
+          "type": "c",
+          "definition": "CHECK (((amount >= (0)::numeric) AND (amount <> ALL (ARRAY['NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric]))))"
+        },
+        {
+          "name": "cash_flow_events_valid_type",
+          "type": "c",
+          "definition": "CHECK ((event_type = ANY (ARRAY['income'::text, 'expense'::text, 'debt_payment'::text, 'planned_expense'::text])))"
+        },
+        {
+          "name": "finance_validate_data",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        }
+      ]
+    },
+    {
+      "name": "cash_flow_rules",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-cash-flow-rules",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": "nextval('cash_flow_rules_id_seq'::regclass)",
+          "identity": "none"
+        },
+        {
+          "name": "name",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "rule_type",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "amount",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "payment_day",
+          "sql_type": "smallint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "share_of_monthly_salary",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "weekend_rule",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "start_date",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "end_date",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "is_active",
+          "sql_type": "boolean",
+          "nullable": false,
+          "default_expression": "true",
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        },
+        {
+          "name": "event_type",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "schedule_type",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'monthly'::text",
+          "identity": "none"
+        },
+        {
+          "name": "liability_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "account_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "calculation_method",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "currency",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'RUB'::text",
+          "identity": "none"
+        },
+        {
+          "name": "living_budget_exempt",
+          "sql_type": "boolean",
+          "nullable": false,
+          "default_expression": "true",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "cash_flow_rules_account_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE SET NULL"
+        },
+        {
+          "name": "cash_flow_rules_event_type_check",
+          "type": "c",
+          "definition": "CHECK (((event_type IS NULL) OR (event_type = ANY (ARRAY['income'::text, 'expense'::text, 'debt_payment'::text]))))"
+        },
+        {
+          "name": "cash_flow_rules_liability_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (liability_id) REFERENCES liabilities(id) ON DELETE SET NULL"
+        },
+        {
+          "name": "cash_flow_rules_name_key",
+          "type": "u",
+          "definition": "UNIQUE (name)"
+        },
+        {
+          "name": "cash_flow_rules_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "cash_flow_rules_rub",
+          "type": "c",
+          "definition": "CHECK ((currency = 'RUB'::text))"
+        },
+        {
+          "name": "cash_flow_rules_rule_type_check",
+          "type": "c",
+          "definition": "CHECK ((rule_type = ANY (ARRAY['fixed'::text, 'salary_advance'::text, 'salary_balance'::text, 'recurring_obligation'::text, 'salary'::text, 'living_budget'::text])))"
+        },
+        {
+          "name": "cash_flow_rules_schedule_type_check",
+          "type": "c",
+          "definition": "CHECK ((schedule_type = ANY (ARRAY['monthly'::text, 'weekly'::text])))"
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-categories",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "by_default"
+        },
+        {
+          "name": "name",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "category_type",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "parent_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "is_active",
+          "sql_type": "boolean",
+          "nullable": false,
+          "default_expression": "true",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "categories_category_type_check",
+          "type": "c",
+          "definition": "CHECK ((category_type = ANY (ARRAY['income'::text, 'expense'::text, 'transfer'::text, 'debt'::text, 'fee'::text])))"
+        },
+        {
+          "name": "categories_name_category_type_key",
+          "type": "u",
+          "definition": "UNIQUE (name, category_type)"
+        },
+        {
+          "name": "categories_parent_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (parent_id) REFERENCES categories(id)"
+        },
+        {
+          "name": "categories_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ]
+    },
+    {
+      "name": "debt_goals",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-debt-goals",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "by_default"
+        },
+        {
+          "name": "liability_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "target_close_date",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "target_monthly_payment",
+          "sql_type": "numeric(14,2)",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "target_extra_payment",
+          "sql_type": "numeric(14,2)",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "priority",
+          "sql_type": "smallint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "rationale",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "is_active",
+          "sql_type": "boolean",
+          "nullable": false,
+          "default_expression": "true",
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "debt_goals_liability_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (liability_id) REFERENCES liabilities(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "debt_goals_liability_id_key",
+          "type": "u",
+          "definition": "UNIQUE (liability_id)"
+        },
+        {
+          "name": "debt_goals_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ]
+    },
+    {
+      "name": "debt_payment_details",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-debt-payment-details",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "by_default"
+        },
+        {
+          "name": "transaction_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "liability_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "principal_amount",
+          "sql_type": "numeric(14,2)",
+          "nullable": false,
+          "default_expression": "0",
+          "identity": "none"
+        },
+        {
+          "name": "interest_amount",
+          "sql_type": "numeric(14,2)",
+          "nullable": false,
+          "default_expression": "0",
+          "identity": "none"
+        },
+        {
+          "name": "fee_amount",
+          "sql_type": "numeric(14,2)",
+          "nullable": false,
+          "default_expression": "0",
+          "identity": "none"
+        },
+        {
+          "name": "cash_flow_event_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "debt_payment_details_cash_flow_event_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (cash_flow_event_id) REFERENCES cash_flow_events(id)"
+        },
+        {
+          "name": "debt_payment_details_check",
+          "type": "c",
+          "definition": "CHECK ((((principal_amount + interest_amount) + fee_amount) > (0)::numeric))"
+        },
+        {
+          "name": "debt_payment_details_fee_amount_check",
+          "type": "c",
+          "definition": "CHECK ((fee_amount >= (0)::numeric))"
+        },
+        {
+          "name": "debt_payment_details_interest_amount_check",
+          "type": "c",
+          "definition": "CHECK ((interest_amount >= (0)::numeric))"
+        },
+        {
+          "name": "debt_payment_details_liability_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (liability_id) REFERENCES liabilities(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "debt_payment_details_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "debt_payment_details_principal_amount_check",
+          "type": "c",
+          "definition": "CHECK ((principal_amount >= (0)::numeric))"
+        },
+        {
+          "name": "debt_payment_details_transaction_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "debt_payment_details_transaction_id_key",
+          "type": "u",
+          "definition": "UNIQUE (transaction_id)"
+        },
+        {
+          "name": "finance_validate_data",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        }
+      ]
+    },
+    {
+      "name": "finance_settings",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-finance-settings",
+      "columns": [
+        {
+          "name": "key",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "value",
+          "sql_type": "jsonb",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "updated_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "finance_settings_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (key)"
+        }
+      ]
+    },
+    {
+      "name": "liabilities",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-liabilities",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "by_default"
+        },
+        {
+          "name": "account_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "liability_type",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "principal_original",
+          "sql_type": "numeric(14,2)",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "principal_current",
+          "sql_type": "numeric(14,2)",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "annual_rate",
+          "sql_type": "numeric(7,4)",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "minimum_payment",
+          "sql_type": "numeric(14,2)",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "payment_day",
+          "sql_type": "smallint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "term_end_date",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "interest_free_until",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "target_close_date",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "target_extra_payment",
+          "sql_type": "numeric(14,2)",
+          "nullable": true,
+          "default_expression": "0",
+          "identity": "none"
+        },
+        {
+          "name": "priority",
+          "sql_type": "smallint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        },
+        {
+          "name": "balance_model",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "linked_account_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "payment_account_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "status",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'active'::text",
+          "identity": "none"
+        },
+        {
+          "name": "name",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "minimum_payment_calculation_day",
+          "sql_type": "smallint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "finance_validate_data",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        },
+        {
+          "name": "liabilities_account_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "liabilities_balance_model_check",
+          "type": "c",
+          "definition": "CHECK (((balance_model IS NULL) OR (balance_model = ANY (ARRAY['revolving_account'::text, 'installment'::text]))))"
+        },
+        {
+          "name": "liabilities_liability_type_check",
+          "type": "c",
+          "definition": "CHECK ((liability_type = ANY (ARRAY['credit_card'::text, 'consumer_loan'::text, 'mortgage'::text, 'other_loan'::text])))"
+        },
+        {
+          "name": "liabilities_linked_account_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (linked_account_id) REFERENCES accounts(id)"
+        },
+        {
+          "name": "liabilities_minimum_payment_calculation_day_check",
+          "type": "c",
+          "definition": "CHECK (((minimum_payment_calculation_day IS NULL) OR ((minimum_payment_calculation_day >= 1) AND (minimum_payment_calculation_day <= 31))))"
+        },
+        {
+          "name": "liabilities_model_accounts",
+          "type": "c",
+          "definition": "CHECK ((((balance_model = 'installment'::text) AND (payment_account_id IS NOT NULL) AND (linked_account_id IS NULL)) OR ((balance_model = 'revolving_account'::text) AND (linked_account_id IS NOT NULL))))"
+        },
+        {
+          "name": "liabilities_payment_account_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (payment_account_id) REFERENCES accounts(id)"
+        },
+        {
+          "name": "liabilities_payment_day_check",
+          "type": "c",
+          "definition": "CHECK (((payment_day >= 1) AND (payment_day <= 31)))"
+        },
+        {
+          "name": "liabilities_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "liabilities_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['active'::text, 'closed'::text, 'paused'::text])))"
+        }
+      ]
+    },
+    {
+      "name": "liability_balance_snapshots",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-liability-balance-snapshots",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "by_default"
+        },
+        {
+          "name": "liability_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "balance_as_of",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "principal_balance",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "accrued_interest",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": "0",
+          "identity": "none"
+        },
+        {
+          "name": "fees_due",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": "0",
+          "identity": "none"
+        },
+        {
+          "name": "source",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "liability_balance_snapshots_accrued_interest_check",
+          "type": "c",
+          "definition": "CHECK ((accrued_interest >= (0)::numeric))"
+        },
+        {
+          "name": "liability_balance_snapshots_fees_due_check",
+          "type": "c",
+          "definition": "CHECK ((fees_due >= (0)::numeric))"
+        },
+        {
+          "name": "liability_balance_snapshots_liability_id_balance_as_of_key",
+          "type": "u",
+          "definition": "UNIQUE (liability_id, balance_as_of)"
+        },
+        {
+          "name": "liability_balance_snapshots_liability_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (liability_id) REFERENCES liabilities(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "liability_balance_snapshots_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "liability_balance_snapshots_principal_balance_check",
+          "type": "c",
+          "definition": "CHECK ((principal_balance >= (0)::numeric))"
+        }
+      ]
+    },
+    {
+      "name": "liability_current_balances",
+      "kind": "view",
+      "doc_ref": "docs/schema.md#view-liability-current-balances",
+      "columns": [
+        {
+          "name": "liability_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "name",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "liability_type",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "balance_model",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "principal_balance",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "accrued_interest",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "fees_due",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "total_debt",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "payment_account_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "linked_account_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        }
+      ],
+      "constraints": []
+    },
+    {
+      "name": "liability_movements",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-liability-movements",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "by_default"
+        },
+        {
+          "name": "liability_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "effective_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "movement_type",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "direction",
+          "sql_type": "smallint",
+          "nullable": false,
+          "default_expression": "1",
+          "identity": "none"
+        },
+        {
+          "name": "transaction_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "cash_flow_event_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        },
+        {
+          "name": "debt_payment_detail_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "finance_validate_data",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        },
+        {
+          "name": "liability_movements_amount_check",
+          "type": "c",
+          "definition": "CHECK ((amount > (0)::numeric))"
+        },
+        {
+          "name": "liability_movements_cash_flow_event_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (cash_flow_event_id) REFERENCES cash_flow_events(id) ON DELETE SET NULL"
+        },
+        {
+          "name": "liability_movements_debt_payment_detail_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (debt_payment_detail_id) REFERENCES debt_payment_details(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "liability_movements_direction_check",
+          "type": "c",
+          "definition": "CHECK ((direction = ANY (ARRAY['-1'::integer, 1])))"
+        },
+        {
+          "name": "liability_movements_liability_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (liability_id) REFERENCES liabilities(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "liability_movements_movement_type_check",
+          "type": "c",
+          "definition": "CHECK ((movement_type = ANY (ARRAY['principal_increase'::text, 'principal_payment'::text, 'interest_accrual'::text, 'interest_payment'::text, 'fee_accrual'::text, 'fee_payment'::text, 'principal_adjustment'::text, 'interest_adjustment'::text, 'fee_adjustment'::text])))"
+        },
+        {
+          "name": "liability_movements_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "liability_movements_transaction_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE"
+        }
+      ]
+    },
+    {
+      "name": "liability_payment_schedule",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-liability-payment-schedule",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "by_default"
+        },
+        {
+          "name": "liability_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "payment_number",
+          "sql_type": "integer",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "payment_date",
+          "sql_type": "date",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "principal_before",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "principal_amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "interest_amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": "0",
+          "identity": "none"
+        },
+        {
+          "name": "fee_amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": "0",
+          "identity": "none"
+        },
+        {
+          "name": "total_amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "principal_after",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "source",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "source_as_of",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        },
+        {
+          "name": "updated_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "liability_payment_schedule_components_check",
+          "type": "c",
+          "definition": "CHECK ((round(((principal_amount + interest_amount) + fee_amount), 2) = round(total_amount, 2)))"
+        },
+        {
+          "name": "liability_payment_schedule_fee_amount_check",
+          "type": "c",
+          "definition": "CHECK ((fee_amount >= (0)::numeric))"
+        },
+        {
+          "name": "liability_payment_schedule_interest_amount_check",
+          "type": "c",
+          "definition": "CHECK ((interest_amount >= (0)::numeric))"
+        },
+        {
+          "name": "liability_payment_schedule_liability_date_key",
+          "type": "u",
+          "definition": "UNIQUE (liability_id, payment_date)"
+        },
+        {
+          "name": "liability_payment_schedule_liability_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (liability_id) REFERENCES liabilities(id)"
+        },
+        {
+          "name": "liability_payment_schedule_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "liability_payment_schedule_principal_amount_check",
+          "type": "c",
+          "definition": "CHECK ((principal_amount >= (0)::numeric))"
+        },
+        {
+          "name": "liability_payment_schedule_principal_before_check",
+          "type": "c",
+          "definition": "CHECK ((principal_before >= (0)::numeric))"
+        },
+        {
+          "name": "liability_payment_schedule_total_amount_check",
+          "type": "c",
+          "definition": "CHECK ((total_amount >= (0)::numeric))"
+        }
+      ]
+    },
+    {
+      "name": "living_budgets",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-living-budgets",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "by_default"
+        },
+        {
+          "name": "week_start",
+          "sql_type": "date",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "living_budgets_amount_check",
+          "type": "c",
+          "definition": "CHECK ((amount >= (0)::numeric))"
+        },
+        {
+          "name": "living_budgets_monday",
+          "type": "c",
+          "definition": "CHECK ((EXTRACT(isodow FROM week_start) = (1)::numeric))"
+        },
+        {
+          "name": "living_budgets_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "living_budgets_week_start_key",
+          "type": "u",
+          "definition": "UNIQUE (week_start)"
+        }
+      ]
+    },
+    {
+      "name": "planned_purchases",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-planned-purchases",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "by_default"
+        },
+        {
+          "name": "name",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "planned_amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "planned_date",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "status",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'active'::text",
+          "identity": "none"
+        },
+        {
+          "name": "financing_method",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "actual_transaction_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "liability_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        },
+        {
+          "name": "closed_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "planned_purchases_actual_transaction_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (actual_transaction_id) REFERENCES transactions(id) ON DELETE SET NULL"
+        },
+        {
+          "name": "planned_purchases_financing_method_check",
+          "type": "c",
+          "definition": "CHECK (((financing_method IS NULL) OR (financing_method = ANY (ARRAY['cash'::text, 'credit_card'::text, 'split'::text, 'other_credit'::text, 'unknown'::text]))))"
+        },
+        {
+          "name": "planned_purchases_liability_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (liability_id) REFERENCES liabilities(id) ON DELETE SET NULL"
+        },
+        {
+          "name": "planned_purchases_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "planned_purchases_planned_amount_check",
+          "type": "c",
+          "definition": "CHECK ((planned_amount > (0)::numeric))"
+        },
+        {
+          "name": "planned_purchases_status_check",
+          "type": "c",
+          "definition": "CHECK ((status = ANY (ARRAY['active'::text, 'completed'::text, 'cancelled'::text, 'converted_to_split'::text, 'converted_to_credit'::text])))"
+        }
+      ]
+    },
+    {
+      "name": "receipt_items",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-receipt-items",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": "nextval('receipt_items_id_seq'::regclass)",
+          "identity": "none"
+        },
+        {
+          "name": "receipt_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "line_number",
+          "sql_type": "integer",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "name",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "barcode",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "quantity",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "unit_price",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "category_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "confidence",
+          "sql_type": "numeric",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "finance_validate_data",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        },
+        {
+          "name": "receipt_items_amount_check",
+          "type": "c",
+          "definition": "CHECK ((amount > (0)::numeric))"
+        },
+        {
+          "name": "receipt_items_category_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (category_id) REFERENCES categories(id)"
+        },
+        {
+          "name": "receipt_items_confidence_check",
+          "type": "c",
+          "definition": "CHECK (((confidence IS NULL) OR ((confidence >= (0)::numeric) AND (confidence <= (1)::numeric))))"
+        },
+        {
+          "name": "receipt_items_nonnegative_price",
+          "type": "c",
+          "definition": "CHECK (((unit_price IS NULL) OR (unit_price >= (0)::numeric)))"
+        },
+        {
+          "name": "receipt_items_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "receipt_items_positive_quantity",
+          "type": "c",
+          "definition": "CHECK (((quantity IS NULL) OR (quantity > (0)::numeric)))"
+        },
+        {
+          "name": "receipt_items_receipt_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (receipt_id) REFERENCES receipts(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "receipt_items_receipt_id_line_number_key",
+          "type": "u",
+          "definition": "UNIQUE (receipt_id, line_number)"
+        }
+      ]
+    },
+    {
+      "name": "receipts",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-receipts",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": "nextval('receipts_id_seq'::regclass)",
+          "identity": "none"
+        },
+        {
+          "name": "transaction_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "merchant_name",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "purchase_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "total_amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "fiscal_drive_number",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "fiscal_document_number",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "fiscal_sign",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "operation_type",
+          "sql_type": "smallint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "qr_payload",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "source",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'photo'::text",
+          "identity": "none"
+        },
+        {
+          "name": "parse_status",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'category_only'::text",
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "finance_validate_data",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        },
+        {
+          "name": "receipts_parse_status_check",
+          "type": "c",
+          "definition": "CHECK ((parse_status = ANY (ARRAY['category_only'::text, 'items_parsed'::text, 'verified_online'::text])))"
+        },
+        {
+          "name": "receipts_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "receipts_source_check",
+          "type": "c",
+          "definition": "CHECK ((source = ANY (ARRAY['photo'::text, 'fns'::text, 'manual'::text])))"
+        },
+        {
+          "name": "receipts_total_amount_check",
+          "type": "c",
+          "definition": "CHECK ((total_amount > (0)::numeric))"
+        },
+        {
+          "name": "receipts_transaction_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "receipts_transaction_id_key",
+          "type": "u",
+          "definition": "UNIQUE (transaction_id)"
+        }
+      ]
+    },
+    {
+      "name": "transaction_category_allocations",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-transaction-category-allocations",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": "nextval('transaction_category_allocations_id_seq'::regclass)",
+          "identity": "none"
+        },
+        {
+          "name": "transaction_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "category_id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "amount",
+          "sql_type": "numeric",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "allocation_source",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'manual'::text",
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "finance_validate_data",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        },
+        {
+          "name": "transaction_category_allocations_allocation_source_check",
+          "type": "c",
+          "definition": "CHECK ((allocation_source = ANY (ARRAY['manual'::text, 'receipt'::text, 'rule'::text, 'import'::text])))"
+        },
+        {
+          "name": "transaction_category_allocations_amount_check",
+          "type": "c",
+          "definition": "CHECK ((amount > (0)::numeric))"
+        },
+        {
+          "name": "transaction_category_allocations_category_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (category_id) REFERENCES categories(id)"
+        },
+        {
+          "name": "transaction_category_allocations_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "transaction_category_allocations_transaction_id_category_id_key",
+          "type": "u",
+          "definition": "UNIQUE (transaction_id, category_id)"
+        },
+        {
+          "name": "transaction_category_allocations_transaction_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE"
+        },
+        {
+          "name": "trg_validate_transaction_category_allocations",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        }
+      ]
+    },
+    {
+      "name": "transactions",
+      "kind": "table",
+      "doc_ref": "docs/schema.md#table-transactions",
+      "columns": [
+        {
+          "name": "id",
+          "sql_type": "bigint",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "by_default"
+        },
+        {
+          "name": "transaction_date",
+          "sql_type": "date",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "transaction_type",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "amount",
+          "sql_type": "numeric(14,2)",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "currency",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'RUB'::text",
+          "identity": "none"
+        },
+        {
+          "name": "description",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "category_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "from_account_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "to_account_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "liability_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "external_ref",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "notes",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "created_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": "now()",
+          "identity": "none"
+        },
+        {
+          "name": "occurred_at",
+          "sql_type": "timestamp with time zone",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "budget_effect",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "salary_component",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "salary_period_start",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "income_event_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "request_payload",
+          "sql_type": "jsonb",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "reserve_effect",
+          "sql_type": "text",
+          "nullable": false,
+          "default_expression": "'none'::text",
+          "identity": "none"
+        },
+        {
+          "name": "reserve_cycle",
+          "sql_type": "text",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "reserve_due_date",
+          "sql_type": "date",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        },
+        {
+          "name": "reserve_liability_id",
+          "sql_type": "bigint",
+          "nullable": true,
+          "default_expression": null,
+          "identity": "none"
+        }
+      ],
+      "observed_rls_enabled": false,
+      "constraints": [
+        {
+          "name": "finance_validate_data",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        },
+        {
+          "name": "transactions_amount_check",
+          "type": "c",
+          "definition": "CHECK ((amount > (0)::numeric))"
+        },
+        {
+          "name": "transactions_budget_effect_check",
+          "type": "c",
+          "definition": "CHECK ((budget_effect = ANY (ARRAY['life'::text, 'excluded'::text, 'none'::text])))"
+        },
+        {
+          "name": "transactions_category_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (category_id) REFERENCES categories(id)"
+        },
+        {
+          "name": "transactions_check",
+          "type": "c",
+          "definition": "CHECK ((((transaction_type = 'expense'::text) AND (from_account_id IS NOT NULL) AND (to_account_id IS NULL)) OR ((transaction_type = 'income'::text) AND (from_account_id IS NULL) AND (to_account_id IS NOT NULL)) OR ((transaction_type = 'transfer'::text) AND (from_account_id IS NOT NULL) AND (to_account_id IS NOT NULL) AND (from_account_id <> to_account_id)) OR (transaction_type = ANY (ARRAY['debt_payment'::text, 'interest'::text, 'fee'::text, 'adjustment'::text]))))"
+        },
+        {
+          "name": "transactions_debit_sides",
+          "type": "c",
+          "definition": "CHECK (((transaction_type <> ALL (ARRAY['debt_payment'::text, 'interest'::text, 'fee'::text])) OR ((from_account_id IS NOT NULL) AND ((transaction_type = 'debt_payment'::text) OR (to_account_id IS NULL)))))"
+        },
+        {
+          "name": "transactions_finite_amount",
+          "type": "c",
+          "definition": "CHECK ((amount <> 'NaN'::numeric))"
+        },
+        {
+          "name": "transactions_from_account_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (from_account_id) REFERENCES accounts(id)"
+        },
+        {
+          "name": "transactions_income_event_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (income_event_id) REFERENCES cash_flow_events(id)"
+        },
+        {
+          "name": "transactions_income_metadata",
+          "type": "c",
+          "definition": "CHECK (((transaction_type = 'income'::text) OR ((income_event_id IS NULL) AND (salary_component IS NULL) AND (salary_period_start IS NULL))))"
+        },
+        {
+          "name": "transactions_liability_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (liability_id) REFERENCES liabilities(id)"
+        },
+        {
+          "name": "transactions_life_only_for_expenses",
+          "type": "c",
+          "definition": "CHECK (((budget_effect <> 'life'::text) OR (transaction_type = 'expense'::text)))"
+        },
+        {
+          "name": "transactions_nonempty_sides",
+          "type": "c",
+          "definition": "CHECK ((((from_account_id IS NOT NULL) OR (to_account_id IS NOT NULL)) AND ((from_account_id IS NULL) OR (to_account_id IS NULL) OR (from_account_id <> to_account_id))))"
+        },
+        {
+          "name": "transactions_pkey",
+          "type": "p",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "transactions_reserve_effect_check",
+          "type": "c",
+          "definition": "CHECK ((reserve_effect = ANY (ARRAY['none'::text, 'grace_draw'::text, 'grace_repay'::text])))"
+        },
+        {
+          "name": "transactions_reserve_liability_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (reserve_liability_id) REFERENCES liabilities(id)"
+        },
+        {
+          "name": "transactions_reserve_metadata",
+          "type": "c",
+          "definition": "CHECK ((((reserve_effect = 'none'::text) AND (reserve_cycle IS NULL) AND (reserve_due_date IS NULL) AND (reserve_liability_id IS NULL)) OR ((reserve_effect <> 'none'::text) AND (NULLIF(btrim(reserve_cycle), ''::text) IS NOT NULL) AND (reserve_due_date IS NOT NULL) AND (reserve_liability_id IS NOT NULL))))"
+        },
+        {
+          "name": "transactions_rub",
+          "type": "c",
+          "definition": "CHECK ((currency = 'RUB'::text))"
+        },
+        {
+          "name": "transactions_salary_component_check",
+          "type": "c",
+          "definition": "CHECK (((salary_component IS NULL) OR (salary_component = ANY (ARRAY['advance'::text, 'salary'::text, 'vacation'::text, 'bonus'::text, 'other'::text]))))"
+        },
+        {
+          "name": "transactions_to_account_id_fkey",
+          "type": "f",
+          "definition": "FOREIGN KEY (to_account_id) REFERENCES accounts(id)"
+        },
+        {
+          "name": "transactions_transaction_type_check",
+          "type": "c",
+          "definition": "CHECK ((transaction_type = ANY (ARRAY['expense'::text, 'income'::text, 'transfer'::text, 'debt_payment'::text, 'interest'::text, 'fee'::text, 'adjustment'::text])))"
+        },
+        {
+          "name": "trg_validate_grace_reserve_deferred",
+          "type": "t",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        }
+      ]
+    }
+  ],
+  "triggers": [
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.account_balance_snapshots FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "account_balance_snapshots"
+    },
+    {
+      "name": "trg_refresh_snapshot_dependents",
+      "definition": "CREATE TRIGGER trg_refresh_snapshot_dependents AFTER INSERT OR DELETE OR UPDATE ON public.account_balance_snapshots FOR EACH ROW EXECUTE FUNCTION refresh_snapshot_dependents()",
+      "table_name": "account_balance_snapshots"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.accounts FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "accounts"
+    },
+    {
+      "name": "finance_validate_data",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.accounts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
+      "table_name": "accounts"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.cash_flow_event_funding FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "cash_flow_event_funding"
+    },
+    {
+      "name": "finance_validate_data",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.cash_flow_event_funding DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
+      "table_name": "cash_flow_event_funding"
+    },
+    {
+      "name": "trg_apply_event_payment_budget_semantics",
+      "definition": "CREATE TRIGGER trg_apply_event_payment_budget_semantics AFTER INSERT OR UPDATE ON public.cash_flow_event_funding FOR EACH ROW EXECUTE FUNCTION apply_event_payment_budget_semantics()",
+      "table_name": "cash_flow_event_funding"
+    },
+    {
+      "name": "trg_refresh_cash_flow_event_from_allocation",
+      "definition": "CREATE TRIGGER trg_refresh_cash_flow_event_from_allocation AFTER INSERT OR DELETE OR UPDATE ON public.cash_flow_event_funding FOR EACH ROW EXECUTE FUNCTION refresh_cash_flow_event_from_allocation()",
+      "table_name": "cash_flow_event_funding"
+    },
+    {
+      "name": "trg_validate_cash_flow_allocation",
+      "definition": "CREATE TRIGGER trg_validate_cash_flow_allocation BEFORE INSERT OR UPDATE ON public.cash_flow_event_funding FOR EACH ROW EXECUTE FUNCTION validate_cash_flow_allocation()",
+      "table_name": "cash_flow_event_funding"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.cash_flow_events FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "cash_flow_events"
+    },
+    {
+      "name": "finance_validate_data",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.cash_flow_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
+      "table_name": "cash_flow_events"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.cash_flow_rules FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "cash_flow_rules"
+    },
+    {
+      "name": "trg_sync_cash_flow_sources",
+      "definition": "CREATE TRIGGER trg_sync_cash_flow_sources AFTER INSERT OR DELETE OR UPDATE ON public.cash_flow_rules FOR EACH STATEMENT EXECUTE FUNCTION sync_cash_flow_sources()",
+      "table_name": "cash_flow_rules"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.categories FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "categories"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.debt_goals FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "debt_goals"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.debt_payment_details FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "debt_payment_details"
+    },
+    {
+      "name": "finance_validate_data",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.debt_payment_details DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
+      "table_name": "debt_payment_details"
+    },
+    {
+      "name": "trg_sync_debt_payment_movements",
+      "definition": "CREATE TRIGGER trg_sync_debt_payment_movements AFTER INSERT OR DELETE OR UPDATE ON public.debt_payment_details FOR EACH ROW EXECUTE FUNCTION sync_debt_payment_movements()",
+      "table_name": "debt_payment_details"
+    },
+    {
+      "name": "trg_validate_debt_payment_details",
+      "definition": "CREATE TRIGGER trg_validate_debt_payment_details BEFORE INSERT OR UPDATE ON public.debt_payment_details FOR EACH ROW EXECUTE FUNCTION validate_debt_payment_details()",
+      "table_name": "debt_payment_details"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.finance_settings FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "finance_settings"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.liabilities FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "liabilities"
+    },
+    {
+      "name": "finance_validate_data",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.liabilities DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
+      "table_name": "liabilities"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.liability_balance_snapshots FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "liability_balance_snapshots"
+    },
+    {
+      "name": "trg_refresh_snapshot_dependents",
+      "definition": "CREATE TRIGGER trg_refresh_snapshot_dependents AFTER INSERT OR DELETE OR UPDATE ON public.liability_balance_snapshots FOR EACH ROW EXECUTE FUNCTION refresh_snapshot_dependents()",
+      "table_name": "liability_balance_snapshots"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.liability_movements FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "liability_movements"
+    },
+    {
+      "name": "finance_validate_data",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.liability_movements DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
+      "table_name": "liability_movements"
+    },
+    {
+      "name": "trg_sync_liability_cache_from_movements",
+      "definition": "CREATE TRIGGER trg_sync_liability_cache_from_movements AFTER INSERT OR DELETE OR UPDATE ON public.liability_movements FOR EACH ROW EXECUTE FUNCTION trg_sync_liability_cache_from_movements()",
+      "table_name": "liability_movements"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.liability_payment_schedule FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "liability_payment_schedule"
+    },
+    {
+      "name": "trg_sync_cash_flow_sources",
+      "definition": "CREATE TRIGGER trg_sync_cash_flow_sources AFTER INSERT OR DELETE OR UPDATE ON public.liability_payment_schedule FOR EACH STATEMENT EXECUTE FUNCTION sync_cash_flow_sources()",
+      "table_name": "liability_payment_schedule"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.living_budgets FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "living_budgets"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.planned_purchases FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "planned_purchases"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.receipt_items FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "receipt_items"
+    },
+    {
+      "name": "finance_validate_data",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.receipt_items DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
+      "table_name": "receipt_items"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.receipts FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "receipts"
+    },
+    {
+      "name": "finance_validate_data",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
+      "table_name": "receipts"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.transaction_category_allocations FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "transaction_category_allocations"
+    },
+    {
+      "name": "finance_validate_data",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.transaction_category_allocations DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
+      "table_name": "transaction_category_allocations"
+    },
+    {
+      "name": "trg_validate_transaction_category_allocations",
+      "definition": "CREATE CONSTRAINT TRIGGER trg_validate_transaction_category_allocations AFTER INSERT OR DELETE OR UPDATE ON public.transaction_category_allocations DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION validate_transaction_category_allocations_deferred()",
+      "table_name": "transaction_category_allocations"
+    },
+    {
+      "name": "finance_00_write_lock",
+      "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.transactions FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "finance_validate_data",
+      "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.transactions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_00_normalize_payment_buffer_funding_semantics",
+      "definition": "CREATE TRIGGER trg_00_normalize_payment_buffer_funding_semantics BEFORE INSERT OR UPDATE OF transaction_type, from_account_id, to_account_id, budget_effect ON public.transactions FOR EACH ROW EXECUTE FUNCTION normalize_payment_buffer_funding_semantics()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_clear_credit_card_minimum_allocations",
+      "definition": "CREATE TRIGGER trg_clear_credit_card_minimum_allocations BEFORE DELETE OR UPDATE OF amount, transaction_date, from_account_id, to_account_id, transaction_type ON public.transactions FOR EACH ROW EXECUTE FUNCTION clear_credit_card_minimum_allocations()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_clear_payment_buffer_funding_allocations",
+      "definition": "CREATE TRIGGER trg_clear_payment_buffer_funding_allocations BEFORE DELETE OR UPDATE OF amount, transaction_date, occurred_at, from_account_id, to_account_id, transaction_type, liability_id ON public.transactions FOR EACH ROW EXECUTE FUNCTION clear_payment_buffer_funding_allocations()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_credit_card_payment_semantics",
+      "definition": "CREATE TRIGGER trg_credit_card_payment_semantics BEFORE INSERT OR UPDATE OF transaction_type, amount, from_account_id, to_account_id, liability_id, category_id, budget_effect ON public.transactions FOR EACH ROW EXECUTE FUNCTION normalize_credit_card_payment_semantics()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_normalize_transaction_budget_effect",
+      "definition": "CREATE TRIGGER trg_normalize_transaction_budget_effect BEFORE INSERT OR UPDATE ON public.transactions FOR EACH ROW EXECUTE FUNCTION normalize_transaction_budget_effect()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_reconcile_credit_card_minimum_from_old_transaction",
+      "definition": "CREATE TRIGGER trg_reconcile_credit_card_minimum_from_old_transaction AFTER DELETE OR UPDATE OF amount, transaction_date, occurred_at, from_account_id, to_account_id, transaction_type ON public.transactions FOR EACH ROW EXECUTE FUNCTION reconcile_credit_card_minimum_from_old_transaction()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_reconcile_credit_card_minimum_from_transaction",
+      "definition": "CREATE TRIGGER trg_reconcile_credit_card_minimum_from_transaction AFTER INSERT OR UPDATE OF amount, transaction_date, occurred_at, from_account_id, to_account_id, transaction_type ON public.transactions FOR EACH ROW EXECUTE FUNCTION reconcile_credit_card_minimum_from_transaction()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_reconcile_payment_buffer_funding_from_transaction",
+      "definition": "CREATE TRIGGER trg_reconcile_payment_buffer_funding_from_transaction AFTER INSERT OR UPDATE OF amount, transaction_date, occurred_at, from_account_id, to_account_id, transaction_type, liability_id ON public.transactions FOR EACH ROW EXECUTE FUNCTION reconcile_payment_buffer_funding_from_transaction()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_refresh_transaction_dependents",
+      "definition": "CREATE TRIGGER trg_refresh_transaction_dependents AFTER UPDATE OF amount, occurred_at, transaction_date, transaction_type, from_account_id, to_account_id, liability_id ON public.transactions FOR EACH ROW EXECUTE FUNCTION refresh_transaction_dependents()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_sync_revolving_liability_cache",
+      "definition": "CREATE TRIGGER trg_sync_revolving_liability_cache AFTER INSERT OR DELETE OR UPDATE ON public.transactions FOR EACH ROW EXECUTE FUNCTION trg_sync_revolving_liability_cache()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_sync_salary_transaction_to_event",
+      "definition": "CREATE TRIGGER trg_sync_salary_transaction_to_event AFTER INSERT OR DELETE OR UPDATE OF amount, transaction_type, transaction_date, occurred_at, salary_component, salary_period_start, income_event_id ON public.transactions FOR EACH ROW EXECUTE FUNCTION sync_salary_transaction_to_event()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_validate_grace_reserve",
+      "definition": "CREATE TRIGGER trg_validate_grace_reserve BEFORE INSERT OR UPDATE ON public.transactions FOR EACH ROW EXECUTE FUNCTION validate_grace_reserve()",
+      "table_name": "transactions"
+    },
+    {
+      "name": "trg_validate_grace_reserve_deferred",
+      "definition": "CREATE CONSTRAINT TRIGGER trg_validate_grace_reserve_deferred AFTER INSERT OR DELETE OR UPDATE ON public.transactions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION validate_grace_reserve_deferred()",
+      "table_name": "transactions"
+    }
+  ]
+}

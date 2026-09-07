@@ -1,5 +1,9 @@
 # Правила расчётов
 
+> ID: calculation_rules · Для: user, developer, agent · Тип: observed_snapshot
+>
+> Денежные формулы и временные границы. [Карта документации](index.md) · [Манифест](manifest.json)
+
 Эта глава описывает текущий код, а не нормативную бухгалтерскую модель. Основные источники: `get_account_balance`, `get_liquidity_until_next_income`, `get_living_budget_reserve`, `get_credit_cash_reserves`, `get_financial_position_at`.
 
 ## 1. Остаток счёта на момент времени
