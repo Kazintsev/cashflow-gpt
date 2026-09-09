@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "snapshot_date": "2026-09-07",
+  "snapshot_date": "2026-09-08",
   "evidence_status": "observed_snapshot",
-  "runtime_source_in_repo": false,
+  "runtime_source_in_repo": true,
   "reference_base": "repository_root",
   "execution_authorization": false,
   "scope": "public",
@@ -12,7 +12,8 @@
     "f": "foreign_key",
     "u": "unique",
     "c": "check",
-    "x": "exclude"
+    "x": "exclude",
+    "t": "constraint_trigger"
   },
   "relations": [
     {
@@ -87,7 +88,9 @@
           "type": "p",
           "definition": "PRIMARY KEY (id)"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/account_balance_snapshots.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "accounts",
@@ -194,7 +197,9 @@
           "type": "t",
           "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/accounts.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "balance_snapshots",
@@ -251,7 +256,9 @@
           "identity": "none"
         }
       ],
-      "constraints": []
+      "constraints": [],
+      "source_path": "database/schema/views/balance_snapshots.sql",
+      "installed_security_invoker": true
     },
     {
       "name": "cash_flow_event_funding",
@@ -350,7 +357,9 @@
           "type": "t",
           "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/cash_flow_event_funding.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "cash_flow_event_settlement_summary",
@@ -400,7 +409,9 @@
           "identity": "none"
         }
       ],
-      "constraints": []
+      "constraints": [],
+      "source_path": "database/schema/views/cash_flow_event_settlement_summary.sql",
+      "installed_security_invoker": true
     },
     {
       "name": "cash_flow_event_state",
@@ -506,7 +517,9 @@
           "identity": "none"
         }
       ],
-      "constraints": []
+      "constraints": [],
+      "source_path": "database/schema/views/cash_flow_event_state.sql",
+      "installed_security_invoker": true
     },
     {
       "name": "cash_flow_events",
@@ -758,7 +771,9 @@
           "type": "t",
           "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/cash_flow_events.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "cash_flow_rules",
@@ -941,7 +956,9 @@
           "type": "c",
           "definition": "CHECK ((schedule_type = ANY (ARRAY['monthly'::text, 'weekly'::text])))"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/cash_flow_rules.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "categories",
@@ -1006,7 +1023,9 @@
           "type": "p",
           "definition": "PRIMARY KEY (id)"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/categories.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "debt_goals",
@@ -1094,7 +1113,9 @@
           "type": "p",
           "definition": "PRIMARY KEY (id)"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/debt_goals.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "debt_payment_details",
@@ -1203,7 +1224,9 @@
           "type": "t",
           "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/debt_payment_details.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "finance_settings",
@@ -1246,7 +1269,9 @@
           "type": "p",
           "definition": "PRIMARY KEY (key)"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/finance_settings.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "liabilities",
@@ -1458,7 +1483,9 @@
           "type": "c",
           "definition": "CHECK ((status = ANY (ARRAY['active'::text, 'closed'::text, 'paused'::text])))"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/liabilities.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "liability_balance_snapshots",
@@ -1561,7 +1588,9 @@
           "type": "c",
           "definition": "CHECK ((principal_balance >= (0)::numeric))"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/liability_balance_snapshots.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "liability_current_balances",
@@ -1639,7 +1668,9 @@
           "identity": "none"
         }
       ],
-      "constraints": []
+      "constraints": [],
+      "source_path": "database/schema/views/liability_current_balances.sql",
+      "installed_security_invoker": true
     },
     {
       "name": "liability_movements",
@@ -1771,7 +1802,9 @@
           "type": "f",
           "definition": "FOREIGN KEY (transaction_id) REFERENCES transactions(id) ON DELETE CASCADE"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/liability_movements.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "liability_payment_schedule",
@@ -1846,7 +1879,9 @@
           "sql_type": "numeric",
           "nullable": true,
           "default_expression": null,
-          "identity": "none"
+          "identity": "none",
+          "generated": "stored",
+          "generation_expression": "GREATEST((principal_before - principal_amount), (0)::numeric)"
         },
         {
           "name": "source",
@@ -1924,7 +1959,9 @@
           "type": "c",
           "definition": "CHECK ((total_amount >= (0)::numeric))"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/liability_payment_schedule.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "living_budgets",
@@ -1989,7 +2026,9 @@
           "type": "u",
           "definition": "UNIQUE (week_start)"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/living_budgets.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "planned_purchases",
@@ -2106,7 +2145,9 @@
           "type": "c",
           "definition": "CHECK ((status = ANY (ARRAY['active'::text, 'completed'::text, 'cancelled'::text, 'converted_to_split'::text, 'converted_to_credit'::text])))"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/planned_purchases.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "receipt_items",
@@ -2245,7 +2286,9 @@
           "type": "u",
           "definition": "UNIQUE (receipt_id, line_number)"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/receipt_items.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "receipts",
@@ -2381,7 +2424,9 @@
           "type": "u",
           "definition": "UNIQUE (transaction_id)"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/receipts.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "transaction_category_allocations",
@@ -2480,7 +2525,9 @@
           "type": "t",
           "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/transaction_category_allocations.sql",
+      "installed_rls_enabled": true
     },
     {
       "name": "transactions",
@@ -2761,274 +2808,330 @@
           "type": "t",
           "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
         }
-      ]
+      ],
+      "source_path": "database/schema/tables/transactions.sql",
+      "installed_rls_enabled": true
     }
   ],
   "triggers": [
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.account_balance_snapshots FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "account_balance_snapshots"
+      "table_name": "account_balance_snapshots",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_refresh_snapshot_dependents",
       "definition": "CREATE TRIGGER trg_refresh_snapshot_dependents AFTER INSERT OR DELETE OR UPDATE ON public.account_balance_snapshots FOR EACH ROW EXECUTE FUNCTION refresh_snapshot_dependents()",
-      "table_name": "account_balance_snapshots"
+      "table_name": "account_balance_snapshots",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.accounts FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "accounts"
+      "table_name": "accounts",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_validate_data",
       "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.accounts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
-      "table_name": "accounts"
+      "table_name": "accounts",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.cash_flow_event_funding FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "cash_flow_event_funding"
+      "table_name": "cash_flow_event_funding",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_validate_data",
       "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.cash_flow_event_funding DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
-      "table_name": "cash_flow_event_funding"
+      "table_name": "cash_flow_event_funding",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_apply_event_payment_budget_semantics",
       "definition": "CREATE TRIGGER trg_apply_event_payment_budget_semantics AFTER INSERT OR UPDATE ON public.cash_flow_event_funding FOR EACH ROW EXECUTE FUNCTION apply_event_payment_budget_semantics()",
-      "table_name": "cash_flow_event_funding"
+      "table_name": "cash_flow_event_funding",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_refresh_cash_flow_event_from_allocation",
       "definition": "CREATE TRIGGER trg_refresh_cash_flow_event_from_allocation AFTER INSERT OR DELETE OR UPDATE ON public.cash_flow_event_funding FOR EACH ROW EXECUTE FUNCTION refresh_cash_flow_event_from_allocation()",
-      "table_name": "cash_flow_event_funding"
+      "table_name": "cash_flow_event_funding",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_validate_cash_flow_allocation",
       "definition": "CREATE TRIGGER trg_validate_cash_flow_allocation BEFORE INSERT OR UPDATE ON public.cash_flow_event_funding FOR EACH ROW EXECUTE FUNCTION validate_cash_flow_allocation()",
-      "table_name": "cash_flow_event_funding"
+      "table_name": "cash_flow_event_funding",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.cash_flow_events FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "cash_flow_events"
+      "table_name": "cash_flow_events",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_validate_data",
       "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.cash_flow_events DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
-      "table_name": "cash_flow_events"
+      "table_name": "cash_flow_events",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.cash_flow_rules FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "cash_flow_rules"
+      "table_name": "cash_flow_rules",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_sync_cash_flow_sources",
       "definition": "CREATE TRIGGER trg_sync_cash_flow_sources AFTER INSERT OR DELETE OR UPDATE ON public.cash_flow_rules FOR EACH STATEMENT EXECUTE FUNCTION sync_cash_flow_sources()",
-      "table_name": "cash_flow_rules"
+      "table_name": "cash_flow_rules",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.categories FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "categories"
+      "table_name": "categories",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.debt_goals FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "debt_goals"
+      "table_name": "debt_goals",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.debt_payment_details FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "debt_payment_details"
+      "table_name": "debt_payment_details",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_validate_data",
       "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.debt_payment_details DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
-      "table_name": "debt_payment_details"
+      "table_name": "debt_payment_details",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_sync_debt_payment_movements",
       "definition": "CREATE TRIGGER trg_sync_debt_payment_movements AFTER INSERT OR DELETE OR UPDATE ON public.debt_payment_details FOR EACH ROW EXECUTE FUNCTION sync_debt_payment_movements()",
-      "table_name": "debt_payment_details"
+      "table_name": "debt_payment_details",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_validate_debt_payment_details",
       "definition": "CREATE TRIGGER trg_validate_debt_payment_details BEFORE INSERT OR UPDATE ON public.debt_payment_details FOR EACH ROW EXECUTE FUNCTION validate_debt_payment_details()",
-      "table_name": "debt_payment_details"
+      "table_name": "debt_payment_details",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.finance_settings FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "finance_settings"
+      "table_name": "finance_settings",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.liabilities FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "liabilities"
+      "table_name": "liabilities",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_validate_data",
       "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.liabilities DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
-      "table_name": "liabilities"
+      "table_name": "liabilities",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.liability_balance_snapshots FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "liability_balance_snapshots"
+      "table_name": "liability_balance_snapshots",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_refresh_snapshot_dependents",
       "definition": "CREATE TRIGGER trg_refresh_snapshot_dependents AFTER INSERT OR DELETE OR UPDATE ON public.liability_balance_snapshots FOR EACH ROW EXECUTE FUNCTION refresh_snapshot_dependents()",
-      "table_name": "liability_balance_snapshots"
+      "table_name": "liability_balance_snapshots",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.liability_movements FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "liability_movements"
+      "table_name": "liability_movements",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_validate_data",
       "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.liability_movements DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
-      "table_name": "liability_movements"
+      "table_name": "liability_movements",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_sync_liability_cache_from_movements",
       "definition": "CREATE TRIGGER trg_sync_liability_cache_from_movements AFTER INSERT OR DELETE OR UPDATE ON public.liability_movements FOR EACH ROW EXECUTE FUNCTION trg_sync_liability_cache_from_movements()",
-      "table_name": "liability_movements"
+      "table_name": "liability_movements",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.liability_payment_schedule FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "liability_payment_schedule"
+      "table_name": "liability_payment_schedule",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_sync_cash_flow_sources",
       "definition": "CREATE TRIGGER trg_sync_cash_flow_sources AFTER INSERT OR DELETE OR UPDATE ON public.liability_payment_schedule FOR EACH STATEMENT EXECUTE FUNCTION sync_cash_flow_sources()",
-      "table_name": "liability_payment_schedule"
+      "table_name": "liability_payment_schedule",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.living_budgets FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "living_budgets"
+      "table_name": "living_budgets",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.planned_purchases FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "planned_purchases"
+      "table_name": "planned_purchases",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.receipt_items FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "receipt_items"
+      "table_name": "receipt_items",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_validate_data",
       "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.receipt_items DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
-      "table_name": "receipt_items"
+      "table_name": "receipt_items",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.receipts FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "receipts"
+      "table_name": "receipts",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_validate_data",
       "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.receipts DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
-      "table_name": "receipts"
+      "table_name": "receipts",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.transaction_category_allocations FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "transaction_category_allocations"
+      "table_name": "transaction_category_allocations",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_validate_data",
       "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.transaction_category_allocations DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
-      "table_name": "transaction_category_allocations"
+      "table_name": "transaction_category_allocations",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_validate_transaction_category_allocations",
       "definition": "CREATE CONSTRAINT TRIGGER trg_validate_transaction_category_allocations AFTER INSERT OR DELETE OR UPDATE ON public.transaction_category_allocations DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION validate_transaction_category_allocations_deferred()",
-      "table_name": "transaction_category_allocations"
+      "table_name": "transaction_category_allocations",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_00_write_lock",
       "definition": "CREATE TRIGGER finance_00_write_lock BEFORE INSERT OR DELETE OR UPDATE ON public.transactions FOR EACH STATEMENT EXECUTE FUNCTION finance_write_lock()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "finance_validate_data",
       "definition": "CREATE CONSTRAINT TRIGGER finance_validate_data AFTER INSERT OR DELETE OR UPDATE ON public.transactions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION finance_validate_data_deferred()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_00_normalize_payment_buffer_funding_semantics",
       "definition": "CREATE TRIGGER trg_00_normalize_payment_buffer_funding_semantics BEFORE INSERT OR UPDATE OF transaction_type, from_account_id, to_account_id, budget_effect ON public.transactions FOR EACH ROW EXECUTE FUNCTION normalize_payment_buffer_funding_semantics()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_clear_credit_card_minimum_allocations",
       "definition": "CREATE TRIGGER trg_clear_credit_card_minimum_allocations BEFORE DELETE OR UPDATE OF amount, transaction_date, from_account_id, to_account_id, transaction_type ON public.transactions FOR EACH ROW EXECUTE FUNCTION clear_credit_card_minimum_allocations()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_clear_payment_buffer_funding_allocations",
       "definition": "CREATE TRIGGER trg_clear_payment_buffer_funding_allocations BEFORE DELETE OR UPDATE OF amount, transaction_date, occurred_at, from_account_id, to_account_id, transaction_type, liability_id ON public.transactions FOR EACH ROW EXECUTE FUNCTION clear_payment_buffer_funding_allocations()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_credit_card_payment_semantics",
       "definition": "CREATE TRIGGER trg_credit_card_payment_semantics BEFORE INSERT OR UPDATE OF transaction_type, amount, from_account_id, to_account_id, liability_id, category_id, budget_effect ON public.transactions FOR EACH ROW EXECUTE FUNCTION normalize_credit_card_payment_semantics()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_normalize_transaction_budget_effect",
       "definition": "CREATE TRIGGER trg_normalize_transaction_budget_effect BEFORE INSERT OR UPDATE ON public.transactions FOR EACH ROW EXECUTE FUNCTION normalize_transaction_budget_effect()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_reconcile_credit_card_minimum_from_old_transaction",
       "definition": "CREATE TRIGGER trg_reconcile_credit_card_minimum_from_old_transaction AFTER DELETE OR UPDATE OF amount, transaction_date, occurred_at, from_account_id, to_account_id, transaction_type ON public.transactions FOR EACH ROW EXECUTE FUNCTION reconcile_credit_card_minimum_from_old_transaction()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_reconcile_credit_card_minimum_from_transaction",
       "definition": "CREATE TRIGGER trg_reconcile_credit_card_minimum_from_transaction AFTER INSERT OR UPDATE OF amount, transaction_date, occurred_at, from_account_id, to_account_id, transaction_type ON public.transactions FOR EACH ROW EXECUTE FUNCTION reconcile_credit_card_minimum_from_transaction()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_reconcile_payment_buffer_funding_from_transaction",
       "definition": "CREATE TRIGGER trg_reconcile_payment_buffer_funding_from_transaction AFTER INSERT OR UPDATE OF amount, transaction_date, occurred_at, from_account_id, to_account_id, transaction_type, liability_id ON public.transactions FOR EACH ROW EXECUTE FUNCTION reconcile_payment_buffer_funding_from_transaction()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_refresh_transaction_dependents",
       "definition": "CREATE TRIGGER trg_refresh_transaction_dependents AFTER UPDATE OF amount, occurred_at, transaction_date, transaction_type, from_account_id, to_account_id, liability_id ON public.transactions FOR EACH ROW EXECUTE FUNCTION refresh_transaction_dependents()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_sync_revolving_liability_cache",
       "definition": "CREATE TRIGGER trg_sync_revolving_liability_cache AFTER INSERT OR DELETE OR UPDATE ON public.transactions FOR EACH ROW EXECUTE FUNCTION trg_sync_revolving_liability_cache()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_sync_salary_transaction_to_event",
       "definition": "CREATE TRIGGER trg_sync_salary_transaction_to_event AFTER INSERT OR DELETE OR UPDATE OF amount, transaction_type, transaction_date, occurred_at, salary_component, salary_period_start, income_event_id ON public.transactions FOR EACH ROW EXECUTE FUNCTION sync_salary_transaction_to_event()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_validate_grace_reserve",
       "definition": "CREATE TRIGGER trg_validate_grace_reserve BEFORE INSERT OR UPDATE ON public.transactions FOR EACH ROW EXECUTE FUNCTION validate_grace_reserve()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     },
     {
       "name": "trg_validate_grace_reserve_deferred",
       "definition": "CREATE CONSTRAINT TRIGGER trg_validate_grace_reserve_deferred AFTER INSERT OR DELETE OR UPDATE ON public.transactions DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION validate_grace_reserve_deferred()",
-      "table_name": "transactions"
+      "table_name": "transactions",
+      "source_path": "database/schema/triggers.sql"
     }
-  ]
+  ],
+  "source_manifest": "database/manifest.json"
 }

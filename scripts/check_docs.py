@@ -37,6 +37,9 @@ def main():
     manifest = read_json("docs/manifest.json")
     functions = read_json(manifest["catalogs"]["functions"])
     schema = read_json(manifest["catalogs"]["schema"])
+    sql_manifest = read_json(manifest["source_manifest"])
+    sql_functions = {(f["name"], f["identity_arguments"]): f for f in sql_manifest["functions"]}
+    require(sql_manifest["snapshot_date"] == manifest["snapshot_date"], "SQL/document snapshot dates differ")
     for name, obj in [("manifest", manifest), ("functions", functions), ("schema", schema)]:
         require(obj.get("schema_version") == 1, f"Unsupported schema_version: {name}")
         require(obj.get("reference_base") == "repository_root", f"Invalid reference base: {name}")
@@ -55,7 +58,8 @@ def main():
         require(bool(d.get("audience")) and bool(d.get("purpose")), f"Missing metadata: {d['id']}")
 
     actual_documents = {str(p.relative_to(ROOT)) for p in ROOT.rglob("*")
-                        if p.is_file() and (p.suffix == ".md" or p.name == "llms.txt"
+                        if p.is_file() and not any(part in {"node_modules", ".git", "__pycache__"} for part in p.relative_to(ROOT).parts)
+                        and (p.suffix == ".md" or p.name == "llms.txt"
                                             or p.parent == ROOT / "docs/reference"
                                             or p == ROOT / "docs/manifest.json")}
     require(actual_documents == set(paths),
@@ -87,6 +91,10 @@ def main():
         require(all(type(p["has_default"]) is bool for p in f["parameters"]),
                 f"Invalid default flags: {f['name']}")
         check_ref(f["doc_ref"], ROOT / "docs/reference/functions.json")
+        check_ref(f["source_path"], ROOT / "docs/reference/functions.json")
+        sql_function = sql_functions.get((f["name"], f["identity_arguments"]), {})
+        require(sql_function.get("path") == f["source_path"], f"SQL source mismatch: {f['signature_id']}")
+        require(sql_function.get("portability_changes") == f["portability_changes"], f"Portability metadata mismatch: {f['signature_id']}")
         anchor = f["doc_ref"].split("#", 1)[1]
         segment = reference_text.split(f'<a id="{anchor}"></a>', 1)[-1].split('<a id="', 1)[0]
         require(expected in segment and "RETURNS " + f["return_type"] in segment,
@@ -99,6 +107,7 @@ def main():
     require(len(names) == len(set(names)), "Duplicate relation names")
     for r in relations:
         check_ref(r["doc_ref"], ROOT / "docs/reference/schema.json")
+        check_ref(r["source_path"], ROOT / "docs/reference/schema.json")
         p = ROOT / r["doc_ref"].split("#", 1)[0]
         anchor = r["doc_ref"].split("#", 1)[1]
         segment = p.read_text(encoding="utf-8").split(f'<a id="{anchor}"></a>', 1)[-1].split('<a id="', 1)[0]
@@ -110,6 +119,7 @@ def main():
             require(expected in segment, f"Markdown/JSON column mismatch: {r['name']}.{c['name']}")
     for t in schema["triggers"]:
         require(t["table_name"] in names, f"Trigger references unknown relation: {t['name']}")
+        check_ref(t["source_path"], ROOT / "docs/reference/schema.json")
 
     intents = []
     for t in manifest["tasks"]:

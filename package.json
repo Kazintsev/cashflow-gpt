@@ -1,0 +1,15 @@
+{
+  "name": "cashflow-gpt",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal finance SQL core and documentation",
+  "scripts": {
+    "build:sql": "python3 scripts/build_sql.py",
+    "check:sql": "python3 scripts/build_sql.py --check",
+    "check:docs": "python3 scripts/check_docs.py",
+    "test": "node tests/database.test.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8"
+  }
+}

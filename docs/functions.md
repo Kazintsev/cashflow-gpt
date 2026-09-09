@@ -4,9 +4,9 @@
 >
 > Точные сигнатуры и отдельные якоря перегрузок. [Карта документации](index.md) · [Манифест](manifest.json)
 
-В каталоге 76 сигнатур схемы `public`, включая перегрузки и триггерные функции. Сигнатуры и возвращаемые типы получены из PostgreSQL 7 сентября 2026 года. Это инвентаризация, а не обещание стабильности всех внутренних вызовов. Для интеграции начинайте с [прикладного API](api.md).
+В каталоге 76 сигнатур схемы `public`, включая перегрузки и триггерные функции. Сигнатуры и возвращаемые типы получены из PostgreSQL 8 сентября 2026 года. Это инвентаризация, а не обещание стабильности всех внутренних вызовов. Для интеграции начинайте с [прикладного API](api.md).
 
-В сигнатурах ниже значения DEFAULT намеренно опущены; параметры с defaults перечислены отдельно. Для фактического вызова используйте именованные аргументы и явные типы. Полные тела функций и миграции в этот пакет не включены.
+В сигнатурах ниже значения DEFAULT намеренно опущены; параметры с defaults перечислены отдельно. Для фактического вызова используйте именованные аргументы и явные типы. Полные тела с DEFAULT доступны по ссылке «Исходник SQL» у каждой сигнатуры. [Структура и отличия экспорта](source-code.md).
 
 Все обследованные функции исполняются с правами вызывающего (`SECURITY INVOKER`). Метка `VOLATILE` сама по себе не доказывает изменение данных; для административных и триггерных функций необходимо читать реализацию.
 
@@ -93,6 +93,8 @@
 
 <a id="fn-apply-event-payment-budget-semantics-12658278ea"></a>
 
+[Исходник SQL](../database/functions/apply_event_payment_budget_semantics--12658278ea.sql)
+
 ## apply_event_payment_budget_semantics
 
 ```sql
@@ -107,6 +109,8 @@ RETURNS trigger
 
 <a id="fn-assert-free-cash-invariant-a2c2858b89"></a>
 
+[Исходник SQL](../database/functions/assert_free_cash_invariant--a2c2858b89.sql)
+
 ## assert_free_cash_invariant
 
 ```sql
@@ -116,10 +120,12 @@ RETURNS void
 
 Параметры со значениями по умолчанию: `p_tolerance`.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-business-day-on-or-before-cebbf35516"></a>
+
+[Исходник SQL](../database/functions/business_day_on_or_before--cebbf35516.sql)
 
 ## business_day_on_or_before
 
@@ -135,6 +141,8 @@ RETURNS date
 
 <a id="fn-clear-credit-card-minimum-allocations-a521adf21e"></a>
 
+[Исходник SQL](../database/functions/clear_credit_card_minimum_allocations--a521adf21e.sql)
+
 ## clear_credit_card_minimum_allocations
 
 ```sql
@@ -148,6 +156,8 @@ RETURNS trigger
 
 
 <a id="fn-clear-payment-buffer-funding-allocations-765bde8b76"></a>
+
+[Исходник SQL](../database/functions/clear_payment_buffer_funding_allocations--765bde8b76.sql)
 
 ## clear_payment_buffer_funding_allocations
 
@@ -163,6 +173,8 @@ RETURNS trigger
 
 <a id="fn-complete-income-event-935dedcc55"></a>
 
+[Исходник SQL](../database/functions/complete_income_event--935dedcc55.sql)
+
 ## complete_income_event
 
 ```sql
@@ -176,6 +188,8 @@ RETURNS void
 
 
 <a id="fn-correct-finance-transaction-9009324eb2"></a>
+
+[Исходник SQL](../database/functions/correct_finance_transaction--9009324eb2.sql)
 
 ## correct_finance_transaction
 
@@ -193,6 +207,8 @@ RETURNS transactions
 
 <a id="fn-execute-event-5dc04a140f"></a>
 
+[Исходник SQL](../database/functions/execute_event--5dc04a140f.sql)
+
 ## execute_event
 
 ```sql
@@ -209,6 +225,8 @@ RETURNS bigint
 
 <a id="fn-execute-installment-payment-84817fc831"></a>
 
+[Исходник SQL](../database/functions/execute_installment_payment--84817fc831.sql)
+
 ## execute_installment_payment
 
 ```sql
@@ -218,10 +236,12 @@ RETURNS bigint
 
 Параметры со значениями по умолчанию: `p_occurred_at`, `p_actual_amount`, `p_principal_amount`, `p_interest_amount`, `p_fee_amount`.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-finance-business-date-425398addf"></a>
+
+[Исходник SQL](../database/functions/finance_business_date--425398addf.sql)
 
 ## finance_business_date
 
@@ -236,6 +256,8 @@ RETURNS date
 
 
 <a id="fn-finance-command-4c19d2b97f"></a>
+
+[Исходник SQL](../database/functions/finance_command--4c19d2b97f.sql)
 
 ## finance_command
 
@@ -253,6 +275,8 @@ RETURNS bigint
 
 <a id="fn-finance-data-issues-5926da9222"></a>
 
+[Исходник SQL](../database/functions/finance_data_issues--5926da9222.sql)
+
 ## finance_data_issues
 
 ```sql
@@ -266,6 +290,8 @@ RETURNS TABLE(code text, entity_id bigint, details jsonb)
 
 
 <a id="fn-finance-day-end-c0ec7af4f3"></a>
+
+[Исходник SQL](../database/functions/finance_day_end--c0ec7af4f3.sql)
 
 ## finance_day_end
 
@@ -281,6 +307,8 @@ RETURNS timestamp with time zone
 
 <a id="fn-finance-day-start-04625df52f"></a>
 
+[Исходник SQL](../database/functions/finance_day_start--04625df52f.sql)
+
 ## finance_day_start
 
 ```sql
@@ -294,6 +322,8 @@ RETURNS timestamp with time zone
 
 
 <a id="fn-finance-integrity-check-b9b78cef5e"></a>
+
+[Исходник SQL](../database/functions/finance_integrity_check--b9b78cef5e.sql)
 
 ## finance_integrity_check
 
@@ -309,6 +339,8 @@ RETURNS TABLE(severity text, code text, entity_type text, entity_id bigint, mess
 
 <a id="fn-finance-setting-numeric-7c24e5a300"></a>
 
+[Исходник SQL](../database/functions/finance_setting_numeric--7c24e5a300.sql)
+
 ## finance_setting_numeric
 
 ```sql
@@ -322,6 +354,8 @@ RETURNS numeric
 
 
 <a id="fn-finance-setting-text-5e1df66f14"></a>
+
+[Исходник SQL](../database/functions/finance_setting_text--5e1df66f14.sql)
 
 ## finance_setting_text
 
@@ -337,6 +371,8 @@ RETURNS text
 
 <a id="fn-finance-validate-data-deferred-9903e2cc8c"></a>
 
+[Исходник SQL](../database/functions/finance_validate_data_deferred--9903e2cc8c.sql)
+
 ## finance_validate_data_deferred
 
 ```sql
@@ -350,6 +386,8 @@ RETURNS trigger
 
 
 <a id="fn-finance-write-lock-493e7475cb"></a>
+
+[Исходник SQL](../database/functions/finance_write_lock--493e7475cb.sql)
 
 ## finance_write_lock
 
@@ -365,6 +403,8 @@ RETURNS trigger
 
 <a id="fn-forecast-free-cash-888649f7ff"></a>
 
+[Исходник SQL](../database/functions/forecast_free_cash--888649f7ff.sql)
+
 ## forecast_free_cash
 
 ```sql
@@ -378,6 +418,8 @@ RETURNS TABLE(current_free_cash numeric, planned_income numeric, secured_outflow
 
 
 <a id="fn-fund-event-e24cde05db"></a>
+
+[Исходник SQL](../database/functions/fund_event--e24cde05db.sql)
 
 ## fund_event
 
@@ -395,6 +437,8 @@ RETURNS bigint
 
 <a id="fn-generate-cash-flow-events-5188dc9aeb"></a>
 
+[Исходник SQL](../database/functions/generate_cash_flow_events--5188dc9aeb.sql)
+
 ## generate_cash_flow_events
 
 ```sql
@@ -408,6 +452,8 @@ RETURNS void
 
 
 <a id="fn-get-account-balance-329abeba8c"></a>
+
+[Исходник SQL](../database/functions/get_account_balance--329abeba8c.sql)
 
 ## get_account_balance
 
@@ -423,6 +469,8 @@ RETURNS numeric
 
 <a id="fn-get-account-balance-654dfdbb2e"></a>
 
+[Исходник SQL](../database/functions/get_account_balance--654dfdbb2e.sql)
+
 ## get_account_balance
 
 ```sql
@@ -436,6 +484,8 @@ RETURNS numeric
 
 
 <a id="fn-get-actual-cash-4d54a90000"></a>
+
+[Исходник SQL](../database/functions/get_actual_cash--4d54a90000.sql)
 
 ## get_actual_cash
 
@@ -451,6 +501,8 @@ RETURNS numeric
 
 <a id="fn-get-actual-cash-f161cecaef"></a>
 
+[Исходник SQL](../database/functions/get_actual_cash--f161cecaef.sql)
+
 ## get_actual_cash
 
 ```sql
@@ -465,6 +517,8 @@ RETURNS numeric
 
 <a id="fn-get-cash-flow-event-coverage-af94ef53c9"></a>
 
+[Исходник SQL](../database/functions/get_cash_flow_event_coverage--af94ef53c9.sql)
+
 ## get_cash_flow_event_coverage
 
 ```sql
@@ -474,10 +528,12 @@ RETURNS TABLE(planned_amount numeric, paid_amount numeric, funded_amount numeric
 
 Параметры со значениями по умолчанию: нет.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-get-cash-flow-event-state-as-of-e6aad22f44"></a>
+
+[Исходник SQL](../database/functions/get_cash_flow_event_state_as_of--e6aad22f44.sql)
 
 ## get_cash_flow_event_state_as_of
 
@@ -493,6 +549,8 @@ RETURNS TABLE(event_id bigint, event_date date, event_type text, amount numeric,
 
 <a id="fn-get-credit-budget-position-a68ed80ef8"></a>
 
+[Исходник SQL](../database/functions/get_credit_budget_position--a68ed80ef8.sql)
+
 ## get_credit_budget_position
 
 ```sql
@@ -506,6 +564,8 @@ RETURNS TABLE(account_id bigint, account_name text, life_spend_total numeric, ca
 
 
 <a id="fn-get-credit-cash-reserves-48133ca082"></a>
+
+[Исходник SQL](../database/functions/get_credit_cash_reserves--48133ca082.sql)
 
 ## get_credit_cash_reserves
 
@@ -523,6 +583,8 @@ RETURNS TABLE(account_id bigint, unpaid_life numeric, grace_outstanding numeric,
 
 <a id="fn-get-expense-category-lines-25428b0831"></a>
 
+[Исходник SQL](../database/functions/get_expense_category_lines--25428b0831.sql)
+
 ## get_expense_category_lines
 
 ```sql
@@ -537,6 +599,8 @@ RETURNS TABLE(transaction_id bigint, transaction_date date, description text, ca
 
 <a id="fn-get-financial-position-d043b30aa9"></a>
 
+[Исходник SQL](../database/functions/get_financial_position--d043b30aa9.sql)
+
 ## get_financial_position
 
 ```sql
@@ -546,10 +610,12 @@ RETURNS TABLE(as_of timestamp with time zone, actual_cash numeric, projected_cas
 
 Параметры со значениями по умолчанию: `p_default_weekly_budget`.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-get-financial-position-6ee5ec6561"></a>
+
+[Исходник SQL](../database/functions/get_financial_position--6ee5ec6561.sql)
 
 ## get_financial_position
 
@@ -560,10 +626,12 @@ RETURNS TABLE(as_of timestamp with time zone, actual_cash numeric, projected_cas
 
 Параметры со значениями по умолчанию: `p_default_weekly_budget`.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-get-financial-position-at-9f14d7d31e"></a>
+
+[Исходник SQL](../database/functions/get_financial_position_at--9f14d7d31e.sql)
 
 ## get_financial_position_at
 
@@ -581,6 +649,8 @@ RETURNS TABLE(as_of date, actual_cash numeric, expected_income numeric, required
 
 <a id="fn-get-financial-position-v2-588bed1dca"></a>
 
+[Исходник SQL](../database/functions/get_financial_position_v2--588bed1dca.sql)
+
 ## get_financial_position_v2
 
 ```sql
@@ -595,6 +665,8 @@ RETURNS TABLE(as_of date, actual_cash numeric, expected_income numeric, required
 
 <a id="fn-get-free-cash-5de924fe5e"></a>
 
+[Исходник SQL](../database/functions/get_free_cash--5de924fe5e.sql)
+
 ## get_free_cash
 
 ```sql
@@ -608,6 +680,8 @@ RETURNS numeric
 
 
 <a id="fn-get-free-cash-5ed941717d"></a>
+
+[Исходник SQL](../database/functions/get_free_cash--5ed941717d.sql)
 
 ## get_free_cash
 
@@ -625,6 +699,8 @@ RETURNS numeric
 
 <a id="fn-get-income-event-state-as-of-e07cdd98ff"></a>
 
+[Исходник SQL](../database/functions/get_income_event_state_as_of--e07cdd98ff.sql)
+
 ## get_income_event_state_as_of
 
 ```sql
@@ -639,6 +715,8 @@ RETURNS TABLE(event_id bigint, received_amount numeric, remaining_amount numeric
 
 <a id="fn-get-liability-balance-4540d0944f"></a>
 
+[Исходник SQL](../database/functions/get_liability_balance--4540d0944f.sql)
+
 ## get_liability_balance
 
 ```sql
@@ -652,6 +730,8 @@ RETURNS TABLE(principal_balance numeric, accrued_interest numeric, fees_due nume
 
 
 <a id="fn-get-liability-balance-8d1c73d395"></a>
+
+[Исходник SQL](../database/functions/get_liability_balance--8d1c73d395.sql)
 
 ## get_liability_balance
 
@@ -669,6 +749,8 @@ RETURNS TABLE(principal_balance numeric, accrued_interest numeric, fees_due nume
 
 <a id="fn-get-liability-balance-details-0017571ee7"></a>
 
+[Исходник SQL](../database/functions/get_liability_balance_details--0017571ee7.sql)
+
 ## get_liability_balance_details
 
 ```sql
@@ -678,10 +760,12 @@ RETURNS TABLE(total_debt numeric, principal_balance numeric, accrued_interest nu
 
 Параметры со значениями по умолчанию: `p_as_of`.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-get-liquidity-until-next-income-5a43c09635"></a>
+
+[Исходник SQL](../database/functions/get_liquidity_until_next_income--5a43c09635.sql)
 
 ## get_liquidity_until_next_income
 
@@ -697,6 +781,8 @@ RETURNS TABLE(as_of timestamp with time zone, business_date date, next_income_da
 
 <a id="fn-get-living-budget-reserve-e27d063804"></a>
 
+[Исходник SQL](../database/functions/get_living_budget_reserve--e27d063804.sql)
+
 ## get_living_budget_reserve
 
 ```sql
@@ -711,6 +797,8 @@ RETURNS TABLE(budget_amount numeric, spent_amount numeric, earmarked_amount nume
 
 <a id="fn-get-obligations-until-next-income-67aba6d215"></a>
 
+[Исходник SQL](../database/functions/get_obligations_until_next_income--67aba6d215.sql)
+
 ## get_obligations_until_next_income
 
 ```sql
@@ -720,10 +808,12 @@ RETURNS TABLE(next_income_date date, event_id bigint, event_date date, descripti
 
 Параметры со значениями по умолчанию: `p_as_of`.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-get-settlement-attention-8b310d39ab"></a>
+
+[Исходник SQL](../database/functions/get_settlement_attention--8b310d39ab.sql)
 
 ## get_settlement_attention
 
@@ -734,10 +824,12 @@ RETURNS TABLE(event_id bigint, event_date date, description text, amount numeric
 
 Параметры со значениями по умолчанию: `p_as_of`.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-get-status-until-next-income-8d89e6dc13"></a>
+
+[Исходник SQL](../database/functions/get_status_until_next_income--8d89e6dc13.sql)
 
 ## get_status_until_next_income
 
@@ -755,6 +847,8 @@ RETURNS jsonb
 
 <a id="fn-get-upcoming-payments-cf8a6c80ca"></a>
 
+[Исходник SQL](../database/functions/get_upcoming_payments--cf8a6c80ca.sql)
+
 ## get_upcoming_payments
 
 ```sql
@@ -769,6 +863,8 @@ RETURNS TABLE(event_id bigint, event_date date, description text, amount numeric
 
 <a id="fn-link-funding-183bf77d8a"></a>
 
+[Исходник SQL](../database/functions/link_funding--183bf77d8a.sql)
+
 ## link_funding
 
 ```sql
@@ -778,10 +874,12 @@ RETURNS void
 
 Параметры со значениями по умолчанию: нет.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-link-funding-baaab7d6e0"></a>
+
+[Исходник SQL](../database/functions/link_funding--baaab7d6e0.sql)
 
 ## link_funding
 
@@ -792,10 +890,12 @@ RETURNS void
 
 Параметры со значениями по умолчанию: нет.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-normalize-credit-card-payment-semantics-4d193efffb"></a>
+
+[Исходник SQL](../database/functions/normalize_credit_card_payment_semantics--4d193efffb.sql)
 
 ## normalize_credit_card_payment_semantics
 
@@ -811,6 +911,8 @@ RETURNS trigger
 
 <a id="fn-normalize-payment-buffer-funding-semantics-16ab0a0576"></a>
 
+[Исходник SQL](../database/functions/normalize_payment_buffer_funding_semantics--16ab0a0576.sql)
+
 ## normalize_payment_buffer_funding_semantics
 
 ```sql
@@ -824,6 +926,8 @@ RETURNS trigger
 
 
 <a id="fn-normalize-transaction-budget-effect-9e6add9034"></a>
+
+[Исходник SQL](../database/functions/normalize_transaction_budget_effect--9e6add9034.sql)
 
 ## normalize_transaction_budget_effect
 
@@ -839,6 +943,8 @@ RETURNS trigger
 
 <a id="fn-rebuild-debt-payment-movements-cadf8bb48d"></a>
 
+[Исходник SQL](../database/functions/rebuild_debt_payment_movements--cadf8bb48d.sql)
+
 ## rebuild_debt_payment_movements
 
 ```sql
@@ -848,10 +954,12 @@ RETURNS void
 
 Параметры со значениями по умолчанию: нет.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-reconcile-credit-card-minimum-ea61b8cf4b"></a>
+
+[Исходник SQL](../database/functions/reconcile_credit_card_minimum--ea61b8cf4b.sql)
 
 ## reconcile_credit_card_minimum
 
@@ -862,10 +970,12 @@ RETURNS void
 
 Параметры со значениями по умолчанию: нет.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-reconcile-credit-card-minimum-from-old-transaction-4945a36f7d"></a>
+
+[Исходник SQL](../database/functions/reconcile_credit_card_minimum_from_old_transaction--4945a36f7d.sql)
 
 ## reconcile_credit_card_minimum_from_old_transaction
 
@@ -881,6 +991,8 @@ RETURNS trigger
 
 <a id="fn-reconcile-credit-card-minimum-from-transaction-189bfba7de"></a>
 
+[Исходник SQL](../database/functions/reconcile_credit_card_minimum_from_transaction--189bfba7de.sql)
+
 ## reconcile_credit_card_minimum_from_transaction
 
 ```sql
@@ -894,6 +1006,8 @@ RETURNS trigger
 
 
 <a id="fn-reconcile-payment-buffer-funding-from-transaction-2d2145772a"></a>
+
+[Исходник SQL](../database/functions/reconcile_payment_buffer_funding_from_transaction--2d2145772a.sql)
 
 ## reconcile_payment_buffer_funding_from_transaction
 
@@ -909,6 +1023,8 @@ RETURNS trigger
 
 <a id="fn-refresh-cash-flow-24981a6d0a"></a>
 
+[Исходник SQL](../database/functions/refresh_cash_flow--24981a6d0a.sql)
+
 ## refresh_cash_flow
 
 ```sql
@@ -918,10 +1034,12 @@ RETURNS void
 
 Параметры со значениями по умолчанию: нет.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-refresh-cash-flow-event-from-allocation-176c3ff941"></a>
+
+[Исходник SQL](../database/functions/refresh_cash_flow_event_from_allocation--176c3ff941.sql)
 
 ## refresh_cash_flow_event_from_allocation
 
@@ -937,6 +1055,8 @@ RETURNS trigger
 
 <a id="fn-refresh-cash-flow-event-status-7a84b59058"></a>
 
+[Исходник SQL](../database/functions/refresh_cash_flow_event_status--7a84b59058.sql)
+
 ## refresh_cash_flow_event_status
 
 ```sql
@@ -946,10 +1066,12 @@ RETURNS cash_flow_events
 
 Параметры со значениями по умолчанию: нет.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-refresh-cash-flow-security-bef82af046"></a>
+
+[Исходник SQL](../database/functions/refresh_cash_flow_security--bef82af046.sql)
 
 ## refresh_cash_flow_security
 
@@ -960,10 +1082,12 @@ RETURNS integer
 
 Параметры со значениями по умолчанию: нет.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-refresh-event-security-cb28073649"></a>
+
+[Исходник SQL](../database/functions/refresh_event_security--cb28073649.sql)
 
 ## refresh_event_security
 
@@ -974,10 +1098,12 @@ RETURNS void
 
 Параметры со значениями по умолчанию: нет.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-refresh-snapshot-dependents-e774891266"></a>
+
+[Исходник SQL](../database/functions/refresh_snapshot_dependents--e774891266.sql)
 
 ## refresh_snapshot_dependents
 
@@ -993,6 +1119,8 @@ RETURNS trigger
 
 <a id="fn-refresh-transaction-dependents-3513c6b0a2"></a>
 
+[Исходник SQL](../database/functions/refresh_transaction_dependents--3513c6b0a2.sql)
+
 ## refresh_transaction_dependents
 
 ```sql
@@ -1007,6 +1135,8 @@ RETURNS trigger
 
 <a id="fn-set-credit-card-minimum-613f21d5d7"></a>
 
+[Исходник SQL](../database/functions/set_credit_card_minimum--613f21d5d7.sql)
+
 ## set_credit_card_minimum
 
 ```sql
@@ -1016,10 +1146,12 @@ RETURNS bigint
 
 Параметры со значениями по умолчанию: нет.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-sync-cash-flow-sources-2ed9ef51b8"></a>
+
+[Исходник SQL](../database/functions/sync_cash_flow_sources--2ed9ef51b8.sql)
 
 ## sync_cash_flow_sources
 
@@ -1035,6 +1167,8 @@ RETURNS trigger
 
 <a id="fn-sync-debt-payment-movements-e4b6004cb5"></a>
 
+[Исходник SQL](../database/functions/sync_debt_payment_movements--e4b6004cb5.sql)
+
 ## sync_debt_payment_movements
 
 ```sql
@@ -1049,6 +1183,8 @@ RETURNS trigger
 
 <a id="fn-sync-liability-principal-cache-493f3f0c4a"></a>
 
+[Исходник SQL](../database/functions/sync_liability_principal_cache--493f3f0c4a.sql)
+
 ## sync_liability_principal_cache
 
 ```sql
@@ -1058,10 +1194,12 @@ RETURNS void
 
 Параметры со значениями по умолчанию: нет.
 
-Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в миграциях. Отдельный стабильный клиентский контракт здесь не объявлен.
+Дополнительная функция расчёта, синхронизации или совместимости. До прямого использования проверьте тело функции и вызывающие места в исходниках SQL. Отдельный стабильный клиентский контракт здесь не объявлен.
 
 
 <a id="fn-sync-salary-transaction-to-event-845fb072a1"></a>
+
+[Исходник SQL](../database/functions/sync_salary_transaction_to_event--845fb072a1.sql)
 
 ## sync_salary_transaction_to_event
 
@@ -1077,6 +1215,8 @@ RETURNS trigger
 
 <a id="fn-trg-sync-liability-cache-from-movements-68942a8473"></a>
 
+[Исходник SQL](../database/functions/trg_sync_liability_cache_from_movements--68942a8473.sql)
+
 ## trg_sync_liability_cache_from_movements
 
 ```sql
@@ -1090,6 +1230,8 @@ RETURNS trigger
 
 
 <a id="fn-trg-sync-revolving-liability-cache-da3ad9487b"></a>
+
+[Исходник SQL](../database/functions/trg_sync_revolving_liability_cache--da3ad9487b.sql)
 
 ## trg_sync_revolving_liability_cache
 
@@ -1105,6 +1247,8 @@ RETURNS trigger
 
 <a id="fn-validate-cash-flow-allocation-7bc13b6030"></a>
 
+[Исходник SQL](../database/functions/validate_cash_flow_allocation--7bc13b6030.sql)
+
 ## validate_cash_flow_allocation
 
 ```sql
@@ -1118,6 +1262,8 @@ RETURNS trigger
 
 
 <a id="fn-validate-debt-payment-details-fc68f8438d"></a>
+
+[Исходник SQL](../database/functions/validate_debt_payment_details--fc68f8438d.sql)
 
 ## validate_debt_payment_details
 
@@ -1133,6 +1279,8 @@ RETURNS trigger
 
 <a id="fn-validate-grace-reserve-d63891a4f9"></a>
 
+[Исходник SQL](../database/functions/validate_grace_reserve--d63891a4f9.sql)
+
 ## validate_grace_reserve
 
 ```sql
@@ -1147,6 +1295,8 @@ RETURNS trigger
 
 <a id="fn-validate-grace-reserve-deferred-303d13b645"></a>
 
+[Исходник SQL](../database/functions/validate_grace_reserve_deferred--303d13b645.sql)
+
 ## validate_grace_reserve_deferred
 
 ```sql
@@ -1160,6 +1310,8 @@ RETURNS trigger
 
 
 <a id="fn-validate-transaction-category-allocations-deferred-2a4024676f"></a>
+
+[Исходник SQL](../database/functions/validate_transaction_category_allocations_deferred--2a4024676f.sql)
 
 ## validate_transaction_category_allocations_deferred
 

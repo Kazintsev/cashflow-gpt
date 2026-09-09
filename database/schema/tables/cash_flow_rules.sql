@@ -1,0 +1,21 @@
+CREATE TABLE public."cash_flow_rules" (
+  "id" bigint DEFAULT nextval('cash_flow_rules_id_seq'::regclass) NOT NULL,
+  "name" text NOT NULL,
+  "rule_type" text NOT NULL,
+  "amount" numeric,
+  "payment_day" smallint,
+  "share_of_monthly_salary" numeric,
+  "weekend_rule" text,
+  "start_date" date,
+  "end_date" date,
+  "is_active" boolean DEFAULT true NOT NULL,
+  "notes" text,
+  "created_at" timestamp with time zone DEFAULT now() NOT NULL,
+  "event_type" text,
+  "schedule_type" text DEFAULT 'monthly'::text NOT NULL,
+  "liability_id" bigint,
+  "account_id" bigint,
+  "calculation_method" text,
+  "currency" text DEFAULT 'RUB'::text NOT NULL,
+  "living_budget_exempt" boolean DEFAULT true NOT NULL
+);

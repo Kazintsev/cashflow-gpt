@@ -4,7 +4,7 @@
 >
 > Поля, типы, связи и ограничения. [Карта документации](index.md) · [Манифест](manifest.json)
 
-Сформирован из каталога PostgreSQL 7 сентября 2026 года. Описывает только схему `public`. Не содержит строк прикладных данных. Типы, NULL, identity и ограничения взяты из каталога. Индексы, не представленные ограничениями, последовательности и серверные настройки не включены: этот справочник не является полным DDL-экспортом.
+Сформирован из каталога PostgreSQL 8 сентября 2026 года. Описывает только схему `public`. Не содержит строк прикладных данных. Типы, NULL, identity и ограничения взяты из каталога. Этот справочник предназначен для навигации. Полный прикладной DDL, дополнительные индексы, последовательности и права находятся отдельно в [SQL-структуре](source-code.md#layout); серверные и облачные настройки не экспортируются. Наблюдавшийся RLS относится к источнику, новая установка включает его на всех таблицах.
 
 ## Таблицы
 
@@ -32,6 +32,8 @@
 
 <a id="table-account-balance-snapshots"></a>
 
+[Определение SQL](../database/schema/tables/account_balance_snapshots.sql)
+
 ## account_balance_snapshots
 
 Контрольные остатки счетов на точный момент времени.
@@ -55,6 +57,8 @@
 | `balance_snapshots_pkey` | PRIMARY KEY | `PRIMARY KEY (id)` |
 
 <a id="table-accounts"></a>
+
+[Определение SQL](../database/schema/tables/accounts.sql)
 
 ## accounts
 
@@ -85,6 +89,8 @@
 
 <a id="view-balance-snapshots"></a>
 
+[Определение SQL](../database/schema/views/balance_snapshots.sql)
+
 ## balance_snapshots
 
 Представление совместимости для снимков остатков счетов.
@@ -102,6 +108,8 @@
 | `balance_as_of` | `timestamp with time zone` |
 
 <a id="table-cash-flow-event-funding"></a>
+
+[Определение SQL](../database/schema/tables/cash_flow_event_funding.sql)
 
 ## cash_flow_event_funding
 
@@ -132,6 +140,8 @@
 
 <a id="view-cash-flow-event-settlement-summary"></a>
 
+[Определение SQL](../database/schema/views/cash_flow_event_settlement_summary.sql)
+
 ## cash_flow_event_settlement_summary
 
 Представление расчётных сумм исполнения и обеспечения события.
@@ -148,6 +158,8 @@
 | `remaining_funding_amount` | `numeric` |
 
 <a id="view-cash-flow-event-state"></a>
+
+[Определение SQL](../database/schema/views/cash_flow_event_state.sql)
 
 ## cash_flow_event_state
 
@@ -173,6 +185,8 @@
 | `derived_status` | `text` |
 
 <a id="table-cash-flow-events"></a>
+
+[Определение SQL](../database/schema/tables/cash_flow_events.sql)
 
 ## cash_flow_events
 
@@ -226,6 +240,8 @@
 
 <a id="table-cash-flow-rules"></a>
 
+[Определение SQL](../database/schema/tables/cash_flow_rules.sql)
+
 ## cash_flow_rules
 
 Источники повторяющихся событий: фиксированные платежи и зарплатные правила.
@@ -267,6 +283,8 @@
 
 <a id="table-categories"></a>
 
+[Определение SQL](../database/schema/tables/categories.sql)
+
 ## categories
 
 Категории операций с возможной иерархией через parent_id.
@@ -289,6 +307,8 @@
 | `categories_pkey` | PRIMARY KEY | `PRIMARY KEY (id)` |
 
 <a id="table-debt-goals"></a>
+
+[Определение SQL](../database/schema/tables/debt_goals.sql)
 
 ## debt_goals
 
@@ -315,6 +335,8 @@
 | `debt_goals_pkey` | PRIMARY KEY | `PRIMARY KEY (id)` |
 
 <a id="table-debt-payment-details"></a>
+
+[Определение SQL](../database/schema/tables/debt_payment_details.sql)
 
 ## debt_payment_details
 
@@ -347,6 +369,8 @@
 
 <a id="table-finance-settings"></a>
 
+[Определение SQL](../database/schema/tables/finance_settings.sql)
+
 ## finance_settings
 
 Ключи конфигурации со значениями JSONB.
@@ -365,6 +389,8 @@
 | `finance_settings_pkey` | PRIMARY KEY | `PRIMARY KEY (key)` |
 
 <a id="table-liabilities"></a>
+
+[Определение SQL](../database/schema/tables/liabilities.sql)
 
 ## liabilities
 
@@ -412,6 +438,8 @@
 
 <a id="table-liability-balance-snapshots"></a>
 
+[Определение SQL](../database/schema/tables/liability_balance_snapshots.sql)
+
 ## liability_balance_snapshots
 
 Исходные/контрольные суммы тела долга, процентов и комиссий на момент времени.
@@ -441,6 +469,8 @@
 
 <a id="view-liability-current-balances"></a>
 
+[Определение SQL](../database/schema/views/liability_current_balances.sql)
+
 ## liability_current_balances
 
 Представление текущих расчётных остатков долгов.
@@ -461,6 +491,8 @@
 | `linked_account_id` | `bigint` |
 
 <a id="table-liability-movements"></a>
+
+[Определение SQL](../database/schema/tables/liability_movements.sql)
 
 ## liability_movements
 
@@ -496,6 +528,8 @@
 
 <a id="table-liability-payment-schedule"></a>
 
+[Определение SQL](../database/schema/tables/liability_payment_schedule.sql)
+
 ## liability_payment_schedule
 
 Банковский график с разбивкой каждого платежа.
@@ -511,7 +545,7 @@
 | `interest_amount` | `numeric` | нет | `0` |
 | `fee_amount` | `numeric` | нет | `0` |
 | `total_amount` | `numeric` | нет | — |
-| `principal_after` | `numeric` | да | — |
+| `principal_after` | `numeric` | да | GENERATED ALWAYS AS GREATEST(principal_before − principal_amount, 0), STORED |
 | `source` | `text` | да | — |
 | `source_as_of` | `date` | да | — |
 | `created_at` | `timestamp with time zone` | нет | `now()` |
@@ -532,6 +566,8 @@
 | `liability_payment_schedule_total_amount_check` | CHECK | `CHECK ((total_amount >= (0)::numeric))` |
 
 <a id="table-living-budgets"></a>
+
+[Определение SQL](../database/schema/tables/living_budgets.sql)
 
 ## living_budgets
 
@@ -555,6 +591,8 @@
 | `living_budgets_week_start_key` | UNIQUE | `UNIQUE (week_start)` |
 
 <a id="table-planned-purchases"></a>
+
+[Определение SQL](../database/schema/tables/planned_purchases.sql)
 
 ## planned_purchases
 
@@ -586,6 +624,8 @@
 | `planned_purchases_status_check` | CHECK | `CHECK ((status = ANY (ARRAY['active'::text, 'completed'::text, 'cancelled'::text, 'converted_to_split'::text, 'converted_to_credit'::text])))` |
 
 <a id="table-receipt-items"></a>
+
+[Определение SQL](../database/schema/tables/receipt_items.sql)
 
 ## receipt_items
 
@@ -622,6 +662,8 @@
 
 <a id="table-receipts"></a>
 
+[Определение SQL](../database/schema/tables/receipts.sql)
+
 ## receipts
 
 Чек, связанный с расходной операцией.
@@ -656,6 +698,8 @@
 
 <a id="table-transaction-category-allocations"></a>
 
+[Определение SQL](../database/schema/tables/transaction_category_allocations.sql)
+
 ## transaction_category_allocations
 
 Разбиение одного расхода по категориям.
@@ -684,6 +728,8 @@
 | `trg_validate_transaction_category_allocations` | t | `TRIGGER DEFERRABLE INITIALLY DEFERRED` |
 
 <a id="table-transactions"></a>
+
+[Определение SQL](../database/schema/tables/transactions.sql)
 
 ## transactions
 
@@ -744,7 +790,7 @@
 
 ## Триггеры
 
-Триггеры приведены для навигации по исходникам. Порядок, условия WHEN и отложенность нужно проверять в DDL миграции; ниже сохранено определение из каталога.
+Триггеры приведены для навигации по исходникам. Порядок, условия WHEN и отложенность нужно проверять в [каноническом DDL](../database/schema/triggers.sql); ниже сохранено определение из каталога.
 
 | Таблица | Триггер | Определение |
 |---|---|---|

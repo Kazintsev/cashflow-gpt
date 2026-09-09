@@ -149,6 +149,8 @@ select public.finance_command(
 | `debt_details` | {principal_amount, interest_amount, fee_amount, event_id} |
 | `reserve_effect`, `reserve_cycle`, `reserve_due_date`, `reserve_liability_id` | Разметка grace-движений |
 
+В `record_transaction` передавайте `description`: столбец описания не допускает NULL, а обёртка не заполняет его автоматически.
+
 Если время не передано, используется `now()`; при переданной только дате — полдень бизнес-дня. Для точного учёта передавайте время явно.
 
 В `record_transaction` категория и счёт по названию не разрешаются автоматически. Сначала найдите правильные ID. При неизвестном счёте/категории ассистент должен уточнить данные.

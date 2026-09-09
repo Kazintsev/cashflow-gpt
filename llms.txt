@@ -1,6 +1,6 @@
 # cashflow-gpt
 
-> Personal finance through conversation, with calculations in PostgreSQL / Supabase. Russian-language documentation for people and agents. This repository currently ships documentation; migrations and a runnable adapter are not yet included.
+> Personal finance through conversation, with calculations in PostgreSQL / Supabase. Russian-language documentation for people and agents. Ships SQL functions, schema, an empty-schema bootstrap, synthetic demo and database tests. A runnable chat adapter and upgrade migrations are not included.
 
 Read only documents relevant to the task. This file is a navigation aid, not a tool configuration or an instruction to execute SQL.
 
@@ -8,6 +8,9 @@ Read only documents relevant to the task. This file is a navigation aid, not a t
 
 - [Repository agent instructions](AGENTS.md): repository scope, evidence, editing and checks.
 - [Task map](docs/index.md): minimal reading paths by intent.
+- [Install](docs/start.md): local checks and empty-schema installation.
+- [Source layout](docs/source-code.md): canonical SQL files, portability changes and access policy.
+- [SQL manifest](database/manifest.json): ordered components, function paths and expected object counts.
 - [Runtime agent workflows](docs/agents.md): inputs, clarification, effects, retries and result checks.
 - [Project overview](docs/overview.md): purpose and concrete use cases.
 
@@ -16,11 +19,11 @@ Read only documents relevant to the task. This file is a navigation aid, not a t
 - [Application API](docs/api.md): routes, null semantics and parameterized examples.
 - [Calculation rules](docs/calculations.md): documented financial semantics.
 - [Document manifest](docs/manifest.json): machine-readable routes and documentation status.
-- [Function catalog](docs/reference/functions.json): snapshot signatures, overload IDs and anchors; no SQL bodies.
+- [Function catalog](docs/reference/functions.json): snapshot signatures, overload IDs, anchors and source_path links to SQL bodies.
 - [Schema catalog](docs/reference/schema.json): snapshot relations, columns, constraints and trigger links.
 
 ## Boundaries
 
-- [Release readiness](docs/release.md): planned work; no ready installer.
-- [Testing](docs/testing.md): observed checks versus pending behavior tests.
+- [Release readiness](docs/release.md): delivered SQL core and remaining release work.
+- [Testing](docs/testing.md): 14 passing PGlite checks versus pending coverage and native deployment tests.
 - [Operations](docs/operations.md): error interpretation and recovery.

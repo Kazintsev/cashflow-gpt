@@ -3,11 +3,11 @@
   "project": "cashflow-gpt",
   "language": "ru",
   "reference_base": "repository_root",
-  "snapshot_date": "2026-09-07",
+  "snapshot_date": "2026-09-08",
   "observed_status_version": "cashflow_until_next_income_v3",
-  "repository_delivery": "documentation_only",
-  "runtime_source_in_repo": false,
-  "ready_for_clean_install": false,
+  "repository_delivery": "sql_core_and_documentation",
+  "runtime_source_in_repo": true,
+  "ready_for_clean_install": true,
   "navigation_is_execution_authorization": false,
   "documents": [
     {
@@ -88,7 +88,7 @@
         "integrator"
       ],
       "evidence_status": "mixed",
-      "purpose": "Подготовка собственной копии; установка пока не проверена"
+      "purpose": "Установка SQL-ядра в пустую схему и подготовка собственного учёта"
     },
     {
       "id": "user_guide",
@@ -188,8 +188,8 @@
         "developer",
         "agent"
       ],
-      "evidence_status": "planned",
-      "purpose": "Работы до воспроизводимого открытого выпуска"
+      "evidence_status": "mixed",
+      "purpose": "Поставляемое SQL-ядро и оставшиеся работы"
     },
     {
       "id": "manifest",
@@ -220,6 +220,17 @@
       ],
       "evidence_status": "observed_snapshot",
       "purpose": "Поля и связи для программной обработки"
+    },
+    {
+      "id": "source_code",
+      "path": "docs/source-code.md",
+      "audience": [
+        "developer",
+        "repository_agent",
+        "integrator"
+      ],
+      "evidence_status": "mixed",
+      "purpose": "Канонические SQL-файлы, сборка, происхождение и отличия экспорта"
     }
   ],
   "tasks": [
@@ -233,12 +244,14 @@
     },
     {
       "intent": "setup",
-      "effect": "planning_only",
+      "effect": "database_schema_write",
       "read": [
         "docs/start.md",
+        "docs/source-code.md#access",
         "docs/release.md"
       ],
-      "ready_to_run": false
+      "ready_to_run": true,
+      "scope": "New isolated database with empty public schema; no production deployment implied"
     },
     {
       "intent": "status",
@@ -343,11 +356,33 @@
         "docs/api.md",
         "docs/testing.md"
       ]
+    },
+    {
+      "intent": "database_edit",
+      "effect": "repository_files",
+      "read": [
+        "AGENTS.md",
+        "docs/source-code.md#edit",
+        "docs/testing.md",
+        "docs/api.md"
+      ]
     }
   ],
   "catalogs": {
     "functions": "docs/reference/functions.json",
     "schema": "docs/reference/schema.json"
   },
-  "validation_command": "python3 scripts/check_docs.py"
+  "validation_command": "python3 scripts/check_docs.py",
+  "clean_install_validation": {
+    "engine": "PostgreSQL 18.3 (PGlite 0.5.8)",
+    "database_checks": 14,
+    "native_postgresql_17_verified": false,
+    "supabase_deployment_verified": false
+  },
+  "source_manifest": "database/manifest.json",
+  "validation_commands": [
+    "python3 scripts/build_sql.py --check",
+    "python3 scripts/check_docs.py",
+    "npm test"
+  ]
 }

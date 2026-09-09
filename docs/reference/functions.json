@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "snapshot_date": "2026-09-07",
+  "snapshot_date": "2026-09-08",
   "evidence_status": "observed_snapshot",
-  "runtime_source_in_repo": false,
+  "runtime_source_in_repo": true,
   "reference_base": "repository_root",
   "execution_authorization": false,
-  "defaults_policy": "Only has_default is provided; exact DEFAULT values and function bodies are not included.",
+  "defaults_policy": "Catalog contains has_default only; exact DEFAULT clauses and complete function bodies are in source_path.",
   "functions": [
     {
       "signature_id": "fn-apply-event-payment-budget-semantics-12658278ea",
@@ -19,7 +19,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-apply-event-payment-budget-semantics-12658278ea"
+      "doc_ref": "docs/functions.md#fn-apply-event-payment-budget-semantics-12658278ea",
+      "source_path": "database/functions/apply_event_payment_budget_semantics--12658278ea.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-assert-free-cash-invariant-a2c2858b89",
@@ -54,7 +56,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-assert-free-cash-invariant-a2c2858b89"
+      "doc_ref": "docs/functions.md#fn-assert-free-cash-invariant-a2c2858b89",
+      "source_path": "database/functions/assert_free_cash_invariant--a2c2858b89.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-business-day-on-or-before-cebbf35516",
@@ -74,7 +78,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-business-day-on-or-before-cebbf35516"
+      "doc_ref": "docs/functions.md#fn-business-day-on-or-before-cebbf35516",
+      "source_path": "database/functions/business_day_on_or_before--cebbf35516.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-clear-credit-card-minimum-allocations-a521adf21e",
@@ -88,7 +94,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-clear-credit-card-minimum-allocations-a521adf21e"
+      "doc_ref": "docs/functions.md#fn-clear-credit-card-minimum-allocations-a521adf21e",
+      "source_path": "database/functions/clear_credit_card_minimum_allocations--a521adf21e.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-clear-payment-buffer-funding-allocations-765bde8b76",
@@ -102,7 +110,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-clear-payment-buffer-funding-allocations-765bde8b76"
+      "doc_ref": "docs/functions.md#fn-clear-payment-buffer-funding-allocations-765bde8b76",
+      "source_path": "database/functions/clear_payment_buffer_funding_allocations--765bde8b76.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-complete-income-event-935dedcc55",
@@ -127,7 +137,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-complete-income-event-935dedcc55"
+      "doc_ref": "docs/functions.md#fn-complete-income-event-935dedcc55",
+      "source_path": "database/functions/complete_income_event--935dedcc55.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-correct-finance-transaction-9009324eb2",
@@ -172,7 +184,9 @@
       "security": "INVOKER",
       "usage_class": "application_entrypoint",
       "documented_effect": "write",
-      "doc_ref": "docs/functions.md#fn-correct-finance-transaction-9009324eb2"
+      "doc_ref": "docs/functions.md#fn-correct-finance-transaction-9009324eb2",
+      "source_path": "database/functions/correct_finance_transaction--9009324eb2.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-execute-event-5dc04a140f",
@@ -222,7 +236,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-execute-event-5dc04a140f"
+      "doc_ref": "docs/functions.md#fn-execute-event-5dc04a140f",
+      "source_path": "database/functions/execute_event--5dc04a140f.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-execute-installment-payment-84817fc831",
@@ -267,7 +283,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-execute-installment-payment-84817fc831"
+      "doc_ref": "docs/functions.md#fn-execute-installment-payment-84817fc831",
+      "source_path": "database/functions/execute_installment_payment--84817fc831.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-finance-business-date-425398addf",
@@ -287,7 +305,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-finance-business-date-425398addf"
+      "doc_ref": "docs/functions.md#fn-finance-business-date-425398addf",
+      "source_path": "database/functions/finance_business_date--425398addf.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-finance-command-4c19d2b97f",
@@ -322,7 +342,9 @@
         "record_transaction",
         "fund_event",
         "execute_event"
-      ]
+      ],
+      "source_path": "database/functions/finance_command--4c19d2b97f.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-finance-data-issues-5926da9222",
@@ -336,7 +358,9 @@
       "security": "INVOKER",
       "usage_class": "application_entrypoint",
       "documented_effect": "read",
-      "doc_ref": "docs/functions.md#fn-finance-data-issues-5926da9222"
+      "doc_ref": "docs/functions.md#fn-finance-data-issues-5926da9222",
+      "source_path": "database/functions/finance_data_issues--5926da9222.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-finance-day-end-c0ec7af4f3",
@@ -356,7 +380,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-finance-day-end-c0ec7af4f3"
+      "doc_ref": "docs/functions.md#fn-finance-day-end-c0ec7af4f3",
+      "source_path": "database/functions/finance_day_end--c0ec7af4f3.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-finance-day-start-04625df52f",
@@ -376,7 +402,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-finance-day-start-04625df52f"
+      "doc_ref": "docs/functions.md#fn-finance-day-start-04625df52f",
+      "source_path": "database/functions/finance_day_start--04625df52f.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-finance-integrity-check-b9b78cef5e",
@@ -396,7 +424,9 @@
       "security": "INVOKER",
       "usage_class": "application_entrypoint",
       "documented_effect": "read",
-      "doc_ref": "docs/functions.md#fn-finance-integrity-check-b9b78cef5e"
+      "doc_ref": "docs/functions.md#fn-finance-integrity-check-b9b78cef5e",
+      "source_path": "database/functions/finance_integrity_check--b9b78cef5e.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-finance-setting-numeric-7c24e5a300",
@@ -421,7 +451,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-finance-setting-numeric-7c24e5a300"
+      "doc_ref": "docs/functions.md#fn-finance-setting-numeric-7c24e5a300",
+      "source_path": "database/functions/finance_setting_numeric--7c24e5a300.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-finance-setting-text-5e1df66f14",
@@ -446,7 +478,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-finance-setting-text-5e1df66f14"
+      "doc_ref": "docs/functions.md#fn-finance-setting-text-5e1df66f14",
+      "source_path": "database/functions/finance_setting_text--5e1df66f14.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-finance-validate-data-deferred-9903e2cc8c",
@@ -460,7 +494,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-finance-validate-data-deferred-9903e2cc8c"
+      "doc_ref": "docs/functions.md#fn-finance-validate-data-deferred-9903e2cc8c",
+      "source_path": "database/functions/finance_validate_data_deferred--9903e2cc8c.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-finance-write-lock-493e7475cb",
@@ -474,7 +510,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-finance-write-lock-493e7475cb"
+      "doc_ref": "docs/functions.md#fn-finance-write-lock-493e7475cb",
+      "source_path": "database/functions/finance_write_lock--493e7475cb.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-forecast-free-cash-888649f7ff",
@@ -504,7 +542,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-forecast-free-cash-888649f7ff"
+      "doc_ref": "docs/functions.md#fn-forecast-free-cash-888649f7ff",
+      "source_path": "database/functions/forecast_free_cash--888649f7ff.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-fund-event-e24cde05db",
@@ -544,7 +584,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-fund-event-e24cde05db"
+      "doc_ref": "docs/functions.md#fn-fund-event-e24cde05db",
+      "source_path": "database/functions/fund_event--e24cde05db.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-generate-cash-flow-events-5188dc9aeb",
@@ -569,7 +611,11 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-generate-cash-flow-events-5188dc9aeb"
+      "doc_ref": "docs/functions.md#fn-generate-cash-flow-events-5188dc9aeb",
+      "source_path": "database/functions/generate_cash_flow_events--5188dc9aeb.sql",
+      "portability_changes": [
+        "require_configured_monthly_salary_for_salary_rules"
+      ]
     },
     {
       "signature_id": "fn-get-account-balance-329abeba8c",
@@ -594,7 +640,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-account-balance-329abeba8c"
+      "doc_ref": "docs/functions.md#fn-get-account-balance-329abeba8c",
+      "source_path": "database/functions/get_account_balance--329abeba8c.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-account-balance-654dfdbb2e",
@@ -619,7 +667,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-account-balance-654dfdbb2e"
+      "doc_ref": "docs/functions.md#fn-get-account-balance-654dfdbb2e",
+      "source_path": "database/functions/get_account_balance--654dfdbb2e.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-actual-cash-4d54a90000",
@@ -639,7 +689,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-actual-cash-4d54a90000"
+      "doc_ref": "docs/functions.md#fn-get-actual-cash-4d54a90000",
+      "source_path": "database/functions/get_actual_cash--4d54a90000.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-actual-cash-f161cecaef",
@@ -659,7 +711,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-actual-cash-f161cecaef"
+      "doc_ref": "docs/functions.md#fn-get-actual-cash-f161cecaef",
+      "source_path": "database/functions/get_actual_cash--f161cecaef.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-cash-flow-event-coverage-af94ef53c9",
@@ -679,7 +733,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-cash-flow-event-coverage-af94ef53c9"
+      "doc_ref": "docs/functions.md#fn-get-cash-flow-event-coverage-af94ef53c9",
+      "source_path": "database/functions/get_cash_flow_event_coverage--af94ef53c9.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-cash-flow-event-state-as-of-e6aad22f44",
@@ -699,7 +755,9 @@
       "security": "INVOKER",
       "usage_class": "application_entrypoint",
       "documented_effect": "read",
-      "doc_ref": "docs/functions.md#fn-get-cash-flow-event-state-as-of-e6aad22f44"
+      "doc_ref": "docs/functions.md#fn-get-cash-flow-event-state-as-of-e6aad22f44",
+      "source_path": "database/functions/get_cash_flow_event_state_as_of--e6aad22f44.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-credit-budget-position-a68ed80ef8",
@@ -719,7 +777,11 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-credit-budget-position-a68ed80ef8"
+      "doc_ref": "docs/functions.md#fn-get-credit-budget-position-a68ed80ef8",
+      "source_path": "database/functions/get_credit_budget_position--a68ed80ef8.sql",
+      "portability_changes": [
+        "neutral_tracking_start_fallback"
+      ]
     },
     {
       "signature_id": "fn-get-credit-cash-reserves-48133ca082",
@@ -744,7 +806,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-credit-cash-reserves-48133ca082"
+      "doc_ref": "docs/functions.md#fn-get-credit-cash-reserves-48133ca082",
+      "source_path": "database/functions/get_credit_cash_reserves--48133ca082.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-expense-category-lines-25428b0831",
@@ -769,7 +833,9 @@
       "security": "INVOKER",
       "usage_class": "application_entrypoint",
       "documented_effect": "read",
-      "doc_ref": "docs/functions.md#fn-get-expense-category-lines-25428b0831"
+      "doc_ref": "docs/functions.md#fn-get-expense-category-lines-25428b0831",
+      "source_path": "database/functions/get_expense_category_lines--25428b0831.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-financial-position-d043b30aa9",
@@ -794,7 +860,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-financial-position-d043b30aa9"
+      "doc_ref": "docs/functions.md#fn-get-financial-position-d043b30aa9",
+      "source_path": "database/functions/get_financial_position--d043b30aa9.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-financial-position-6ee5ec6561",
@@ -819,7 +887,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-financial-position-6ee5ec6561"
+      "doc_ref": "docs/functions.md#fn-get-financial-position-6ee5ec6561",
+      "source_path": "database/functions/get_financial_position--6ee5ec6561.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-financial-position-at-9f14d7d31e",
@@ -849,7 +919,9 @@
       "security": "INVOKER",
       "usage_class": "application_entrypoint",
       "documented_effect": "read",
-      "doc_ref": "docs/functions.md#fn-get-financial-position-at-9f14d7d31e"
+      "doc_ref": "docs/functions.md#fn-get-financial-position-at-9f14d7d31e",
+      "source_path": "database/functions/get_financial_position_at--9f14d7d31e.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-financial-position-v2-588bed1dca",
@@ -874,7 +946,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-financial-position-v2-588bed1dca"
+      "doc_ref": "docs/functions.md#fn-get-financial-position-v2-588bed1dca",
+      "source_path": "database/functions/get_financial_position_v2--588bed1dca.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-free-cash-5de924fe5e",
@@ -894,7 +968,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-free-cash-5de924fe5e"
+      "doc_ref": "docs/functions.md#fn-get-free-cash-5de924fe5e",
+      "source_path": "database/functions/get_free_cash--5de924fe5e.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-free-cash-5ed941717d",
@@ -914,7 +990,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-free-cash-5ed941717d"
+      "doc_ref": "docs/functions.md#fn-get-free-cash-5ed941717d",
+      "source_path": "database/functions/get_free_cash--5ed941717d.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-income-event-state-as-of-e07cdd98ff",
@@ -934,7 +1012,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-income-event-state-as-of-e07cdd98ff"
+      "doc_ref": "docs/functions.md#fn-get-income-event-state-as-of-e07cdd98ff",
+      "source_path": "database/functions/get_income_event_state_as_of--e07cdd98ff.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-liability-balance-4540d0944f",
@@ -959,7 +1039,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-liability-balance-4540d0944f"
+      "doc_ref": "docs/functions.md#fn-get-liability-balance-4540d0944f",
+      "source_path": "database/functions/get_liability_balance--4540d0944f.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-liability-balance-8d1c73d395",
@@ -984,7 +1066,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-liability-balance-8d1c73d395"
+      "doc_ref": "docs/functions.md#fn-get-liability-balance-8d1c73d395",
+      "source_path": "database/functions/get_liability_balance--8d1c73d395.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-liability-balance-details-0017571ee7",
@@ -1009,7 +1093,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-liability-balance-details-0017571ee7"
+      "doc_ref": "docs/functions.md#fn-get-liability-balance-details-0017571ee7",
+      "source_path": "database/functions/get_liability_balance_details--0017571ee7.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-liquidity-until-next-income-5a43c09635",
@@ -1034,7 +1120,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-liquidity-until-next-income-5a43c09635"
+      "doc_ref": "docs/functions.md#fn-get-liquidity-until-next-income-5a43c09635",
+      "source_path": "database/functions/get_liquidity_until_next_income--5a43c09635.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-living-budget-reserve-e27d063804",
@@ -1064,7 +1152,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-living-budget-reserve-e27d063804"
+      "doc_ref": "docs/functions.md#fn-get-living-budget-reserve-e27d063804",
+      "source_path": "database/functions/get_living_budget_reserve--e27d063804.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-obligations-until-next-income-67aba6d215",
@@ -1084,7 +1174,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-obligations-until-next-income-67aba6d215"
+      "doc_ref": "docs/functions.md#fn-get-obligations-until-next-income-67aba6d215",
+      "source_path": "database/functions/get_obligations_until_next_income--67aba6d215.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-settlement-attention-8b310d39ab",
@@ -1104,7 +1196,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-get-settlement-attention-8b310d39ab"
+      "doc_ref": "docs/functions.md#fn-get-settlement-attention-8b310d39ab",
+      "source_path": "database/functions/get_settlement_attention--8b310d39ab.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-get-status-until-next-income-8d89e6dc13",
@@ -1129,7 +1223,11 @@
       "security": "INVOKER",
       "usage_class": "application_entrypoint",
       "documented_effect": "read",
-      "doc_ref": "docs/functions.md#fn-get-status-until-next-income-8d89e6dc13"
+      "doc_ref": "docs/functions.md#fn-get-status-until-next-income-8d89e6dc13",
+      "source_path": "database/functions/get_status_until_next_income--8d89e6dc13.sql",
+      "portability_changes": [
+        "type_based_account_labels"
+      ]
     },
     {
       "signature_id": "fn-get-upcoming-payments-cf8a6c80ca",
@@ -1149,7 +1247,9 @@
       "security": "INVOKER",
       "usage_class": "application_entrypoint",
       "documented_effect": "read",
-      "doc_ref": "docs/functions.md#fn-get-upcoming-payments-cf8a6c80ca"
+      "doc_ref": "docs/functions.md#fn-get-upcoming-payments-cf8a6c80ca",
+      "source_path": "database/functions/get_upcoming_payments--cf8a6c80ca.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-link-funding-183bf77d8a",
@@ -1179,7 +1279,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-link-funding-183bf77d8a"
+      "doc_ref": "docs/functions.md#fn-link-funding-183bf77d8a",
+      "source_path": "database/functions/link_funding--183bf77d8a.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-link-funding-baaab7d6e0",
@@ -1214,7 +1316,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-link-funding-baaab7d6e0"
+      "doc_ref": "docs/functions.md#fn-link-funding-baaab7d6e0",
+      "source_path": "database/functions/link_funding--baaab7d6e0.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-normalize-credit-card-payment-semantics-4d193efffb",
@@ -1228,7 +1332,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-normalize-credit-card-payment-semantics-4d193efffb"
+      "doc_ref": "docs/functions.md#fn-normalize-credit-card-payment-semantics-4d193efffb",
+      "source_path": "database/functions/normalize_credit_card_payment_semantics--4d193efffb.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-normalize-payment-buffer-funding-semantics-16ab0a0576",
@@ -1242,7 +1348,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-normalize-payment-buffer-funding-semantics-16ab0a0576"
+      "doc_ref": "docs/functions.md#fn-normalize-payment-buffer-funding-semantics-16ab0a0576",
+      "source_path": "database/functions/normalize_payment_buffer_funding_semantics--16ab0a0576.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-normalize-transaction-budget-effect-9e6add9034",
@@ -1256,7 +1364,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-normalize-transaction-budget-effect-9e6add9034"
+      "doc_ref": "docs/functions.md#fn-normalize-transaction-budget-effect-9e6add9034",
+      "source_path": "database/functions/normalize_transaction_budget_effect--9e6add9034.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-rebuild-debt-payment-movements-cadf8bb48d",
@@ -1276,7 +1386,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-rebuild-debt-payment-movements-cadf8bb48d"
+      "doc_ref": "docs/functions.md#fn-rebuild-debt-payment-movements-cadf8bb48d",
+      "source_path": "database/functions/rebuild_debt_payment_movements--cadf8bb48d.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-reconcile-credit-card-minimum-ea61b8cf4b",
@@ -1296,7 +1408,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-reconcile-credit-card-minimum-ea61b8cf4b"
+      "doc_ref": "docs/functions.md#fn-reconcile-credit-card-minimum-ea61b8cf4b",
+      "source_path": "database/functions/reconcile_credit_card_minimum--ea61b8cf4b.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-reconcile-credit-card-minimum-from-old-transaction-4945a36f7d",
@@ -1310,7 +1424,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-reconcile-credit-card-minimum-from-old-transaction-4945a36f7d"
+      "doc_ref": "docs/functions.md#fn-reconcile-credit-card-minimum-from-old-transaction-4945a36f7d",
+      "source_path": "database/functions/reconcile_credit_card_minimum_from_old_transaction--4945a36f7d.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-reconcile-credit-card-minimum-from-transaction-189bfba7de",
@@ -1324,7 +1440,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-reconcile-credit-card-minimum-from-transaction-189bfba7de"
+      "doc_ref": "docs/functions.md#fn-reconcile-credit-card-minimum-from-transaction-189bfba7de",
+      "source_path": "database/functions/reconcile_credit_card_minimum_from_transaction--189bfba7de.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-reconcile-payment-buffer-funding-from-transaction-2d2145772a",
@@ -1338,7 +1456,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-reconcile-payment-buffer-funding-from-transaction-2d2145772a"
+      "doc_ref": "docs/functions.md#fn-reconcile-payment-buffer-funding-from-transaction-2d2145772a",
+      "source_path": "database/functions/reconcile_payment_buffer_funding_from_transaction--2d2145772a.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-refresh-cash-flow-24981a6d0a",
@@ -1352,7 +1472,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-24981a6d0a"
+      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-24981a6d0a",
+      "source_path": "database/functions/refresh_cash_flow--24981a6d0a.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-refresh-cash-flow-event-from-allocation-176c3ff941",
@@ -1366,7 +1488,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-event-from-allocation-176c3ff941"
+      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-event-from-allocation-176c3ff941",
+      "source_path": "database/functions/refresh_cash_flow_event_from_allocation--176c3ff941.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-refresh-cash-flow-event-status-7a84b59058",
@@ -1386,7 +1510,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-event-status-7a84b59058"
+      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-event-status-7a84b59058",
+      "source_path": "database/functions/refresh_cash_flow_event_status--7a84b59058.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-refresh-cash-flow-security-bef82af046",
@@ -1411,7 +1537,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-security-bef82af046"
+      "doc_ref": "docs/functions.md#fn-refresh-cash-flow-security-bef82af046",
+      "source_path": "database/functions/refresh_cash_flow_security--bef82af046.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-refresh-event-security-cb28073649",
@@ -1425,7 +1553,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-refresh-event-security-cb28073649"
+      "doc_ref": "docs/functions.md#fn-refresh-event-security-cb28073649",
+      "source_path": "database/functions/refresh_event_security--cb28073649.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-refresh-snapshot-dependents-e774891266",
@@ -1439,7 +1569,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-refresh-snapshot-dependents-e774891266"
+      "doc_ref": "docs/functions.md#fn-refresh-snapshot-dependents-e774891266",
+      "source_path": "database/functions/refresh_snapshot_dependents--e774891266.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-refresh-transaction-dependents-3513c6b0a2",
@@ -1453,7 +1585,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-refresh-transaction-dependents-3513c6b0a2"
+      "doc_ref": "docs/functions.md#fn-refresh-transaction-dependents-3513c6b0a2",
+      "source_path": "database/functions/refresh_transaction_dependents--3513c6b0a2.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-set-credit-card-minimum-613f21d5d7",
@@ -1483,7 +1617,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-set-credit-card-minimum-613f21d5d7"
+      "doc_ref": "docs/functions.md#fn-set-credit-card-minimum-613f21d5d7",
+      "source_path": "database/functions/set_credit_card_minimum--613f21d5d7.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-sync-cash-flow-sources-2ed9ef51b8",
@@ -1497,7 +1633,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-sync-cash-flow-sources-2ed9ef51b8"
+      "doc_ref": "docs/functions.md#fn-sync-cash-flow-sources-2ed9ef51b8",
+      "source_path": "database/functions/sync_cash_flow_sources--2ed9ef51b8.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-sync-debt-payment-movements-e4b6004cb5",
@@ -1511,7 +1649,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-sync-debt-payment-movements-e4b6004cb5"
+      "doc_ref": "docs/functions.md#fn-sync-debt-payment-movements-e4b6004cb5",
+      "source_path": "database/functions/sync_debt_payment_movements--e4b6004cb5.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-sync-liability-principal-cache-493f3f0c4a",
@@ -1531,7 +1671,9 @@
       "security": "INVOKER",
       "usage_class": "internal_review_required",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-sync-liability-principal-cache-493f3f0c4a"
+      "doc_ref": "docs/functions.md#fn-sync-liability-principal-cache-493f3f0c4a",
+      "source_path": "database/functions/sync_liability_principal_cache--493f3f0c4a.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-sync-salary-transaction-to-event-845fb072a1",
@@ -1545,7 +1687,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-sync-salary-transaction-to-event-845fb072a1"
+      "doc_ref": "docs/functions.md#fn-sync-salary-transaction-to-event-845fb072a1",
+      "source_path": "database/functions/sync_salary_transaction_to_event--845fb072a1.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-trg-sync-liability-cache-from-movements-68942a8473",
@@ -1559,7 +1703,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-trg-sync-liability-cache-from-movements-68942a8473"
+      "doc_ref": "docs/functions.md#fn-trg-sync-liability-cache-from-movements-68942a8473",
+      "source_path": "database/functions/trg_sync_liability_cache_from_movements--68942a8473.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-trg-sync-revolving-liability-cache-da3ad9487b",
@@ -1573,7 +1719,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-trg-sync-revolving-liability-cache-da3ad9487b"
+      "doc_ref": "docs/functions.md#fn-trg-sync-revolving-liability-cache-da3ad9487b",
+      "source_path": "database/functions/trg_sync_revolving_liability_cache--da3ad9487b.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-validate-cash-flow-allocation-7bc13b6030",
@@ -1587,7 +1735,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-validate-cash-flow-allocation-7bc13b6030"
+      "doc_ref": "docs/functions.md#fn-validate-cash-flow-allocation-7bc13b6030",
+      "source_path": "database/functions/validate_cash_flow_allocation--7bc13b6030.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-validate-debt-payment-details-fc68f8438d",
@@ -1601,7 +1751,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-validate-debt-payment-details-fc68f8438d"
+      "doc_ref": "docs/functions.md#fn-validate-debt-payment-details-fc68f8438d",
+      "source_path": "database/functions/validate_debt_payment_details--fc68f8438d.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-validate-grace-reserve-d63891a4f9",
@@ -1615,7 +1767,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-validate-grace-reserve-d63891a4f9"
+      "doc_ref": "docs/functions.md#fn-validate-grace-reserve-d63891a4f9",
+      "source_path": "database/functions/validate_grace_reserve--d63891a4f9.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-validate-grace-reserve-deferred-303d13b645",
@@ -1629,7 +1783,9 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-validate-grace-reserve-deferred-303d13b645"
+      "doc_ref": "docs/functions.md#fn-validate-grace-reserve-deferred-303d13b645",
+      "source_path": "database/functions/validate_grace_reserve_deferred--303d13b645.sql",
+      "portability_changes": []
     },
     {
       "signature_id": "fn-validate-transaction-category-allocations-deferred-2a4024676f",
@@ -1643,7 +1799,10 @@
       "security": "INVOKER",
       "usage_class": "trigger_only",
       "documented_effect": "unspecified",
-      "doc_ref": "docs/functions.md#fn-validate-transaction-category-allocations-deferred-2a4024676f"
+      "doc_ref": "docs/functions.md#fn-validate-transaction-category-allocations-deferred-2a4024676f",
+      "source_path": "database/functions/validate_transaction_category_allocations_deferred--2a4024676f.sql",
+      "portability_changes": []
     }
-  ]
+  ],
+  "source_manifest": "database/manifest.json"
 }
