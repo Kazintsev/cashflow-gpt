@@ -39,6 +39,6 @@ Documentation work does not require production writes, schema changes, permissio
 
 Run `python3 scripts/check_docs.py` from the repository root. It validates local links, explicit anchors and catalog/document consistency; it does not test SQL behavior or database access.
 
-For SQL changes run `python3 scripts/build_sql.py --check` and `npm test` after `npm ci --ignore-scripts`. Tests create an isolated in-memory PostgreSQL through PGlite; they need no production credentials. See [test scope](docs/testing.md). Passing these tests does not certify native PostgreSQL 17, Supabase Data API access or a chat integration.
+For SQL changes run `python3 scripts/build_sql.py --check` and `npm test` after `npm ci --ignore-scripts`. Tests create an isolated in-memory PostgreSQL through PGlite; they need no production credentials. See [test scope](docs/testing.md). A separate Supabase PostgreSQL 17.6 validation passed on 2026-09-09; see [native validation](docs/testing.md#supabase-validation). `tests/native-smoke.sql` requires a disposable database with today's unchanged demo seed and owner access; it rolls back probe rows, but sequences can advance. Run it only against an explicitly authorized test database. Neither suite certifies a chat integration or HTTP Data API configuration.
 
 Respect the authorized GitHub destination and branch. Preserve unrelated files, use a fast-forward update, and report changes, verification and remaining limits. No instruction here authorizes a deployment or visibility change.

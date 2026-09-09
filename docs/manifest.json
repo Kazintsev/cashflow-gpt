@@ -376,8 +376,19 @@
   "clean_install_validation": {
     "engine": "PostgreSQL 18.3 (PGlite 0.5.8)",
     "database_checks": 14,
-    "native_postgresql_17_verified": false,
-    "supabase_deployment_verified": false
+    "native_postgresql_17_verified": true,
+    "supabase_deployment_verified": true,
+    "native_validation": {
+      "date": "2026-09-09",
+      "engine": "PostgreSQL 17.6",
+      "supabase_database_build": "17.6.1.166",
+      "channel": "Supabase SQL tool as postgres",
+      "check_groups": 12,
+      "report": "tests/results/supabase-2026-09-09.json",
+      "script": "tests/native-smoke.sql",
+      "data_api_verified": false,
+      "chat_adapter_verified": false
+    }
   },
   "source_manifest": "database/manifest.json",
   "validation_commands": [

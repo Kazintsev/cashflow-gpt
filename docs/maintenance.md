@@ -17,7 +17,7 @@ README объясняет проект. docs/index.md маршрутизируе
 - observed_status_version — известная версия JSON-ответа статуса, не версия установщика.
 - runtime_source_in_repo=true — канонические исходники находятся в database/functions/ и database/schema/.
 - source_path — путь к SQL от корня репозитория; portability_changes — явные отличия от источника.
-- ready_for_clean_install=true — bootstrap проверен в PGlite; поле clean_install_validation уточняет среду. Это не готовность ИИ-адаптера.
+- ready_for_clean_install=true — bootstrap проверен в PGlite и отдельном Supabase PostgreSQL 17.6; поле clean_install_validation уточняет среду. Это не готовность ИИ-адаптера.
 
 Не повышайте достоверность документа до observed_snapshot только потому, что он написан уверенно. Предлагаемый алгоритм агента остаётся proposed_workflow до проверки конкретного адаптера.
 

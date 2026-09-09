@@ -1,0 +1,91 @@
+{
+  "format_version": 1,
+  "date": "2026-09-09",
+  "result": "passed",
+  "source_commit": "ac3e9276891bd05cba0d6e47d42710f26d6780c9",
+  "engine": "PostgreSQL 17.6",
+  "platform": "Supabase",
+  "platform_database_build": "17.6.1.166",
+  "region": "eu-west-1",
+  "execution_channel": "Supabase SQL tool as postgres",
+  "production_modified": false,
+  "personal_records_included": false,
+  "files_sha256": {
+    "database/bootstrap.sql": "813399525b4acc56f6009e4ee2d0f6f0632ab556230713b790095e47a9c67c54",
+    "database/demo/seed.sql": "a39a8ee5577cff043c8d972bd48ad3b97a8001834576d2128a87439b2d4c357d",
+    "tests/native-smoke.sql": "2c9365d62a2800e73811e909ffc55ab2a1e7da5f8627d51f34cb17080c291495"
+  },
+  "installation": {
+    "initial_public_relations": 0,
+    "initial_public_functions": 0,
+    "bootstrap_committed": true,
+    "empty_status_cash": 0,
+    "empty_status_integrity_ok": true,
+    "empty_status_free_cash_until_next_income": null,
+    "demo_committed": true,
+    "bootstrap_repeat_rejected": true,
+    "seed_repeat_rejected": true
+  },
+  "expected_counts": {
+    "tables": 19,
+    "views": 4,
+    "functions": 76,
+    "sequences": 18,
+    "constraints": 144,
+    "additional_indexes": 43,
+    "triggers": 53
+  },
+  "native_smoke": {
+    "passed_check_groups": 12,
+    "checks": [
+      "demo_status",
+      "schema_inventory",
+      "compile_76_functions",
+      "owner_only_access",
+      "request_idempotency",
+      "funding_execution_principal",
+      "transfer_and_excluded",
+      "credit_card_budget_and_repayment",
+      "atomic_correction_and_deferred_constraints",
+      "snapshot_cutoff",
+      "forecast_and_integrity",
+      "probe_rollback"
+    ],
+    "probe_rows_rolled_back": true,
+    "sequences_may_advance": true
+  },
+  "preserved_demo": {
+    "accounts": 4,
+    "transactions": 2,
+    "cash": 38750,
+    "weekly_spend": 450,
+    "weekly_budget": 10000,
+    "integrity_ok": true
+  },
+  "advisors": {
+    "warnings": 0,
+    "errors": 0,
+    "info": [
+      {
+        "name": "rls_enabled_no_policy",
+        "count": 19,
+        "reason": "Intentional owner-only access; no client policies."
+      },
+      {
+        "name": "unused_index",
+        "count": 22,
+        "reason": "New database and small demo do not establish index redundancy."
+      }
+    ]
+  },
+  "not_verified": [
+    "HTTP Data API",
+    "SQL Editor UI",
+    "chat adapter",
+    "concurrent network requests",
+    "large-data performance",
+    "bank reconciliation",
+    "backup restore",
+    "all remaining regression matrix scenarios"
+  ]
+}

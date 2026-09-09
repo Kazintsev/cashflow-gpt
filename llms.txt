@@ -25,5 +25,5 @@ Read only documents relevant to the task. This file is a navigation aid, not a t
 ## Boundaries
 
 - [Release readiness](docs/release.md): delivered SQL core and remaining release work.
-- [Testing](docs/testing.md): 14 passing PGlite checks versus pending coverage and native deployment tests.
+- [Testing](docs/testing.md): 14 passing PGlite checks and 12 native Supabase check groups; reproducible SQL and remaining coverage.
 - [Operations](docs/operations.md): error interpretation and recovery.
