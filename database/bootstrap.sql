@@ -1950,6 +1950,7 @@ declare
   l record;
   v_today date:=public.finance_business_date(p_as_of);
   v_cash jsonb;
+  v_previous_day_operations jsonb;
   v_today_events jsonb;
   v_controls jsonb;
   v_future jsonb;
@@ -2032,6 +2033,29 @@ begin
     into v_integrity,v_integrity_errors
   from public.finance_integrity_check(p_as_of) q;
 
+  -- Reconciliation list: a complete business day, not a rolling 24 hours.
+  select jsonb_build_object(
+    'date',v_today-1,
+    'timezone',public.finance_setting_text('business_timezone','Europe/Moscow'),
+    'start_at',public.finance_day_start(v_today-1),
+    'end_at_exclusive',public.finance_day_start(v_today),
+    'count',count(*),
+    'operations',coalesce(jsonb_agg(jsonb_build_object(
+      'transaction_id',t.id,'occurred_at',t.occurred_at,
+      'local_time',to_char(t.occurred_at AT TIME ZONE public.finance_setting_text('business_timezone','Europe/Moscow'),'HH24:MI:SS'),
+      'transaction_type',t.transaction_type,'amount',t.amount,'currency',t.currency,
+      'description',t.description,'budget_effect',t.budget_effect,
+      'from_account_id',t.from_account_id,'from_account_name',fa.name,
+      'to_account_id',t.to_account_id,'to_account_name',ta.name,
+      'liability_id',t.liability_id
+    ) order by t.occurred_at,t.id),'[]'::jsonb)
+  ) into v_previous_day_operations
+  from public.transactions t
+  left join public.accounts fa on fa.id=t.from_account_id
+  left join public.accounts ta on ta.id=t.to_account_id
+  where t.occurred_at>=public.finance_day_start(v_today-1)
+    and t.occurred_at<public.finance_day_start(v_today);
+
   return jsonb_build_object(
     'status_version','cashflow_until_next_income_v3','as_of',p_as_of,'business_date',v_today,
     'integrity_ok',coalesce(v_integrity_errors,0)=0,'integrity_issues',v_integrity,
@@ -2044,6 +2068,7 @@ begin
       'remaining_living_budget',l.remaining_living_budget,
       'future_living_budget',l.future_living_budget,
       'planned_purchase_reserve',l.planned_purchase_reserve,'credit_reserve',(SELECT coalesce(sum(additional_reserve),0) FROM public.get_credit_cash_reserves(p_as_of,l.next_income_date-1))),
+    'previous_day_operations',v_previous_day_operations,
     'today',v_today_events,'controls',v_controls,'obligations_until_next_income',v_future);
 end
 $function$;

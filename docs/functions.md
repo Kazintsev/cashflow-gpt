@@ -840,7 +840,7 @@ RETURNS jsonb
 
 Параметры со значениями по умолчанию: `p_as_of`, `p_default_weekly_budget`.
 
-Канонический оперативный статус для пользователя.
+Канонический оперативный статус для пользователя. С 11 сентября 2026 возвращает также `previous_day_operations` — полный список операций предыдущего бизнес-дня. [Контракт блока](api.md#status-read).
 
 Комментарий в БД: Canonical operational finance status. Use this instead of get_financial_position/free_cash for user-facing status.
 

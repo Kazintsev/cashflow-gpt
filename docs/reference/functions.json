@@ -1227,6 +1227,37 @@
       "source_path": "database/functions/get_status_until_next_income--8d89e6dc13.sql",
       "portability_changes": [
         "type_based_account_labels"
+      ],
+      "contract_extensions": [
+        {
+          "date": "2026-09-11",
+          "field": "previous_day_operations",
+          "semantics": "All transactions in [business_date-1 00:00, business_date 00:00), by occurred_at; one row per transaction, ordered by occurred_at and id; no limit.",
+          "fields": [
+            "date",
+            "timezone",
+            "start_at",
+            "end_at_exclusive",
+            "count",
+            "operations"
+          ],
+          "operation_fields": [
+            "transaction_id",
+            "occurred_at",
+            "local_time",
+            "transaction_type",
+            "amount",
+            "currency",
+            "description",
+            "budget_effect",
+            "from_account_id",
+            "from_account_name",
+            "to_account_id",
+            "to_account_name",
+            "liability_id"
+          ],
+          "doc_ref": "docs/api.md#status-read"
+        }
       ]
     },
     {

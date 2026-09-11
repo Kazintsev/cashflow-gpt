@@ -33,6 +33,8 @@ try {
     const s=await status();
     assert.equal(s.integrity_ok,true);
     assert.equal(s.cash.actual_cash,0);
+    assert.equal(s.previous_day_operations.count,0);
+    assert.deepEqual(s.previous_day_operations.operations,[]);
     assert.equal(s.liquidity.free_cash_until_next_income,null);
   });
   await check('catalog object counts',async()=>{
@@ -135,6 +137,9 @@ try {
     const forecast=await one('select * from public.get_financial_position_at(public.finance_business_date(now())+15,now(),null)');
     assert.ok(Number.isFinite(Number(forecast.free_cash)));
     const s=await status();assert.equal(s.integrity_ok,true);
+  });
+  await check('previous business day reconciliation boundaries and all rows',async()=>{
+    await db.exec(read('tests/previous-day-operations.sql'));
   });
   console.log('PASS '+passed+' database checks');
 } catch(e) {
